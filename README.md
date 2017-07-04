@@ -1,6 +1,6 @@
 # Front-End TestIt
 
-This project have all content of the front-end of the web application TestIt, a web app built by the students participants of IC, of Faculdade de Tecnologia de Sorocaba, this app have the purpose of being a inovative plataform where teachers can create tests and the students can do they.
+This project haves all the content of the front-end of the web application TestIt, a web app built by the students participants of scientific initiation of Faculdade de Tecnologia de Sorocaba, this app haves the purpose of being a plataform where teachers can create tests and the students can realize them in a more easy way, that helps both teachers and students.
 
 ## Prerequisites
 
@@ -19,7 +19,7 @@ npm install
 npm run build
 ````
 
-## Built With
+## References
 
 * [Vue.js](https://vuejs.org/)
 * [Sass](http://sass-lang.com/)
