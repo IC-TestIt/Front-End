@@ -1,23 +1,25 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <router-view></router-view>
+  <div id="app-main">
+    <VHeader></VHeader>
+    <div id="app-container">
+      <router-view></router-view>
+    </div>
+    <VFooter></VFooter>
   </div>
 </template>
 
 <script>
+import VHeader from './components/Header'
+import VFooter from './components/Footer'
+
 export default {
-  name: 'app'
+  name: 'app-main',
+  components: {
+    VHeader,
+    VFooter
+  }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
