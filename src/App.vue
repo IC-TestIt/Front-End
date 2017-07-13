@@ -1,5 +1,5 @@
 <template>
-  <div id="app-main">
+  <div>
     <VHeader></VHeader>
     <div id="app-container">
       <router-view></router-view>
@@ -21,5 +21,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style src="./assets/styles/main.css"></style>
