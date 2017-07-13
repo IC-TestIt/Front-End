@@ -1,18 +1,25 @@
-body {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    background-color: #FAFAFA;
-    min-height: 100vh;
-}
-
-#app-main {
+html,body
+{
     width: 100%;
     height: 100%;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
+}
+
+
+body {
+    background-color: #FAFAFA;
+    min-height: 100vh;
+    max-width: 100%;
+}
+
+body p {
+  font-family: 'Roboto', sans-serif;
+}
+
+body h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto', sans-serif;
 }
 
 ul {
@@ -23,32 +30,50 @@ ul {
 .header {
     height: 10vh;
     width: 100%;
-    color: #000066;
-    border-bottom: 1px solid #000066;
+    color: #006;
+    border-bottom: 1px solid #006;
     overflow: hidden;
-    position: absolute;
-  }
+}
 
 .header img {
     position: relative;
     width: 10%;
     overflow: hidden;
-    left: 20%;
+    left: 45%;
     top: 20%;
 }
 
 .footer {
-    height: 6vh;
+    height: 10vh;
     width: 100%;
     color: #b8b8b8;
-    border-top: 1px solid #000066;
-    display: flex;
+    border-top: 1px solid #006;
+    background-color: #006;
+    margin: 0;
 }
 
 .footer p {
-    position: absolute;
-    margin: 0;
+    position: relative;
+    margin: 20px;
     left: 10%;
-    bottom: 0;
-    font-size: 13px;
+    bottom: 0%;
+    font-size: 15px;
+    color: #FFF;
+}
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px)
+and (orientation: portrait) {
+
+  .header img {
+    width: 40%;
+    left: 30%;
+  }
+
+  .footer p {
+    font-size: 45px;
+    left: 35%;
+    top: 25%;
+  }
 }
