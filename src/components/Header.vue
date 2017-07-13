@@ -1,15 +1,14 @@
 <template>
   <div class="header">
-    <img src="../assets/images/logo.jpg" alt="">
+    <img src="../assets/images/logo.jpg" alt="Test It">
   </div>
 </template>
 
 <script>
 export default {
-  name: 'THeader'
+  name: 'VHeader'
 }
 </script>
 
-<style src="../assets/styles/main.css">
-  
+<style media="screen">
 </style>

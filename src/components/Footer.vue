@@ -6,9 +6,6 @@
 
 <script>
 export default {
-  name: 'TFooter'
+  name: 'VFooter'
 }
 </script>
-
-<style src="../assets/styles/main.css">
-</style>
