@@ -124,7 +124,6 @@ and (orientation: portrait) {
     width: 100%;
     height: 80%;
     margin-left: 40px;
-    margin-top: 85px;
   }
 }
 

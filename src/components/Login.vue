@@ -7,7 +7,7 @@
         <md-input type="email"></md-input>
       </md-input-container>
 
-      <md-input-container>
+      <md-input-container md-has-password>
         <label>Senha</label>
         <md-input type="password"></md-input>
       </md-input-container>

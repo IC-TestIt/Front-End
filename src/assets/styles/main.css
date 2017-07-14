@@ -72,8 +72,23 @@ and (orientation: portrait) {
   }
 
   .footer p {
-    font-size: 45px;
-    left: 35%;
-    top: 25%;
+    font-size: 20px;
+    left: 26%;
+  }
+
+  .md-tabs .md-tabs-navigation-container {
+    overflow-x: hidden;
+  }
+
+  .md-tabs .md-tabs-navigation.md-has-navigation-scroll .md-tab-header-navigation-button.md-left {
+    display: none;
+  }
+
+  .md-tabs .md-tabs-navigation.md-has-navigation-scroll .md-tab-header-navigation-button.md-right {
+    display: none;
+  }
+
+  .md-input-container label {
+    font-size: 13px;
   }
 }

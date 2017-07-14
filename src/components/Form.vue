@@ -28,20 +28,6 @@
         <md-input type="date"></md-input>
       </md-input-container>
 
-      <md-input-container>
-        <label for="type">Tipo de Identificador</label>
-        <md-select name="type" id="type" required>
-          <md-option value="cpf">CPF</md-option>
-          <md-option value="rg">RG</md-option>
-        </md-select>
-      </md-input-container>
-
-      <md-input-container>
-        <label>Identificador</label>
-        <md-input required></md-input>
-      </md-input-container>
-
-
       <md-button class="md-raised md-primary">Cadastrar</md-button>
 
     </form>
