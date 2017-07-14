@@ -1,18 +1,18 @@
 <template lang="html">
   <div class="vlogin">
-    <form novalidate @submit.stop.prevent="submit">
+    <form novalidate v-on:submit="handleSubmit($event)">
 
       <md-input-container>
         <label>Email</label>
-        <md-input type="email"></md-input>
+        <md-input type="email" v-model="user.email"></md-input>
       </md-input-container>
 
       <md-input-container md-has-password>
         <label>Senha</label>
-        <md-input type="password"></md-input>
+        <md-input type="password" v-model="user.password"></md-input>
       </md-input-container>
 
-      <md-button class="md-raised md-primary">Login</md-button>
+      <md-button type="submit" class="md-raised md-primary">Login</md-button>
 
     </form>
   </div>
@@ -20,7 +20,31 @@
 
 <script>
 export default {
-  name: 'vlogin'
+  name: 'vlogin',
+  data () {
+    return {
+      user: {
+        email: null,
+        password: null
+      }
+    }
+  },
+  methods: {
+    handleSubmit (e) {
+      e.preventDefault()
+      // Auth
+      this.$auth.login({
+        params: {auth: this.user},
+        success: function () {
+          console.log('Usuário logado com sucesso.')
+        },
+        error: function () {
+          console.log('Usuário e/ou senha inválidos.')
+        },
+        rememberMe: true
+      })
+    }
+  }
 }
 </script>
 
