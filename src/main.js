@@ -14,16 +14,6 @@ Vue.http.options.root = process.env.API
 
 Vue.router = router
 
-Vue.use(require('@websanova/vue-auth'), {
-  auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
-  http: require('@websanova/vue-auth/drivers/http/vue-resource.1.x.js'),
-  router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
-  rolesVar: 'type',
-  loginData: {url: `${Vue.http.options.root}/token`, method: 'POST', redirect: '/', fetchUser: false},
-  fetchData: {url: 'auth/user', method: 'GET'},
-  refreshData: {url: 'auth/refresh', method: 'GET', atInit: false}
-})
-
 Vue.material.registerTheme('default', {
   primary: {
     color: 'indigo',
