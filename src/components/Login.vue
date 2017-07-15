@@ -32,16 +32,20 @@ export default {
   methods: {
     handleSubmit (e) {
       e.preventDefault()
-      // Auth
-      this.$auth.login({
-        params: {auth: this.user},
-        success: function () {
+
+      const loginData = `email=${this.user.email}&password=${this.user.password}`
+
+      this.$http.post(`${process.env.API}/token`, loginData, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then(response => {
+        if (response.status === 200) {
           console.log('Usuário logado com sucesso.')
-        },
-        error: function () {
-          console.log('Usuário e/ou senha inválidos.')
-        },
-        rememberMe: true
+        }
+      }, error => {
+        console.log(error)
+        console.log('Usuário e/ou senha inválidos.')
       })
     }
   }
@@ -49,6 +53,5 @@ export default {
 </script>
 
 <style lang="css">
-
 
 </style>
