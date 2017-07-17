@@ -19,9 +19,16 @@ Vue.material.registerTheme('default', {
     color: 'indigo',
     hue: 900
   },
-  accent: 'blue',
+  accent: {
+    color: 'amber',
+    hue: 800
+  },
   warn: 'black',
-  background: 'grey'
+  background: {
+    color: 'blue',
+    hue: 900,
+    textColor: 'black'
+  }
 })
 
 /* eslint-disable no-new */
