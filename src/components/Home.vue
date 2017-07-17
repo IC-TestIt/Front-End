@@ -18,7 +18,7 @@
 
         <md-tab md-label="Cadastre-se">
 
-          <VForm></VForm>
+          <VForm :user="user"></VForm>
 
         </md-tab>
 
@@ -38,6 +38,16 @@ export default {
   components: {
     VForm,
     VLogin
+  },
+  data () {
+    return {
+      user: {
+        name: '',
+        email: '',
+        pwd: '',
+        date: ''
+      }
+    }
   }
 }
 </script>

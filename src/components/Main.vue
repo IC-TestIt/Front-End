@@ -63,7 +63,21 @@
 
 <script>
 export default {
-  name: 'main'
+  name: 'main',
+  mounted () {
+    this.getMsg()
+  },
+  methods: {
+    getMsg () {
+      this.$http.get(`${process.env.API}/api`, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('id_token')
+        }
+      }).then(r => {
+        console.log(r.body)
+      })
+    }
+  }
 }
 </script>
 
