@@ -2,7 +2,7 @@
   <div class="signUp">
     <h1>Concluir Cadastro</h1>
     <div class="page">
-      <VForm></VForm>
+      <VForm :user="user"></VForm>
     </div>
   </div>
 
@@ -15,6 +15,29 @@ export default {
   name: 'signUp',
   components: {
     VForm
+  },
+  data () {
+    return {
+      user: {
+        name: '',
+        email: '',
+        pwd: '',
+        date: ''
+      },
+      rpwd: ''
+    }
+  },
+  mounted () {
+    this.getData()
+  },
+  // props: ['propName']
+  methods: {
+    getData: function () {
+      if (this.$route.params.id === '1') {
+        this.user.name = 'Medson'
+        this.user.email = 'medson@gmail.com'
+      }
+    }
   }
 }
 </script>
