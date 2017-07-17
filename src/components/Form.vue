@@ -1,19 +1,20 @@
 <template lang="html">
   <div class="vform">
     <form novalidate @submit.stop.prevent="submit">
+
       <md-input-container>
         <label>Nome</label>
-        <md-input required></md-input>
+        <md-input required v-model="user.name"></md-input>
       </md-input-container>
 
       <md-input-container>
         <label>Email</label>
-        <md-input type="email" required></md-input>
+        <md-input type="email" required v-model="user.email"></md-input>
       </md-input-container>
 
       <md-input-container>
         <label>Senha</label>
-        <md-input type="password" required v-model="pwd"></md-input>
+        <md-input type="password" required v-model="user.pwd"></md-input>
       </md-input-container>
 
       <md-input-container>
@@ -21,11 +22,11 @@
         <md-input type="password" required v-model="rpwd"></md-input>
       </md-input-container>
 
-      <span v-if="compare(pwd, rpwd) == false">*Senhas não coincidem</span>
+      <span v-if="compare(user.pwd, rpwd) == false">*Senhas não coincidem</span>
 
       <md-input-container>
         <label>Data de Nascimento</label>
-        <md-input type="date"></md-input>
+        <md-input type="date" v-model="user.date"></md-input>
       </md-input-container>
 
       <md-button class="md-raised md-primary">Cadastrar</md-button>
@@ -39,10 +40,19 @@ export default {
   name: 'vform',
   data () {
     return {
-      pwd: '',
+      user: {
+        name: '',
+        email: '',
+        pwd: '',
+        date: ''
+      },
       rpwd: ''
     }
   },
+  mounted () {
+    this.getDate()
+  },
+  props: ['user'],
   methods: {
     compare: function (pwd, rpwd) {
       if (pwd === rpwd) {
@@ -51,6 +61,10 @@ export default {
         // console.log('senha errada')
         return false
       }
+    },
+    getDate: function () {
+      // this.user.name = 'Medson'
+      // this.user.email = 'medson@gmail.com'
     }
   }
 }
