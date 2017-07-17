@@ -40,12 +40,12 @@ export default {
   name: 'vform',
   data () {
     return {
-      user: {
-        name: '',
-        email: '',
-        pwd: '',
-        date: ''
-      },
+      // user: {
+      //   name: '',
+      //   email: '',
+      //   pwd: '',
+      //   date: ''
+      // },
       rpwd: ''
     }
   },
