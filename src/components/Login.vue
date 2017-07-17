@@ -14,6 +14,8 @@
 
       <md-button type="submit" class="md-raised md-primary">Login</md-button>
 
+      <label class="label-error">{{msg}}</label>
+
     </form>
   </div>
 </template>
@@ -26,7 +28,8 @@ export default {
       user: {
         email: null,
         password: null
-      }
+      },
+      msg: ''
     }
   },
   methods: {
@@ -42,10 +45,12 @@ export default {
       }).then(response => {
         if (response.status === 200) {
           console.log('Usuário logado com sucesso.')
+          this.$router.push('/home')
         }
       }, error => {
         console.log(error)
         console.log('Usuário e/ou senha inválidos.')
+        this.msg = 'Usuário e/ou senha inválidos.'
       })
     }
   }
