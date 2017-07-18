@@ -2,7 +2,7 @@
   <div class="signUp">
     <h1>Concluir Cadastro</h1>
     <div class="page">
-      <VForm :user="user"></VForm>
+      <VForm :user="user" :handleSubmit="handleSubmit"></VForm>
     </div>
   </div>
 
@@ -21,8 +21,13 @@ export default {
       user: {
         name: '',
         email: '',
-        pwd: '',
-        date: ''
+        password: '',
+        phone: '',
+        birthday: '',
+        type: 2,
+        organizationid: 7,
+        Identifyer: '',
+        id: ''
       },
       rpwd: ''
     }
@@ -30,13 +35,15 @@ export default {
   mounted () {
     this.getData()
   },
-  // props: ['propName']
   methods: {
     getData: function () {
-      if (this.$route.params.id === '1') {
-        this.user.name = 'Medson'
-        this.user.email = 'medson@gmail.com'
-      }
+      this.user.id = this.$route.params.id
+      this.$http.get(`${process.env.API}/api/user/${this.user.id}`).then(r => {
+        this.user = r.body
+      })
+    },
+    handleSubmit: function (user) {
+      this.$http.put(`${process.env.API}/api/user/${this.user.id}`, user)
     }
   }
 }

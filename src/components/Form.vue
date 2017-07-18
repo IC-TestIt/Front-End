@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="vform">
-    <form novalidate @submit.stop.prevent="submit">
+    <form novalidate v-on:submit="signUp($event)">
 
       <md-input-container>
         <label>Nome</label>
@@ -14,22 +14,27 @@
 
       <md-input-container>
         <label>Senha</label>
-        <md-input type="password" required v-model="user.pwd"></md-input>
+        <md-input type="password" required v-model="user.password"></md-input>
       </md-input-container>
 
       <md-input-container>
         <label>Confirme a Senha</label>
-        <md-input type="password" required v-model="rpwd"></md-input>
+        <md-input type="password" required v-model="rpassword"></md-input>
       </md-input-container>
 
-      <span v-if="compare(user.pwd, rpwd) == false">*Senhas não coincidem</span>
+      <span v-if="!compare(user.password, rpassword)">*Senhas não coincidem</span>
 
       <md-input-container>
         <label>Data de Nascimento</label>
-        <md-input type="date" v-model="user.date"></md-input>
+        <md-input type="date" v-model="user.birthday"></md-input>
       </md-input-container>
 
-      <md-button class="md-raised md-primary">Cadastrar</md-button>
+      <md-input-container>
+        <label>Telefone</label>
+        <md-input v-model="user.phone"></md-input>
+      </md-input-container>
+
+      <md-button type="submit" class="md-raised md-primary">Cadastrar</md-button>
 
     </form>
   </div>
@@ -40,22 +45,16 @@ export default {
   name: 'vform',
   data () {
     return {
-      // user: {
-      //   name: '',
-      //   email: '',
-      //   pwd: '',
-      //   date: ''
-      // },
-      rpwd: ''
+      rpassword: ''
     }
   },
   mounted () {
     this.getDate()
   },
-  props: ['user'],
+  props: ['user', 'handleSubmit'],
   methods: {
-    compare: function (pwd, rpwd) {
-      if (pwd === rpwd) {
+    compare: function (password, rpassword) {
+      if (password === rpassword) {
         return true
       } else {
         // console.log('senha errada')
@@ -65,6 +64,11 @@ export default {
     getDate: function () {
       // this.user.name = 'Medson'
       // this.user.email = 'medson@gmail.com'
+    },
+    signUp: function (e) {
+      e.preventDefault()
+
+      this.handleSubmit(this.user)
     }
   }
 }
