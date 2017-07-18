@@ -18,7 +18,7 @@
 
         <md-tab md-label="Cadastre-se">
 
-          <VForm :user="user"></VForm>
+          <VForm :user="user" :handleSubmit="handleSubmit"></VForm>
 
         </md-tab>
 
@@ -44,9 +44,18 @@ export default {
       user: {
         name: '',
         email: '',
-        pwd: '',
-        date: ''
+        password: '',
+        phone: '',
+        birthday: '',
+        type: 1,
+        organizationid: 7,
+        Identifyer: 'Professor'
       }
+    }
+  },
+  methods: {
+    handleSubmit: function (user) {
+      this.$http.post(`${process.env.API}/api/user`, user)
     }
   }
 }
