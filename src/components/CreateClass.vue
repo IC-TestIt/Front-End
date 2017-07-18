@@ -8,7 +8,7 @@
                     
                     <md-input-container>
                        <label>Descrição da turma</label>
-                       <md-input  type="descricao" v-model="user.description"></md-input>
+                       <md-input  v-model="room.description"></md-input>
                     </md-input-container>
 
                     
@@ -24,17 +24,17 @@
                     
                     <md-input-container>
                        <label>Nome do aluno</label>
-                       <md-input  type="descricao" v-model="user.description"></md-input>
+                       <md-input v-model="student.name"></md-input>
                     </md-input-container>
 
                      <md-input-container>
                        <label>Email</label>
-                       <md-input  v-model="user.description"></md-input>
+                       <md-input  v-model="student.email"></md-input>
                      </md-input-container>
 
                      <md-input-container>
                        <label>Identificador (Ex: RA, CPF, RG)</label>
-                       <md-input   v-model="user.description"></md-input>
+                       <md-input   v-model="student.identifyer"></md-input>
                      </md-input-container>
                     
 
@@ -74,31 +74,13 @@ export default {
   name: 'vlogin',
   data () {
     return {
-      user: {
-        descricao: null
+      room: {
+        description: null
       },
-      methods: {
-        handleSubmit (e) {
-          e.preventDefault()
-
-          const loginData = `email=${this.user.email}&password=${this.user.password}`
-
-          this.$http.post(`${process.env.API}/token`, loginData, {
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            }
-          }).then(response => {
-            if (response.status === 200) {
-              console.log('Usuário logado com sucesso.')
-              localStorage.setItem('id_token', response.body.access_token)
-              this.$router.push('/home')
-            }
-          }, error => {
-            console.log(error)
-            console.log('Usuário e/ou senha inválidos.')
-            this.msg = 'Usuário e/ou senha inválidos.'
-          })
-        }
+      student: {
+        email: null,
+        name: null,
+        identifyer: null
       }
     }
   }
@@ -153,7 +135,7 @@ export default {
 
 .form-one {  
   margin-top: 30px;
-  width: 40vw;
+  width: 40vw;  
   background: #FFF;  
   overflow-x: hidden;  
   /*box-shadow: 5px 5px 5px 5px grey;*/
