@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import FinishSignUp from '@/components/FinishSignUp'
 import Main from '@/components/Main'
+import CreateClass from '@/components/CreateClass'
 
 Vue.use(Router)
 
@@ -23,8 +24,14 @@ export default new Router({
     component: FinishSignUp
   },
   {
-    path: '/home',
+    path: '/home/',
     name: 'Main',
     component: Main
+  },
+  {
+    path: '/turma',
+    nome: 'CreateClass',
+    component: CreateClass
   }]
 })
+
