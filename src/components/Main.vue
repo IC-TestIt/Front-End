@@ -1,5 +1,10 @@
 <template lang="html">
   <div class="main has-ripple blue">
+    <div v-show="loggedIn" class="logout">
+      <a v-on:click="logOut()">
+        <i class="fa fa-sign-out" aria-hidden="true"></i>
+      </a>
+    </div>
     <md-ink-ripple />
     <md-list class="list">
       <md-toolbar md-theme="white">
@@ -64,11 +69,17 @@
 <script>
 export default {
   name: 'main',
+  data () {
+    return {
+      loggedIn: false
+    }
+  },
   mounted () {
     this.getMsg()
+    this.loggedIn = localStorage.getItem('id_token') !== null
   },
   methods: {
-    getMsg () {
+    getMsg: function () {
       this.$http.get(`${process.env.API}/api`, {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('id_token')
@@ -76,6 +87,11 @@ export default {
       }).then(r => {
         console.log(r.body)
       })
+    },
+    logOut: function () {
+      localStorage.clear()
+      this.loggedIn = false
+      this.$router.push('/')
     }
   }
 }
@@ -169,5 +185,16 @@ hr {
   letter-spacing: 1px;
 }
 
+.logout {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 90vw;
+  top: 2vh;
+  color: #006;
+}
 
+.logout i {
+  font-size: 5vh;
+}
 </style>
