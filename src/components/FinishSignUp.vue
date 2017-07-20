@@ -10,6 +10,7 @@
 
 <script>
 import VForm from './Form.vue'
+import baseService from '../services/baseService'
 
 export default {
   name: 'signUp',
@@ -38,12 +39,12 @@ export default {
   methods: {
     getData: function () {
       this.user.id = this.$route.params.id
-      this.$http.get(`${process.env.API}/api/user/${this.user.id}`).then(r => {
-        this.user = r.body
+      baseService.get(`/user/${this.user.id}`).then(r => {
+        this.user = r.data
       })
     },
     handleSubmit: function (user) {
-      this.$http.put(`${process.env.API}/api/user/${this.user.id}`, user)
+      baseService.put(`/user/${this.user.id}`, user)
     }
   }
 }

@@ -75,19 +75,9 @@ export default {
     }
   },
   mounted () {
-    this.getMsg()
     this.loggedIn = localStorage.getItem('token') !== null
   },
   methods: {
-    getMsg: function () {
-      this.$http.get(`${process.env.API}/api`, {
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
-        }
-      }).then(r => {
-        console.log(r.body)
-      })
-    },
     logOut: function () {
       localStorage.clear()
       this.loggedIn = false
