@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import baseService from '../services/baseService'
+
 export default {
   name: 'vlogin',
   data () {
@@ -36,16 +38,10 @@ export default {
     handleSubmit (e) {
       e.preventDefault()
 
-      const loginData = `email=${this.user.email}&password=${this.user.password}`
-
-      this.$http.post(`${process.env.API}/token`, loginData, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      }).then(response => {
+      baseService.login(this.user.email, this.user.password).then(response => {
         if (response.status === 200) {
           console.log('Usuário logado com sucesso.')
-          localStorage.setItem('id_token', response.body.access_token)
+          localStorage.setItem('token', response.data.access_token)
           this.$router.push('/home')
         }
       }, error => {

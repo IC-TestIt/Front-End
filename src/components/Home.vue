@@ -32,6 +32,7 @@
 <script>
 import VForm from './Form.vue'
 import VLogin from './Login.vue'
+import baseService from '../services/baseService'
 
 export default {
   name: 'home',
@@ -55,7 +56,7 @@ export default {
   },
   methods: {
     handleSubmit: function (user) {
-      this.$http.post(`${process.env.API}/api/user`, user)
+      baseService.post(`/user`, user)
     }
   }
 }
