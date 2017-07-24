@@ -1,9 +1,9 @@
 <template lang="html">
-    <div class="main">  
-      <div class="dash">
-        <md-whiteframe class=" a dash-item form-one">
+    <div class="createClass">
+      <div class="org">
+        <md-whiteframe class=" g org-item form-one">
            <span class="md-title class-title">Cadastrar Turma</span>
-           <form class="form-save-class">
+           <form class="form-save-class" v-on:submit="createClass()">
               <md-input-container>
                  <label>Descrição da turma</label>
                  <md-input  v-model="room.description"></md-input>
@@ -11,9 +11,9 @@
               <md-button type="submit" class="md-raised md-primary">Salvar</md-button>
            </form>
         </md-whiteframe>
-        <md-whiteframe class=" b  dash-item form-two">
+        <md-whiteframe class=" h  org-item form-two">
             <span class="md-title class-title">Adicionar Aluno</span>
-            <form class="form-save-student">
+            <form class="form-save-student" v-on:submit="addStudent()">
               <md-input-container>
                  <label>Nome do aluno</label>
                  <md-input v-model="student.name"></md-input>
@@ -26,12 +26,12 @@
                  <label>Identificador (Ex: RA, CPF, RG)</label>
                  <md-input   v-model="student.identifyer"></md-input>
                </md-input-container>
-              
+
                <md-button type="submit" class="md-raised md-primary">Salvar</md-button>
            </form>
-        </md-whiteframe>         
-        
-        <md-table v-once class="c table-class">
+        </md-whiteframe>
+
+        <md-table v-once class="i table-class">
           <md-table-header>
             <md-table-row>
              <md-table-head>Aluno(ID)</md-table-head>
@@ -50,18 +50,47 @@
 </template>
 
 <script>
+import baseService from '../services/baseService'
+
 export default {
-  name: 'vlogin',
+  name: 'vclass',
   data () {
     return {
       room: {
-        description: null
+        description: null,
+        teacherId: null
       },
       student: {
         email: null,
         name: null,
-        identifyer: null
-      }
+        identifyer: null,
+        type: 2,
+        password: 'senha@123'
+      },
+      classId: null
+    }
+  },
+  methods: {
+    createClass: function (e) {
+      this.room.teacherId = 6
+      baseService.post(`/class`, this.room).then(r => {
+        if (r.status === 200) {
+          this.classId = r.data.classId
+        }
+      })
+    },
+    addStudent: function (e) {
+      baseService.get(`/user/exists/${this.student.email}`).then(r => {
+        let newStudent = r.data
+        if (newStudent === 0) {
+          baseService.post(`/user`, this.student).then(r => {
+            newStudent = this.student
+            baseService.post(`/class/${this.classId}/student/${newStudent}`)
+          })
+        } else {
+          baseService.post(`/class/${this.classId}/student/${newStudent}`)
+        }
+      })
     }
   }
 }
@@ -69,7 +98,7 @@ export default {
 
 
 <style lang="css">
-.main {
+.createClass {
   display: flex;
   min-height: 80vh;
   min-width: 40vw;
@@ -77,28 +106,31 @@ export default {
   height: 300px;
 }
 
-.dash {
+.org {
   display: grid;
   margin: 0 0 0 110px;
   grid-gap: 50px;
   grid-template-columns: 1fr 15% 150px 1fr;
   grid-template-rows: 250px 250px;
-  grid-template-areas: "a b" "c c";
+  grid-template-areas:
+    'g h'
+    'i i'
+  ;
 }
 
-.a {
-  grid-columns: a;
+.g {
+  grid-columns: g;
 }
 
-.b {
-  grid-columns: b;
+.h {
+  grid-columns: h;
 }
 
-.c {
-  grid-area: c;
+.i {
+  grid-area: i;
 }
 
-.dash-item {
+.org-item {
   display: flex;
   /*justify-content: center;*/
   align-items: center;
