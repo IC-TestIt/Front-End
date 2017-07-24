@@ -30,21 +30,27 @@
                <md-button type="submit" class="md-raised md-primary">Salvar</md-button>
            </form>
         </md-whiteframe>
-
         <md-table v-once class="i table-class">
           <md-table-header>
             <md-table-row>
-             <md-table-head>Aluno(ID)</md-table-head>
-             <md-table-head>Turma</md-table-head>
+             <md-table-head>Nome</md-table-head>
+             <md-table-head>Email</md-table-head>
+             <md-table-head>Identificador</md-table-head>
             </md-table-row>
           </md-table-header>
           <md-table-body>
-            <md-table-row v-for="(row, index) in 1" :key="index">
-              <md-table-cell>ID</md-table-cell>
-              <md-table-cell v-for="(col, index) in 1" :key="index">Descrição</md-table-cell>
+            <md-table-row v-for="student in students" :key="student.id" :md-item="student">
+              <md-table-cell>{{student.name}}</md-table-cell>
+              <md-table-cell>{{student.email}}</md-table-cell>
+              <md-table-cell>{{student.identifyer}}</md-table-cell>
             </md-table-row>
           </md-table-body>
         </md-table>
+        <ul v-for="student in students" :key="student.id">
+          <li>{{student.name}}</li>
+          <li>{{student.email}}</li>
+          <li>{{student.identifyer}}</li>
+        </ul>
       </div>
     </div>
 </template>
@@ -67,8 +73,11 @@ export default {
         type: 2,
         password: 'senha@123'
       },
-      classId: null
+      classId: null,
+      students: this.getStudents()
     }
+  },
+  mounted () {
   },
   methods: {
     createClass: function (e) {
@@ -91,6 +100,16 @@ export default {
           baseService.post(`/class/${this.classId}/student/${newStudent}`)
         }
       })
+    },
+    getStudents: function () {
+      let id = this.$route.params.id
+      baseService.get(`/class/${id}`).then(r => {
+        this.students = r.data
+        this.printStudents()
+      })
+    },
+    printStudents: function () {
+      console.log(this.students)
     }
   }
 }
