@@ -29,9 +29,13 @@ export default new Router({
     component: Main
   },
   {
-    path: '/turma',
+    path: '/turma/:id',
+    nome: 'CreateClass',
+    component: CreateClass
+  },
+  {
+    path: '/turma/',
     nome: 'CreateClass',
     component: CreateClass
   }]
 })
-
