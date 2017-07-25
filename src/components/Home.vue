@@ -19,7 +19,7 @@
         <md-tab md-label="Cadastre-se">
 
           <VForm :user="user" :handleSubmit="handleSubmit"></VForm>
-
+          
         </md-tab>
 
       </md-tabs>
@@ -56,7 +56,13 @@ export default {
   },
   methods: {
     handleSubmit: function (user) {
-      baseService.post(`/user`, user)
+      baseService.post(`/user`, user).then(response => {
+        if (response.status === 200) {
+          alert('Usuario cadastrado!')
+        } else {
+          alert('Usuario não cadastrado!')
+        }
+      })
     }
   }
 }
