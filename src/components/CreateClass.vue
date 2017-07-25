@@ -30,7 +30,7 @@
                <md-button type="submit" class="md-raised md-primary">Salvar</md-button>
            </form>
         </md-whiteframe>
-        <md-table v-once class="i table-class">
+        <md-table class="i table-class">
           <md-table-header>
             <md-table-row>
              <md-table-head>Nome</md-table-head>
@@ -46,11 +46,6 @@
             </md-table-row>
           </md-table-body>
         </md-table>
-        <ul v-for="student in students" :key="student.id">
-          <li>{{student.name}}</li>
-          <li>{{student.email}}</li>
-          <li>{{student.identifyer}}</li>
-        </ul>
       </div>
     </div>
 </template>
@@ -71,13 +66,18 @@ export default {
         name: null,
         identifyer: null,
         type: 2,
-        password: 'senha@123'
+        password: 'senha@123',
+        organizationId: 7,
+        phone: '12',
+        birthday: '12/12/2010'
       },
       classId: null,
-      students: this.getStudents()
+      students: this.getStudents(),
+      routeId: this.$route.params.id
     }
   },
   mounted () {
+    this.getStudents()
   },
   methods: {
     createClass: function (e) {
@@ -85,19 +85,23 @@ export default {
       baseService.post(`/class`, this.room).then(r => {
         if (r.status === 200) {
           this.classId = r.data.classId
+          this.$router.push('/turma/' + this.classId)
         }
       })
     },
     addStudent: function (e) {
-      baseService.get(`/user/exists/${this.student.email}`).then(r => {
+      baseService.get(`/student/exists/${this.student.email}`).then(r => {
         let newStudent = r.data
+        console.log(newStudent)
         if (newStudent === 0) {
           baseService.post(`/user`, this.student).then(r => {
-            newStudent = this.student
-            baseService.post(`/class/${this.classId}/student/${newStudent}`)
+            newStudent = r.data
+            baseService.post(`/class/${this.routeId}/student/${newStudent.studentId}`)
+            this.getStudents()
           })
         } else {
-          baseService.post(`/class/${this.classId}/student/${newStudent}`)
+          baseService.post(`/class/${this.routeId}/student/${newStudent}`)
+          this.getStudents()
         }
       })
     },
@@ -105,11 +109,7 @@ export default {
       let id = this.$route.params.id
       baseService.get(`/class/${id}`).then(r => {
         this.students = r.data
-        this.printStudents()
       })
-    },
-    printStudents: function () {
-      console.log(this.students)
     }
   }
 }
