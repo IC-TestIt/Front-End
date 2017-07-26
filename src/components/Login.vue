@@ -44,6 +44,7 @@ export default {
           localStorage.setItem('token', response.data.access_token)
           localStorage.setItem('userId', response.data.userId)
           localStorage.setItem('teacherId', response.data.teacherId)
+          localStorage.setItem('studentId', response.data.studentId)
           this.$router.push('/home')
         }
       }, error => {
