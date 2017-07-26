@@ -61,9 +61,9 @@ export default {
     handleSubmit: function (user) {
       baseService.post(`/user`, user).then(response => {
         if (response.status === 200) {
-          this.$toastr('success', {position: 'toast-top-center', msg: 'Cadastro efetuado com sucesso!'})
+          this.$toastr('success', {position: 'toast-top-right', msg: 'Cadastro efetuado com sucesso!'})
         } else {
-          this.$toastr('error', {position: 'toast-top-center', msg: 'Erro ao cadastrar!'})
+          this.$toastr('error', {position: 'toast-top-right', msg: 'Erro ao cadastrar!'})
         }
       })
     }
