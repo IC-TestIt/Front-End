@@ -42,6 +42,8 @@ export default {
         if (response.status === 200) {
           console.log('Usuário logado com sucesso.')
           localStorage.setItem('token', response.data.access_token)
+          localStorage.setItem('userId', response.data.userId)
+          localStorage.setItem('teacherId', response.data.teacherId)
           this.$router.push('/home')
         }
       }, error => {

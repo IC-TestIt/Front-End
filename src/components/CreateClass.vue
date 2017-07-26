@@ -81,11 +81,11 @@ export default {
   },
   methods: {
     createClass: function (e) {
-      this.room.teacherId = 6
+      this.room.teacherId = localStorage.getItem('teacherId')
       baseService.post(`/class`, this.room).then(r => {
         if (r.status === 200) {
           this.classId = r.data.classId
-          this.$router.push('/turma/' + this.classId)
+          this.$router.push(this.classId)
         }
       })
     },
