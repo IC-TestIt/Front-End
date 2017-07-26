@@ -1,9 +1,9 @@
 <template lang="html">
-    <div class="main">  
-      <div class="dash">
-        <md-whiteframe class=" a dash-item form-one">
+    <div class="createClass">
+      <div class="org">
+        <md-whiteframe class=" g org-item form-one">
            <span class="md-title class-title">Cadastrar Turma</span>
-           <form class="form-save-class">
+           <form class="form-save-class" v-on:submit="createClass()">
               <md-input-container>
                  <label>Descrição da turma</label>
                  <md-input  v-model="room.description"></md-input>
@@ -11,9 +11,9 @@
               <md-button type="submit" class="md-raised md-primary">Salvar</md-button>
            </form>
         </md-whiteframe>
-        <md-whiteframe class=" b  dash-item form-two">
+        <md-whiteframe class=" h  org-item form-two">
             <span class="md-title class-title">Adicionar Aluno</span>
-            <form class="form-save-student">
+            <form class="form-save-student" v-on:submit="addStudent()">
               <md-input-container>
                  <label>Nome do aluno</label>
                  <md-input v-model="student.name"></md-input>
@@ -26,22 +26,23 @@
                  <label>Identificador (Ex: RA, CPF, RG)</label>
                  <md-input   v-model="student.identifyer"></md-input>
                </md-input-container>
-              
+
                <md-button type="submit" class="md-raised md-primary">Salvar</md-button>
            </form>
-        </md-whiteframe>         
-        
-        <md-table v-once class="c table-class">
+        </md-whiteframe>
+        <md-table class="i table-class">
           <md-table-header>
             <md-table-row>
-             <md-table-head>Aluno(ID)</md-table-head>
-             <md-table-head>Turma</md-table-head>
+             <md-table-head>Nome</md-table-head>
+             <md-table-head>Email</md-table-head>
+             <md-table-head>Identificador</md-table-head>
             </md-table-row>
           </md-table-header>
           <md-table-body>
-            <md-table-row v-for="(row, index) in 1" :key="index">
-              <md-table-cell>ID</md-table-cell>
-              <md-table-cell v-for="(col, index) in 1" :key="index">Descrição</md-table-cell>
+            <md-table-row v-for="student in students" :key="student.id" :md-item="student">
+              <md-table-cell>{{student.name}}</md-table-cell>
+              <md-table-cell>{{student.email}}</md-table-cell>
+              <md-table-cell>{{student.identifyer}}</md-table-cell>
             </md-table-row>
           </md-table-body>
         </md-table>
@@ -50,18 +51,65 @@
 </template>
 
 <script>
+import baseService from '../services/baseService'
+
 export default {
-  name: 'vlogin',
+  name: 'vclass',
   data () {
     return {
       room: {
-        description: null
+        description: null,
+        teacherId: null
       },
       student: {
         email: null,
         name: null,
-        identifyer: null
-      }
+        identifyer: null,
+        type: 2,
+        password: 'senha@123',
+        organizationId: 7,
+        phone: '12',
+        birthday: '12/12/2010'
+      },
+      classId: null,
+      students: this.getStudents(),
+      routeId: this.$route.params.id
+    }
+  },
+  mounted () {
+    this.getStudents()
+  },
+  methods: {
+    createClass: function (e) {
+      this.room.teacherId = localStorage.getItem('teacherId')
+      baseService.post(`/class`, this.room).then(r => {
+        if (r.status === 200) {
+          this.classId = r.data.classId
+          this.$router.push(this.classId)
+        }
+      })
+    },
+    addStudent: function (e) {
+      baseService.get(`/student/exists/${this.student.email}`).then(r => {
+        let newStudent = r.data
+        console.log(newStudent)
+        if (newStudent === 0) {
+          baseService.post(`/user`, this.student).then(r => {
+            newStudent = r.data
+            baseService.post(`/class/${this.routeId}/student/${newStudent.studentId}`)
+            this.getStudents()
+          })
+        } else {
+          baseService.post(`/class/${this.routeId}/student/${newStudent}`)
+          this.getStudents()
+        }
+      })
+    },
+    getStudents: function () {
+      let id = this.$route.params.id
+      baseService.get(`/class/${id}`).then(r => {
+        this.students = r.data
+      })
     }
   }
 }
@@ -69,7 +117,7 @@ export default {
 
 
 <style lang="css">
-.main {
+.createClass {
   display: flex;
   min-height: 80vh;
   min-width: 40vw;
@@ -77,28 +125,31 @@ export default {
   height: 300px;
 }
 
-.dash {
+.org {
   display: grid;
   margin: 0 0 0 110px;
   grid-gap: 50px;
   grid-template-columns: 1fr 15% 150px 1fr;
   grid-template-rows: 250px 250px;
-  grid-template-areas: "a b" "c c";
+  grid-template-areas:
+    'g h'
+    'i i'
+  ;
 }
 
-.a {
-  grid-columns: a;
+.g {
+  grid-columns: g;
 }
 
-.b {
-  grid-columns: b;
+.h {
+  grid-columns: h;
 }
 
-.c {
-  grid-area: c;
+.i {
+  grid-area: i;
 }
 
-.dash-item {
+.org-item {
   display: flex;
   /*justify-content: center;*/
   align-items: center;
