@@ -40,7 +40,7 @@ export default {
 
       baseService.login(this.user.email, this.user.password).then(response => {
         if (response.status === 200) {
-          console.log('Usuário logado com sucesso.')
+          this.$toastr('info', {position: 'toast-top-right', msg: 'Usuário Logado com Sucesso'})
           localStorage.setItem('token', response.data.access_token)
           localStorage.setItem('userId', response.data.userId)
           localStorage.setItem('teacherId', response.data.teacherId)
@@ -49,8 +49,7 @@ export default {
         }
       }, error => {
         console.log(error)
-        console.log('Usuário e/ou senha inválidos.')
-        this.msg = 'Usuário e/ou senha inválidos.'
+        this.$toastr('error', {position: 'toast-top-right', msg: 'Email e/ou Senha inválido(s)!'})
       })
     }
   }
