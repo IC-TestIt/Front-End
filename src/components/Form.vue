@@ -32,7 +32,8 @@
       <md-input-container>
         <label>Telefone</label>
         <md-input v-model="user.phone"></md-input>
-      </md-input-container>
+      </md-input-container>  
+
 
       <md-button type="submit" class="md-raised md-primary">Cadastrar</md-button>
 

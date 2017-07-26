@@ -19,7 +19,7 @@
         <md-tab md-label="Cadastre-se">
 
           <VForm :user="user" :handleSubmit="handleSubmit"></VForm>
-
+          
         </md-tab>
 
       </md-tabs>
@@ -54,9 +54,18 @@ export default {
       }
     }
   },
+  mounted: function () {
+    this.showToastr()
+  },
   methods: {
     handleSubmit: function (user) {
-      baseService.post(`/user`, user)
+      baseService.post(`/user`, user).then(response => {
+        if (response.status === 200) {
+          this.$toastr('success', {position: 'toast-top-right', msg: 'Cadastro efetuado com sucesso!'})
+        } else {
+          this.$toastr('error', {position: 'toast-top-right', msg: 'Erro ao cadastrar!'})
+        }
+      })
     }
   }
 }
