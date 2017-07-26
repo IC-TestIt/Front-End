@@ -40,14 +40,13 @@ export default {
 
       baseService.login(this.user.email, this.user.password).then(response => {
         if (response.status === 200) {
-          console.log('Usuário logado com sucesso.')
+          this.$toastr('info', {position: 'toast-top-center', msg: 'Logado'})
           localStorage.setItem('token', response.data.access_token)
           this.$router.push('/home')
         }
       }, error => {
         console.log(error)
-        console.log('Usuário e/ou senha inválidos.')
-        this.msg = 'Usuário e/ou senha inválidos.'
+        this.$toastr('error', {position: 'toast-top-center', msg: 'Usuário não logado!'})
       })
     }
   }

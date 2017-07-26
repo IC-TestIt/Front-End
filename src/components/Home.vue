@@ -54,13 +54,16 @@ export default {
       }
     }
   },
+  mounted: function () {
+    this.showToastr()
+  },
   methods: {
     handleSubmit: function (user) {
       baseService.post(`/user`, user).then(response => {
         if (response.status === 200) {
-          alert('Usuario cadastrado!')
+          this.$toastr('success', {position: 'toast-top-center', msg: 'Cadastro efetuado com sucesso!'})
         } else {
-          alert('Usuario não cadastrado!')
+          this.$toastr('error', {position: 'toast-top-center', msg: 'Erro ao cadastrar!'})
         }
       })
     }
