@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import FinishSignUp from '@/components/FinishSignUp'
 import Main from '@/components/Main'
 import CreateClass from '@/components/CreateClass'
+import CreateTest from '@/components/CreateTest'
 
 Vue.use(Router)
 
@@ -37,5 +38,10 @@ export default new Router({
     path: '/turma/',
     nome: 'CreateClass',
     component: CreateClass
+  },
+  {
+    path: '/prova/',
+    nome: 'CreateTest',
+    component: CreateTest
   }]
 })
