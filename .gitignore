@@ -1,3 +1,7 @@
+# build files
+dist/
+!dist/server.js
+
 # Logs
 logs
 *.log
