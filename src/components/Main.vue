@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="main has-ripple blue">
+  <!--<div class="main has-ripple blue">
     <div v-show="loggedIn" class="logout">
       <a v-on:click="logOut()">
         <i class="fa fa-sign-out" aria-hidden="true"></i>
@@ -14,7 +14,7 @@
       <md-list-item href="#/home">Provas</md-list-item>
       <md-list-item href="#/home">Turmas</md-list-item>
       <md-list-item href="#/home">Configurações</md-list-item>
-    </md-list>
+    </md-list>-->
     <div class="dash">
 
       <md-whiteframe class="a dash-item has-ripple blue">
