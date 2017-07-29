@@ -54,9 +54,6 @@ export default {
       }
     }
   },
-  mounted: function () {
-    this.showToastr()
-  },
   methods: {
     handleSubmit: function (user) {
       baseService.post(`/user`, user).then(response => {
@@ -74,15 +71,6 @@ export default {
 <style>
 h1, h2 {
   font-weight: normal;
-}
-
-.home {
-  display: flex;
-  justify-content: space-around;
-  min-height: 80vh;
-  min-width: 40vw;
-  background-color: #ECECEC;
-  height: 200px;
 }
 
 .text {

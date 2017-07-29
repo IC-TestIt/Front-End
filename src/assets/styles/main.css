@@ -26,6 +26,14 @@ ul {
   list-style: none;
 }
 
+.home {
+  display: flex;
+  justify-content: space-around;
+  min-height: 80vh;
+  min-width: 40vw;
+  background-color: #ECECEC;
+  height: 200px;
+}
 
 .header {
     height: 10vh;
