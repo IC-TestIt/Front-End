@@ -15,7 +15,7 @@
       <md-list-item href="#/home">Turmas</md-list-item>
       <md-list-item href="#/home">Configurações</md-list-item>
     </md-list>-->
-    <div class="dash">
+    <!-- <div class="dash">
 
       <md-whiteframe class="a dash-item has-ripple blue">
         <md-ink-ripple />
@@ -59,7 +59,7 @@
         <md-icon class="md-size-4x md-accent">trending_up</md-icon>
         <span>Estatisticas</span>
 
-      </md-whiteframe>
+      </md-whiteframe> -->
 
     </div>
   </div>

@@ -21,4 +21,6 @@ export default {
 }
 </script>
 
-<style src="./assets/styles/main.css"></style>
+<style lang="stylus">
+  @import './assets/styles/main'
+</style>

@@ -1,53 +1,45 @@
 <template lang="html">
-    <div class="createClass">
-      <div class="org">
-        <md-whiteframe class=" g org-item form-one">
-           <span class="md-title class-title">Cadastrar Turma</span>
-           <form class="form-save-class" v-on:submit="createClass()">
-              <md-input-container>
-                 <label>Descrição da turma</label>
-                 <md-input  v-model="room.description"></md-input>
-              </md-input-container>
-              <md-button type="submit" class="md-raised md-primary">Salvar</md-button>
-           </form>
-        </md-whiteframe>
-        <md-whiteframe class=" h  org-item form-two">
-            <span class="md-title class-title">Adicionar Aluno</span>
-            <form class="form-save-student" v-on:submit="addStudent()">
-              <md-input-container>
-                 <label>Nome do aluno</label>
-                 <md-input v-model="student.name"></md-input>
-              </md-input-container>
-               <md-input-container>
-                 <label>Email</label>
-                 <md-input  v-model="student.email"></md-input>
-               </md-input-container>
-               <md-input-container>
-                 <label>Identificador (Ex: RA, CPF, RG)</label>
-                 <md-input   v-model="student.identifyer"></md-input>
-               </md-input-container>
-
-               <md-button type="submit" class="md-raised md-primary">Salvar</md-button>
-           </form>
-        </md-whiteframe>
-        <md-table class="i table-class">
-          <md-table-header>
-            <md-table-row>
-             <md-table-head>Nome</md-table-head>
-             <md-table-head>Email</md-table-head>
-             <md-table-head>Identificador</md-table-head>
-            </md-table-row>
-          </md-table-header>
-          <md-table-body>
-            <md-table-row v-for="student in students" :key="student.id" :md-item="student">
-              <md-table-cell>{{student.name}}</md-table-cell>
-              <md-table-cell>{{student.email}}</md-table-cell>
-              <md-table-cell>{{student.identifyer}}</md-table-cell>
-            </md-table-row>
-          </md-table-body>
-        </md-table>
-      </div>
-    </div>
+  <div class="createClass">
+    <v-container fluid>
+      <v-layout row justify-space-around>
+        <v-flex xs6 class="mt-1 createClass-form">
+          <div class="text-xs-center">
+            <span>Cadastrar Turma</span>
+          </div>
+          <form class="" v-on:submit="createClass()">
+            <v-text-field label="Descrição da Turma" v-model="room.description" class="input-group--focused"></v-text-field>
+            <div class="text-xs-center">
+              <v-btn round primary dark>Cadastrar</v-btn>
+            </div>
+          </form>
+        </v-flex>
+        <v-flex xs6 class="mt-1 createClass-form">
+          <div class="text-xs-center">
+            <span>Adicionar Aluno</span>
+          </div>
+          <form class="createClass-AddStudent" v-on:submit="addStudent()">
+            <v-text-field label="Nome" v-model="student.name" class="input-group--focused"></v-text-field>
+            <v-text-field label="Email" v-model="student.email" class="input-group--focused"></v-text-field>
+            <v-text-field label="Identificador (Ex: RA, CPF, RG)" v-model="student.identifyer" class="input-group--focused"></v-text-field>
+            <div class="text-xs-center">
+              <v-btn round primary dark>Adicionar</v-btn>
+            </div>
+          </form>
+        </v-flex>
+      </v-layout>
+      <v-layout justify-space-around class="createClass-table">
+        <v-flex xs12>
+          <v-data-table v-bind:headers="headers" :items="students" hide-actions class="elevation-1">
+            <template slot="students" scope="props">
+              <td class="text-xs-left">{{ props.student.name }}</td>
+              <td class="text-xs-right">{{ props.student.email }}</td>
+              <td class="text-xs-right">{{ props.student.identifyer }}</td>
+            </template>
+          </v-data-table>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </div>
 </template>
 
 <script>
@@ -73,7 +65,12 @@ export default {
       },
       classId: null,
       students: this.getStudents(),
-      routeId: this.$route.params.id
+      routeId: this.$route.params.id,
+      headers: [
+        {text: 'Nome', value: 'name'},
+        {text: 'Email', value: 'email'},
+        {text: 'Identificador', value: 'identifyer'}
+      ]
     }
   },
   mounted () {
@@ -120,85 +117,31 @@ export default {
 .createClass {
   display: flex;
   min-height: 80vh;
-  min-width: 40vw;
   background-color: #ECECEC;
   height: 300px;
+  overflow-y: scroll;
 }
 
-.org {
-  display: grid;
-  margin: 0 0 0 110px;
-  grid-gap: 50px;
-  grid-template-columns: 1fr 15% 150px 1fr;
-  grid-template-rows: 250px 250px;
-  grid-template-areas:
-    'g h'
-    'i i'
-  ;
+.createClass .container {
+  width: 75vw;
 }
 
-.g {
-  grid-columns: g;
+.createClass-AddStudent {
+  height: 40vh;
+  overflow-y: scroll;
 }
 
-.h {
-  grid-columns: h;
+.createClass-form {
+  margin: 30px;
+  background-color: #FAFAFA;
+  border: 1px solid #000;
+  padding: 20px;
 }
 
-.i {
-  grid-area: i;
-}
-
-.org-item {
-  display: flex;
-  /*justify-content: center;*/
-  align-items: center;
-  flex-direction: column;
+.createClass-table {
+  margin-left: 40px;
   background-color: #FAFAFA;
 }
 
 
-.form-one {
-  margin-top: 30px;
-  width: 40vw;
-  background: #FFF;
-  overflow-x: hidden;
-  /*box-shadow: 5px 5px 5px 5px grey;*/
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-.form-two {
-  margin-top: 30px;
-  width: 40vw;
-  background: #FFF;
-  overflow-x: hidden;
-  /*box-shadow: 5px 5px 5px 5px grey;*/
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-.table-class {
-  background: #FFF;
-  width: 83.5vw;
-  height: 200px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-.form-save-class {
-  width: 75%;
-}
-
-.form-save-student {
-  width: 450px;
-  margin: auto auto auto 50px;
-  padding: 20px;
-}
-
-.md-raised {
-  margin: 20px auto auto auto;
-}
-
-.class-title {
-  padding-top: 5%;
-  color: #1a237e;
-}
 </style>
