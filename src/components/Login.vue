@@ -1,21 +1,22 @@
 <template lang="html">
   <div class="vlogin">
     <form novalidate v-on:submit="handleSubmit($event)">
-
-      <md-input-container>
-        <label>Email</label>
-        <md-input type="email" v-model="user.email"></md-input>
-      </md-input-container>
-
-      <md-input-container md-has-password>
-        <label>Senha</label>
-        <md-input type="password" v-model="user.password"></md-input>
-      </md-input-container>
-
-      <md-button type="submit" class="md-raised md-primary">Login</md-button>
-
+      <v-container fluid>
+        <v-layout row>
+          <v-flex xs12>
+            <v-text-field label="Email" type="email" v-model="user.email"></v-text-field>
+          </v-flex>
+        </v-layout>
+        <v-layout row>
+          <v-flex xs12>
+            <v-text-field label="Senha" type="password" v-model="user.password"></v-text-field>
+          </v-flex>
+        </v-layout>
+        <div class="text-xs-center">
+          <v-btn primary>Login</v-btn>
+        </div>
+      </v-container>
       <label class="label-error">{{msg}}</label>
-
     </form>
   </div>
 </template>
@@ -58,4 +59,11 @@ export default {
 
 <style lang="css">
 
+.vlogin {
+  height: 52vh;
+}
+
+.vlogin .input-group__details:before {
+  background-color: #888;
+}
 </style>

@@ -1,16 +1,45 @@
 <template>
-  <div id="CreateTest">
-    <md-stepper class="createTest-stperHoriz" md-editable="true" md-elevation="0">
-      <md-step id="createTest-first" class="createTest-step" md-button-back="" md-button-continue="Adicionar Questões">
-
-      </md-step>
-      <md-step class="createTest-step" v-for="" :key="" md-button-back="Voltar" md-button-continue="Próxima">
-
-      </md-step>
-      <md-step id="createTest-last" class="createTest-step" md-button-back="Voltar" md-button-continue="Finalizar Prova">
-
-      </md-step>
-    </md-stepper>
+  <div class="createTest">
+    <v-container fluid>
+      <v-stepper non-linear>
+        <v-stepper-header>
+          <v-stepper-step step="1" editable>Informações Gerais</v-stepper-step>
+          <v-divider></v-divider>
+          <v-stepper-step step="2" editable>Adicionar Questões</v-stepper-step>
+          <v-divider></v-divider>
+          <v-stepper-step step="3" editable>Revisar Prova</v-stepper-step>
+        </v-stepper-header>
+        <v-stepper-content step="1">
+          <v-card class="grey lighten-1 z-depth-1 mb-5" height="200px"></v-card>
+          <v-btn primary @click.native="e1 = 2">Continue</v-btn>
+          <v-btn flat>Cancel</v-btn>
+        </v-stepper-content>
+        <v-stepper-content step="2">
+          <v-stepper vertical non-linear>
+            <v-stepper-step step="1">
+              Select an app
+              <small>Summarize if needed</small>
+            </v-stepper-step>
+            <v-stepper-content step="1">
+              <v-card class="grey lighten-1 z-depth-1 mb-5" height="200px"></v-card>
+              <v-btn primary @click.native="e6 = 2">Continue</v-btn>
+              <v-btn flat>Cancel</v-btn>
+            </v-stepper-content>
+            <v-stepper-step step="2" v-bind:complete="e6 > 2">Configure analytics for this app</v-stepper-step>
+            <v-stepper-content step="2">
+              <v-card class="grey lighten-1 z-depth-1 mb-5" height="200px"></v-card>
+              <v-btn primary @click.native="e6 = 3">Continue</v-btn>
+              <v-btn flat>Cancel</v-btn>
+            </v-stepper-content>
+          </v-stepper>
+        </v-stepper-content>
+        <v-stepper-content step="3">
+          <v-card class="grey lighten-1 z-depth-1 mb-5" height="200px"></v-card>
+          <v-btn primary @click.native="e1 = 1">Continue</v-btn>
+          <v-btn flat>Cancel</v-btn>
+        </v-stepper-content>
+    </v-stepper>
+    </v-container>
   </div>
 </template>
 <script>
@@ -22,49 +51,27 @@ export default {
     }
   },
   mounted () {
-    this.addLinks()
+
   },
   methods: {
-    addLinks: function () {
-      var y = document.getElementById('createTest-first')
-      var x = y.document.querySelectorAll('div.md-step-numer')
-      var z = x.document.getElementsByTagName('span').innerHtml
-      z.set.Attribute('id', 'createTest-Create')
-      var link = '<a href="#createTest-Create">' + z + '</a>'
-      z.document.getElementsByTagName('span').innerHtml = link
 
-      y = document.getElementById('createTest-last')
-      x = y.document.querySelectorAll('div.md-step-numer')
-      z = x.document.getElementsByTagName('span').innerHtml
-      z.set.Attribute('id', 'createTest-List')
-      link = '<a href="#createTest-List">' + z + '</a>'
-      z.document.getElementsByTagName('span').innerHtml = link
-    }
   }
 }
 </script>
 <style>
 
-#CreateTest {
-  display: flex;
-  width: 100%;
-  min-height: 50vh;
-  overflow-y: hidden;
+.createTest {
+  overflow: scroll;
 }
 
-.createTest-stperHoriz {
-  position: relative;
-  height: 150px;
+.createTest .container {
+  width: 100vw;
+  height: 50vh;
 }
 
-.createTest-step {
-  height: 445px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  position: absolute;
-  margin: 50px;
-  padding: 100px;
+.createTest .input-group__details:before {
+  background-color: #888;
 }
+
 
 </style>
