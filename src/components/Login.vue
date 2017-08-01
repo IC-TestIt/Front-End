@@ -4,16 +4,16 @@
       <v-container fluid>
         <v-layout row>
           <v-flex xs12>
-            <v-text-field label="Email" type="email" v-model="user.email" class="input-group--focused"></v-text-field>
+            <v-text-field label="Email" type="email" v-model="user.email"></v-text-field>
           </v-flex>
         </v-layout>
         <v-layout row>
           <v-flex xs12>
-            <v-text-field label="Senha" type="password" v-model="user.password" class="input-group--focused"></v-text-field>
+            <v-text-field label="Senha" type="password" v-model="user.password"></v-text-field>
           </v-flex>
         </v-layout>
         <div class="text-xs-center">
-          <v-btn round primary>Login</v-btn>
+          <v-btn primary>Login</v-btn>
         </div>
       </v-container>
       <label class="label-error">{{msg}}</label>
@@ -61,5 +61,9 @@ export default {
 
 .vlogin {
   height: 52vh;
+}
+
+.vlogin .input-group__details:before {
+  background-color: #888;
 }
 </style>

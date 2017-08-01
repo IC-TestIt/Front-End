@@ -4,22 +4,22 @@
       <v-container fluid>
         <v-layout row>
           <v-flex xs12>
-            <v-text-field label="Nome" v-model="user.name" class="input-group--focused"></v-text-field>
+            <v-text-field label="Nome" v-model="user.name"></v-text-field>
           </v-flex>
         </v-layout>
         <v-layout row>
           <v-flex xs12>
-            <v-text-field label="Email" v-model="user.email" class="input-group--focused"></v-text-field>
+            <v-text-field label="Email" v-model="user.email"></v-text-field>
           </v-flex>
         </v-layout>
         <v-layout row>
           <v-flex xs12>
-            <v-text-field label="Senha" type="password" v-model="user.password" class="input-group--focused"></v-text-field>
+            <v-text-field label="Senha" type="password" v-model="user.password"></v-text-field>
           </v-flex>
         </v-layout>
         <v-layout row>
           <v-flex xs12>
-            <v-text-field label="Confirmar Senha" type="password" v-model="rpassword" class="input-group--focused"></v-text-field>
+            <v-text-field label="Confirmar Senha" type="password" v-model="rpassword"></v-text-field>
           </v-flex>
         </v-layout>
         <v-layout row>
@@ -32,11 +32,11 @@
         </v-layout>
         <v-layout row>
           <v-flex xs12>
-            <v-text-field label="Telefone" v-model="user.phone" class="input-group--focused"></v-text-field>
+            <v-text-field label="Telefone" v-model="user.phone"></v-text-field>
           </v-flex>
         </v-layout>
         <div class="text-xs-center">
-          <v-btn round primary dark>Cadastrar</v-btn>
+          <v-btn primary dark>Cadastrar</v-btn>
         </div>
       </v-container>
     </form>
@@ -85,6 +85,12 @@ and (orientation: portrait) {
     width: 100%;
     min-width: 40vw;
   }
+
+  .vform .input-group__details:before {
+    background-color: #888;
+  }
+
+
 
   /*.vform md-input-container {
     width: 100%;

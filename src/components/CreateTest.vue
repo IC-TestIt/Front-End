@@ -69,5 +69,9 @@ export default {
   height: 50vh;
 }
 
+.createTest .input-group__details:before {
+  background-color: #888;
+}
+
 
 </style>

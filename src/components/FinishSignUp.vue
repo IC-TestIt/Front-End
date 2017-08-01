@@ -79,6 +79,10 @@ export default {
   margin-right: 300px;
 }
 
+.input-group__details:before {
+  background-color: #888;
+}
+
 
 
 </style>

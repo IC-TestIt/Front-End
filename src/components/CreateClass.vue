@@ -2,34 +2,34 @@
   <div class="createClass">
     <v-container fluid>
       <v-layout row justify-space-around>
-        <v-flex xs6 class="mt-1 createClass-form">
-          <div class="text-xs-center">
+        <v-flex xs5 class="ma-3 pa-3 createClass-form">
+          <div class="text-xs-center createClass-subtitle">
             <span>Cadastrar Turma</span>
           </div>
-          <form class="" v-on:submit="createClass()">
-            <v-text-field label="Descrição da Turma" v-model="room.description" class="input-group--focused"></v-text-field>
+          <form class="createClass-class" v-on:submit="createClass()">
+            <v-text-field label="Descrição da Turma" v-model="room.description"></v-text-field>
             <div class="text-xs-center">
-              <v-btn round primary dark>Cadastrar</v-btn>
+              <v-btn primary dark>Cadastrar</v-btn>
             </div>
           </form>
         </v-flex>
-        <v-flex xs6 class="mt-1 createClass-form">
-          <div class="text-xs-center">
+        <v-flex xs7 class="ma-3 ml-1 pa-3 createClass-form">
+          <div class="text-xs-center createClass-subtitle">
             <span>Adicionar Aluno</span>
           </div>
           <form class="createClass-AddStudent" v-on:submit="addStudent()">
-            <v-text-field label="Nome" v-model="student.name" class="input-group--focused"></v-text-field>
-            <v-text-field label="Email" v-model="student.email" class="input-group--focused"></v-text-field>
-            <v-text-field label="Identificador (Ex: RA, CPF, RG)" v-model="student.identifyer" class="input-group--focused"></v-text-field>
+            <v-text-field label="Nome" v-model="student.name"></v-text-field>
+            <v-text-field label="Email" v-model="student.email"></v-text-field>
+            <v-text-field label="Identificador (Ex: RA, CPF, RG)" v-model="student.identifyer"></v-text-field>
             <div class="text-xs-center">
-              <v-btn round primary dark>Adicionar</v-btn>
+              <v-btn primary dark>Adicionar</v-btn>
             </div>
           </form>
         </v-flex>
       </v-layout>
-      <v-layout justify-space-around class="createClass-table">
-        <v-flex xs12>
-          <v-data-table v-bind:headers="headers" :items="students" hide-actions class="elevation-1">
+      <v-layout justify-space-around class="">
+        <v-flex xs12 class="ma-1 pa-1">
+          <v-data-table v-bind:headers="headers" :items="students" hide-actions class="elevation-1 createClass-table">
             <template slot="students" scope="props">
               <td class="text-xs-left">{{ props.student.name }}</td>
               <td class="text-xs-right">{{ props.student.email }}</td>
@@ -119,7 +119,10 @@ export default {
   min-height: 80vh;
   background-color: #ECECEC;
   height: 300px;
-  overflow-y: scroll;
+}
+
+.createClass .input-group__details:before {
+  background-color: #888;
 }
 
 .createClass .container {
@@ -127,20 +130,31 @@ export default {
 }
 
 .createClass-AddStudent {
-  height: 40vh;
+  height: 30vh;
   overflow-y: scroll;
 }
 
 .createClass-form {
-  margin: 30px;
   background-color: #FAFAFA;
-  border: 1px solid #000;
   padding: 20px;
+  box-shadow: 1px 1px 1px #888888;
 }
 
 .createClass-table {
-  margin-left: 40px;
   background-color: #FAFAFA;
+  overflow-y: scroll;
+  height: 28vh;
+  box-shadow: 1px 1px 1px #888888;
+}
+
+.createClass-subtitle {
+  text-transform: full-width;
+  text-align: center;
+  color: #444;
+  letter-spacing: 1px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
 

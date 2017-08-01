@@ -2,7 +2,7 @@
 
 $theme := {
   primary: $indigo.darken-4
-  accent: $indigo.accent-4
+  accent: $indigo.darken-4
   secondary: $grey.lighten-1
   info: $blue.lighten-1
   warning: $amber.darken-2
@@ -12,6 +12,9 @@ $theme := {
 
 @import '../node_modules/vuetify/src/stylus/main'
 
+
+.input-group__details:before
+  background-color: #888;
 
 html,body
     width 100%
