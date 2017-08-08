@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TestIt</title>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet" type="text/css">
+  <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet" type="text/css"></link>
+  <link href="styles.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+</head>
+
+<body>
+  <div id="app">
+    <v-app>
+
+      <v-navigation-drawer persistent light :mini-variant.sync="mini" v-model="drawer" overflow class="grey darken-1">
+        <v-toolbar flat class="transparent">
+          <v-list class="pa-0">
+            <v-list-tile avatar tag="div" class="light-blue darken-1 my-1 py-3">
+              <v-list-tile-avatar>
+                <img src="" />
+              </v-list-tile-avatar>
+              <v-list-tile-content>
+                <v-list-tile-title class="white--text">Bem-vindo</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list>
+        </v-toolbar>
+        <v-list class="grey darken-1 my-4">
+          <v-list-group v-for="item in items" :value="item.active" v-bind:key="item.title">
+            <v-list-tile slot="item">
+              <v-list-tile-action>
+                <v-icon class="world">{{ item.action }}</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title class="world">{{ item.title }}</v-list-tile-title>
+              </v-list-tile-content>
+              <v-list-tile-action>
+                <v-icon>keyboard_arrow_down</v-icon>
+              </v-list-tile-action>
+            </v-list-tile>
+            <v-list-tile v-for="subItem in item.items" v-bind:key="subItem.title" class="grey lighten-1">
+              <v-list-tile-content>
+                <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
+              </v-list-tile-content>
+              <v-list-tile-action>
+                <v-icon>{{ subItem.action }}</v-icon>
+              </v-list-tile-action>
+            </v-list-tile>
+          </v-list-group>
+        </v-list>
+      </v-navigation-drawer>
+      <v-toolbar fixed fluid class="card-panel white elevation-0">
+        <v-toolbar-side-icon @click.native.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <div id="imagem-header">
+          <a href="index.html"> <img src="logo.jpg"></a>
+        </div>
+      </v-toolbar>
+      <main>
+        <v-container fluid>
+          <v-toolbar fluid class="grey lighten-2 mt-0">
+            <v-toolbar-text class="title">Cadastra Prova</v-toolbar-text>
+
+          </v-toolbar>
+          <!--   <div id="example-1">
+            <v-layout row wrap>
+              <v-flex xs3 v-for="i in 4" :key="i" class="menus">
+                <v-card dark class="card-panel white elevation-1 mt-5">
+                  <v-card-text class="black--text">3</v-card-text>
+                </v-card>
+              </v-flex>
+              <v-flex xs12>
+                <v-card dark class="card-panel white elevation-1  mt-5">
+                  <v-card-text class="black--text">grafico</v-card-text>
+                </v-card>
+              </v-flex>
+            </v-layout> -->
+          <!--v-router-->
+          <v-stepper value="1" class="mx-5 my-3 ">
+            <v-stepper-header>
+              <v-stepper-step step="1">Informações básicas</v-stepper-step>
+              <v-divider></v-divider>
+              <v-stepper-step step="2">Questões</v-stepper-step>
+              <v-divider></v-divider>
+              <v-stepper-step step="3">Finalizar</v-stepper-step>
+            </v-stepper-header>
+          </v-stepper>
+        </v-container>
+      </main>
+
+      <v-footer :fixed="fixed" fluid id="footer">
+        <span class="white--text">Test It 2017</span>
+      </v-footer>
+    </v-app>
+  </div>
+
+
+
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vuetify/dist/vuetify.js"></script>
+  <script>
+    Vue.component('page', {
+      template: '#page'
+    })
+    new Vue({
+      el: '#app',
+      data: {
+        clipped: false,
+        drawer: true,
+        fixed: true,
+        items: [
+          {
+            action: 'create',
+            title: 'PROVAS',
+            items: [
+              { title: 'Cadastrar' },
+              { title: 'Minhas Provas' }
+            ]
+          },
+          {
+            action: 'people',
+            title: 'TURMAS',
+            active: false,
+            items: [
+              { title: 'Item' },
+              { title: 'Item' },
+            ],
+            right: true,
+            rightDrawer: true,
+          }
+        ]
+      }
+    })
+  </script>
+</body>
+
+</html>
