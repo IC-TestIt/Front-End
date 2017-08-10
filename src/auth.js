@@ -8,7 +8,6 @@ export default {
         localStorage.setItem('userId', response.data.userId)
         localStorage.setItem('teacherId', response.data.teacherId)
         localStorage.setItem('studentId', response.data.studentId)
-        Promise.resolve(response.status)
       }
     })
   },

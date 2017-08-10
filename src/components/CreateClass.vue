@@ -20,7 +20,7 @@
           <form class="createClass-AddStudent" v-on:submit="addStudent()">
             <v-text-field label="Nome" v-model="student.name"></v-text-field>
             <v-text-field label="Email" v-model="student.email"></v-text-field>
-            <v-text-field label="Identificador (Ex: RA, CPF, RG)" v-model="student.identifyer"></v-text-field>
+            <v-text-field label="Identificador (Ex: RA, CPF, RG)" v-model="student.identifier"></v-text-field>
             <div class="text-xs-center">
               <v-btn primary dark>Adicionar</v-btn>
             </div>
@@ -33,7 +33,7 @@
             <template slot="students" scope="props">
               <td class="text-xs-left">{{ props.student.name }}</td>
               <td class="text-xs-right">{{ props.student.email }}</td>
-              <td class="text-xs-right">{{ props.student.identifyer }}</td>
+              <td class="text-xs-right">{{ props.student.identifier }}</td>
             </template>
           </v-data-table>
         </v-flex>
@@ -56,7 +56,7 @@ export default {
       student: {
         email: null,
         name: null,
-        identifyer: null,
+        identifier: null,
         type: 2,
         password: 'senha@123',
         organizationId: 7,
@@ -69,7 +69,7 @@ export default {
       headers: [
         {text: 'Nome', value: 'name'},
         {text: 'Email', value: 'email'},
-        {text: 'Identificador', value: 'identifyer'}
+        {text: 'Identificador', value: 'identifier'}
       ]
     }
   },

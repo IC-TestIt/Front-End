@@ -40,12 +40,11 @@ export default {
       e.preventDefault()
 
       auth.logIn(this.user.email, this.user.password).then((r) => {
-        if (r === 200) {
-          this.$toastr('info', {position: 'toast-top-right', msg: 'Usuário Logado com Sucesso'})
-          this.$router.push('/home')
-        }
+        this.$toastr('info', {position: 'toast-top-right', msg: 'Usuário Logado com Sucesso'})
+        this.$router.push('/turma')
       }).catch(e => {
         this.$toastr('error', {position: 'toast-top-right', msg: 'Email e/ou Senha inválido(s)!'})
+        auth.logout()
       })
     }
   }

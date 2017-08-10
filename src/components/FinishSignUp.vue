@@ -26,8 +26,8 @@ export default {
         phone: '',
         birthday: '',
         type: 2,
-        organizationid: 7,
-        Identifyer: '',
+        organizationid: 1,
+        identifier: '',
         id: ''
       },
       rpwd: ''

@@ -53,8 +53,8 @@ export default {
         phone: '',
         birthday: '',
         type: 1,
-        organizationid: 7,
-        Identifyer: 'Professor'
+        organizationid: 1,
+        identifier: 'Professor'
       }
     }
   },
