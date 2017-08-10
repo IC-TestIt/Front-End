@@ -1,7 +1,5 @@
 import axios from 'axios'
 
-// const baseApi = `${process.env.API}/api/`
-
 const http = axios.create({
   baseURL: `${process.env.API}/api/`,
   headers: {
