@@ -13,7 +13,7 @@
           </v-flex>
         </v-layout>
         <div class="text-xs-center">
-          <v-btn primary>Login</v-btn>
+          <v-btn primary type="submit">Login</v-btn>
         </div>
       </v-container>
       <label class="label-error">{{msg}}</label>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import baseService from '../services/baseService'
+import auth from '../auth'
 
 export default {
   name: 'vlogin',
@@ -39,17 +39,12 @@ export default {
     handleSubmit (e) {
       e.preventDefault()
 
-      baseService.login(this.user.email, this.user.password).then(response => {
-        if (response.status === 200) {
+      auth.logIn(this.user.email, this.user.password).then((r) => {
+        if (r === 200) {
           this.$toastr('info', {position: 'toast-top-right', msg: 'Usuário Logado com Sucesso'})
-          localStorage.setItem('token', response.data.access_token)
-          localStorage.setItem('userId', response.data.userId)
-          localStorage.setItem('teacherId', response.data.teacherId)
-          localStorage.setItem('studentId', response.data.studentId)
           this.$router.push('/home')
         }
-      }, error => {
-        console.log(error)
+      }).catch(e => {
         this.$toastr('error', {position: 'toast-top-right', msg: 'Email e/ou Senha inválido(s)!'})
       })
     }

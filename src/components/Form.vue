@@ -36,7 +36,7 @@
           </v-flex>
         </v-layout>
         <div class="text-xs-center">
-          <v-btn primary dark>Cadastrar</v-btn>
+          <v-btn primary dark type="submit">Cadastrar</v-btn>
         </div>
       </v-container>
     </form>
