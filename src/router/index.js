@@ -17,11 +17,12 @@ function onlyUser (t, f, next) {
   redirect(t, f, next, auth.loggedIn())
 }
 
-function redirect (t, f, next, condition) {
-  if (condition) {
+function redirect (to, from, next, condition) {
+  if (!condition) {
+    next('/')
+  } else {
     next()
   }
-  next('/')
 }
 
 export default new Router({
