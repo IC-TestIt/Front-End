@@ -1,0 +1,78 @@
+@import '../../../node_modules/vuetify/src/stylus/settings/_colors'
+
+$theme := {
+  primary: $indigo.darken-4
+  accent: $indigo.darken-4
+  secondary: $grey.lighten-1
+  info: $blue.lighten-1
+  warning: $amber.darken-2
+  error: $red.accent-4
+  success: $green.lighten-2
+}
+
+@import '../node_modules/vuetify/src/stylus/main'
+
+
+.input-group__details:before
+  background-color: #888;
+
+html,body
+    width 100%
+    height 100%
+    margin 0px
+    padding 0px
+    overflow-x hidden
+    overflow-y hidden
+
+body
+    background-color #FAFAFA
+    min-height 100vh
+    max-width 100%
+    p
+        font-family 'Roboto', sans-serif
+
+body h1, h2, h3, h4, h5, h6
+    font-family 'Roboto', sans-serif
+
+ul
+    list-style none
+
+.home
+    display flex
+    justify-content space-around
+    min-height 80vh
+    min-width 40vw
+    background-color #ECECEC
+    height 200px
+
+.header
+    height 10vh
+    width 100%
+    color #006
+    border-bottom 1px solid #006
+    overflow hidden
+    img
+        position relative
+        width 10%
+        overflow hidden
+        left 45%
+        top 20%
+
+.footer
+    height 5vh
+    width 100%
+    color #b8b8b8
+    border-top 1px solid #006
+    background-color #006
+    margin-top 5vh
+    p
+        position relative
+        margin 20px
+        left 10%
+        bottom 0%
+        font-size 15px
+        color #FFF
+
+.label-error
+    color red
+    display block

@@ -1,10 +1,8 @@
 <template>
   <div class="main">   
-    <div>
-    <v-layout> <VMenu></VMenu> </v-layout>
      <main>
-        <v-container fluid>
-          <v-toolbar fluid class="grey lighten-2 mt-0">
+        <!--<v-container fluid>-->
+          <!--<v-toolbar fluid class="grey lighten-2 mt-0">
             <v-toolbar-text class="title">Cadastrar Prova</v-toolbar-text>
 
           </v-toolbar>
@@ -22,11 +20,9 @@
               </v-flex>
             </v-layout> 
             </div>
-          <!--v-router-->          
-        </v-container>
+        </v-container>-->
       </main>  
     </div> 
-  </div>
 </template>
 
 <script>
@@ -47,11 +43,11 @@ export default {
 
 <style lang="css">
 
-.main {
+/*.main {
   display: flex;
   min-height: 80vh;
   min-width: 40vw;
   background-color: #ECECEC;
   height: 200px;
-}
+}*/
 </style>

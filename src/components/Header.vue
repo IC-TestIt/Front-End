@@ -1,6 +1,7 @@
 <template>
   <div class="header">
-    <img src="../assets/images/logo.jpg" alt="Test It">
+  <a href="http://testitapp.herokuapp.com/#/">
+    <img src="../assets/images/logo.jpg" alt="Test It"></a>
   </div>
 </template>
 

@@ -1,7 +1,8 @@
 <template>
   <div>
     <VHeader></VHeader>
-    <div id="app-container">
+    <div id="app-container" class="home">
+      <VMenu></VMenu>
       <router-view></router-view>
     </div>
     <VFooter></VFooter>
@@ -11,14 +12,18 @@
 <script>
 import VHeader from './components/Header'
 import VFooter from './components/Footer'
+import VMenu from './components/Menu'
 
 export default {
   name: 'app-main',
   components: {
     VHeader,
-    VFooter
+    VFooter,
+    VMenu
   }
 }
 </script>
 
-<style src="./assets/styles/main.css"></style>
+<style lang="stylus">
+  @import './assets/styles/main'
+</style>

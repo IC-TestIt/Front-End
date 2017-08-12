@@ -1,27 +1,28 @@
 <template lang="html">
   <div class="vlogin">
     <form novalidate v-on:submit="handleSubmit($event)">
-
-      <md-input-container>
-        <label>Email</label>
-        <md-input type="email" v-model="user.email"></md-input>
-      </md-input-container>
-
-      <md-input-container md-has-password>
-        <label>Senha</label>
-        <md-input type="password" v-model="user.password"></md-input>
-      </md-input-container>
-
-      <md-button type="submit" class="md-raised md-primary">Login</md-button>
-
+      <v-container fluid>
+        <v-layout row>
+          <v-flex xs12>
+            <v-text-field label="Email" type="email" v-model="user.email"></v-text-field>
+          </v-flex>
+        </v-layout>
+        <v-layout row>
+          <v-flex xs12>
+            <v-text-field label="Senha" type="password" v-model="user.password"></v-text-field>
+          </v-flex>
+        </v-layout>
+        <div class="text-xs-center">
+          <v-btn primary type="submit">Login</v-btn>
+        </div>
+      </v-container>
       <label class="label-error">{{msg}}</label>
-
     </form>
   </div>
 </template>
 
 <script>
-import baseService from '../services/baseService'
+import auth from '../auth'
 
 export default {
   name: 'vlogin',
@@ -38,16 +39,12 @@ export default {
     handleSubmit (e) {
       e.preventDefault()
 
-      baseService.login(this.user.email, this.user.password).then(response => {
-        if (response.status === 200) {
-          console.log('Usuário logado com sucesso.')
-          localStorage.setItem('token', response.data.access_token)
-          this.$router.push('/home')
-        }
-      }, error => {
-        console.log(error)
-        console.log('Usuário e/ou senha inválidos.')
-        this.msg = 'Usuário e/ou senha inválidos.'
+      auth.logIn(this.user.email, this.user.password).then((r) => {
+        this.$toastr('info', {position: 'toast-top-right', msg: 'Usuário Logado com Sucesso'})
+        this.$router.push('/turma')
+      }).catch(e => {
+        this.$toastr('error', {position: 'toast-top-right', msg: 'Email e/ou Senha inválido(s)!'})
+        auth.logout()
       })
     }
   }
@@ -56,4 +53,11 @@ export default {
 
 <style lang="css">
 
+.vlogin {
+  height: 52vh;
+}
+
+.vlogin .input-group__details:before {
+  background-color: #888;
+}
 </style>

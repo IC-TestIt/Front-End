@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="signUp">
     <h1>Concluir Cadastro</h1>
-    <div class="page">
+    <div class="signUp-page">
       <VForm :user="user" :handleSubmit="handleSubmit"></VForm>
     </div>
   </div>
@@ -26,8 +26,8 @@ export default {
         phone: '',
         birthday: '',
         type: 2,
-        organizationid: 7,
-        Identifyer: '',
+        organizationid: 1,
+        identifier: '',
         id: ''
       },
       rpwd: ''
@@ -62,19 +62,25 @@ export default {
   align-content: center;
 }
 
-h1 {
+.signUp h1 {
   text-align: center;
+  color: #000;
+  font-size: 35px;
 }
 
-.page {
+.signUp-page {
   display: flex;
   justify-content: center;
 }
 
 .signUp .vform {
-  width: 100%;
+  width: 30vw;
   margin-left: 300px;
   margin-right: 300px;
+}
+
+.input-group__details:before {
+  background-color: #888;
 }
 
 
