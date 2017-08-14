@@ -9,7 +9,7 @@
           <form class="createClass-class" v-on:submit="createClass()">
             <v-text-field label="Descrição da Turma" v-model="room.description"></v-text-field>
             <div class="text-xs-center">
-              <v-btn primary dark>Cadastrar</v-btn>
+              <v-btn primary dark type="submit">Cadastrar</v-btn>
             </div>
           </form>
         </v-flex>
@@ -22,7 +22,7 @@
             <v-text-field label="Email" v-model="student.email"></v-text-field>
             <v-text-field label="Identificador (Ex: RA, CPF, RG)" v-model="student.identifier"></v-text-field>
             <div class="text-xs-center">
-              <v-btn primary dark>Adicionar</v-btn>
+              <v-btn primary dark type="submit">Adicionar</v-btn>
             </div>
           </form>
         </v-flex>
