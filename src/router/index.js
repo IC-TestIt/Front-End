@@ -3,6 +3,7 @@ import auth from '../auth'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Main from '@/components/Main'
+import MyTests from '@/components/MyTests'
 import CreateTest from '@/components/CreateTest'
 import CreateClass from '@/components/CreateClass'
 import FinishSignUp from '@/components/FinishSignUp'
@@ -14,9 +15,9 @@ function onlyTeacher (t, f, next) {
   redirect(t, f, next, auth.isTeacher())
 }
 
-// function onlyUser (t, f, next) {
-//   redirect(t, f, next, auth.loggedIn())
-// }
+function onlyUser (t, f, next) {
+  redirect(t, f, next, auth.loggedIn())
+}
 
 function redirect (to, from, next, condition) {
   if (!condition) {
@@ -34,7 +35,7 @@ export default new Router({
   },
   {
     path: '/signup/',
-    name: 'SignUp',
+    name: 'FinishSignUp',
     component: FinishSignUp
   },
   {
@@ -45,12 +46,12 @@ export default new Router({
   {
     path: '/home/',
     name: 'Main',
-    component: Main
-    // ,beforeEnter: onlyUser
+    component: Main,
+    beforeEnter: onlyUser
   },
   {
     path: '/turma/:id',
-    name: 'CreateClass',
+    name: 'CompleteClass',
     component: CreateClass,
     beforeEnter: onlyTeacher
   },
@@ -67,11 +68,9 @@ export default new Router({
     beforeEnter: onlyTeacher
   },
   {
-    path: '/logout',
-    beforeEnter (to, from, next) {
-      auth.logout()
-      next('/')
-    }
+    path: '/provas',
+    name: 'MyTests',
+    component: MyTests
   },
   {
     path: '/verprova/:id',
@@ -83,5 +82,12 @@ export default new Router({
     path: '/verprova/',
     name: 'viewTest',
     component: ViewTest
+  },
+  {
+    path: '/logout',
+    beforeEnter (to, from, next) {
+      auth.logout()
+      next('/')
+    }
   }]
 })
