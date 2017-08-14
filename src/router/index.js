@@ -3,10 +3,10 @@ import auth from '../auth'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Main from '@/components/Main'
-import MyTests from '@/components/MyTests'
 import CreateTest from '@/components/CreateTest'
 import CreateClass from '@/components/CreateClass'
 import FinishSignUp from '@/components/FinishSignUp'
+import ViewTest from '@/components/ViewTest'
 
 Vue.use(Router)
 
@@ -14,9 +14,9 @@ function onlyTeacher (t, f, next) {
   redirect(t, f, next, auth.isTeacher())
 }
 
-function onlyUser (t, f, next) {
-  redirect(t, f, next, auth.loggedIn())
-}
+// function onlyUser (t, f, next) {
+//   redirect(t, f, next, auth.loggedIn())
+// }
 
 function redirect (to, from, next, condition) {
   if (!condition) {
@@ -39,18 +39,18 @@ export default new Router({
   },
   {
     path: '/signup/:id',
-    name: 'FinishSignUp',
+    name: 'SignUp',
     component: FinishSignUp
   },
   {
     path: '/home/',
     name: 'Main',
-    component: Main,
-    beforeEnter: onlyUser
+    component: Main
+    // ,beforeEnter: onlyUser
   },
   {
     path: '/turma/:id',
-    name: 'CompleteClass',
+    name: 'CreateClass',
     component: CreateClass,
     beforeEnter: onlyTeacher
   },
@@ -67,15 +67,21 @@ export default new Router({
     beforeEnter: onlyTeacher
   },
   {
-    path: '/provas',
-    name: 'MyTests',
-    component: MyTests
-  },
-  {
     path: '/logout',
     beforeEnter (to, from, next) {
       auth.logout()
       next('/')
     }
+  },
+  {
+    path: '/verprova/:id',
+    name: 'viewTest',
+    component: ViewTest
+    // beforeEnter: onlyTeacher
+  },
+  {
+    path: '/verprova/',
+    name: 'viewTest',
+    component: ViewTest
   }]
 })
