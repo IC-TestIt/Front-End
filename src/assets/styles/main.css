@@ -52,12 +52,12 @@ ul {
 }
 
 .footer {
-    height: 10vh;
+    height: 5vh;
     width: 100%;
     color: #b8b8b8;
     border-top: 1px solid #006;
     background-color: #006;
-    margin: 0;
+    margin-top: 5vh;
 }
 
 .footer p {
