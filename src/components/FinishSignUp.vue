@@ -2,7 +2,7 @@
   <div class="signUp">
     <h1>Concluir Cadastro</h1>
     <div class="signUp-page">
-      <VForm :user="user" :handleSubmit="handleSubmit"></VForm>
+      <VForm :user="user" :handleSubmit="handleSubmit" :loading="loading"></VForm>
     </div>
   </div>
 
@@ -30,7 +30,8 @@ export default {
         identifier: '',
         id: ''
       },
-      rpwd: ''
+      rpwd: '',
+      loading: false
     }
   },
   mounted () {
@@ -44,7 +45,14 @@ export default {
       })
     },
     handleSubmit: function (user) {
-      baseService.put(`/user/${this.user.id}`, user)
+      this.loading = true
+      baseService.put(`/user/${this.user.id}`, user).then(() => {
+        this.loading = false
+        this.$toastr('success', {position: 'toast-top-right', msg: 'Cadastro concluído com sucesso!'})
+      }).catch(() => {
+        this.loading = false
+        this.$toastr('error', {position: 'toast-top-right', msg: 'Erro ao cadastrar!'})
+      })
     }
   }
 }

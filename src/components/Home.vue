@@ -25,7 +25,7 @@
         </v-tabs-content>
         <v-tabs-content id="home-signup">
           <v-card flat>
-            <VForm :user="user" :handleSubmit="handleSubmit"></VForm>
+            <VForm :user="user" :handleSubmit="handleSubmit" :loading="loading"></VForm>
           </v-card>
         </v-tabs-content>
       </v-tabs>
@@ -55,17 +55,23 @@ export default {
         type: 1,
         organizationid: 1,
         identifier: 'Professor'
-      }
+      },
+      loading: false
     }
   },
   methods: {
     handleSubmit: function (user) {
+      this.loading = true
       baseService.post(`/user`, user).then(response => {
         if (response.status === 200) {
           this.$toastr('success', {position: 'toast-top-right', msg: 'Cadastro efetuado com sucesso!'})
         } else {
           this.$toastr('error', {position: 'toast-top-right', msg: 'Erro ao cadastrar!'})
         }
+        this.loading = false
+      }).catch(() => {
+        this.loading = false
+        this.$toastr('error', {position: 'toast-top-right', msg: 'Erro ao cadastrar!'})
       })
     }
   }
