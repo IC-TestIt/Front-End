@@ -1,16 +1,29 @@
 <template>
 <div class="viewTest">
-  <h1 class="viewTest-TestTitle print">{{test.description}}</h1>
-  <div id="printJS-form" class="viewTest-Test print" v-for="question in test.questions" :key="question.key">
-    <h3 class="viewTest-QuestionTitle print">{{question.description}}</h3>
-    <hr class="viewTest-LineQuestion print" v-if="question.alternatives == ''">
-    <hr class="viewTest-LineQuestion print" v-if="question.alternatives == ''">
-    <hr class="viewTest-LineQuestion print" v-if="question.alternatives == ''">
-    <hr class="viewTest-LineQuestion print" v-if="question.alternatives == ''">
-    <hr class="viewTest-LineQuestion print" v-if="question.alternatives == ''">
-    <div class="print" v-if="question.alternatives != ''" v-for="a in question.alternatives" :key="a.key">
-      <p class="viewTest-Alternative print">{{a.description}}</p>
-    </div>
+  <div class="viewTest-header">
+    <h1 class="viewTest-TestTitle print">{{test.description}}</h1>
+  </div>
+  <div class="viewTest-Test">
+    <v-stepper vertical v-model="e6">
+      <div v-for="(question, index) in test.questions" :key="question.key">
+        <v-stepper-step step="T" v-bind:complete="e6 > index" editable>
+          <h3 class="viewTest-QuestionTitle print">{{question.description}}</h3>
+        </v-stepper-step>
+        <v-stepper-content step="T" editable>
+          <hr class="viewTest-LineQuestion print" v-if="question.alternatives === undefined ">
+          <hr class="viewTest-LineQuestion print" v-if="question.alternatives === undefined ">
+          <hr class="viewTest-LineQuestion print" v-if="question.alternatives === undefined ">
+          <hr class="viewTest-LineQuestion print" v-if="question.alternatives === undefined ">
+          <hr class="viewTest-LineQuestion print" v-if="question.alternatives === undefined ">
+          <hr class="viewTest-LineQuestion print" v-if="question.alternatives === undefined ">
+          <div class="viewTest-AlternativeCircle pa-2 print" v-if="question.alternatives !== undefined" v-for="a in question.alternatives" :key="a.key">
+            <span class="viewTest-Alternative"><v-icon class="pa-2">panorama_fish_eye</v-icon>{{a.description}}</span>
+          </div>
+          <!-- <v-btn primary @click.native="e6 = index + 1">Continue</v-btn> -->
+          <!-- <v-btn flat @click.native="e6 = index - 1">Cancel</v-btn> -->
+        </v-stepper-content>
+      </div>
+    </v-stepper>
   </div>
 </div>
 </template>
@@ -32,7 +45,38 @@ export default {
     }
   },
   data: () => ({
-    test: {}
+    e6: 0,
+    test: {
+      description: 'Matematica',
+      questions: [{
+        description: '1+1',
+        alternatives: [{
+          description: '1'
+        }, {
+          description: '2'
+        }, {
+          description: '3'
+        }]
+      }, {
+        description: '2+2'
+
+      }, {
+        description: '3+3'
+
+      }, {
+        description: '4+4',
+        alternatives: [{
+          description: '5'
+        }, {
+          description: '7'
+        }, {
+          description: '8'
+        }]
+      }, {
+        description: '5+5'
+
+      }]
+    }
   })
 }
 </script>
@@ -41,7 +85,24 @@ export default {
 <style>
 .viewTest {
   height: 100vh;
-  width: 80vw;
+  width: 100vw;
+  background-color: #ECECEC;
+}
+
+.viewTest-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-content: space-between;
+  width: 60vw;
+  height: 5vh;
+  margin-left: 250px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.viewTest-header p {
+  font-size: 15px;
 }
 
 .viewTest-LineQuestion {
@@ -64,11 +125,20 @@ export default {
 
 .viewTest-Alternative {
   font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-  font-size: 12pt;
+  font-size: 14pt;
   color: #000;
 }
 
+.viewTest-AlternativeCircle {
+  display: flex;
+  flex: 1;
+  justify-content: flex-start;
+}
+
 .viewTest-Test {
+  width: 80vw;
+  margin-left: 10vw;
+  margin-bottom: 5vh;
 }
 
 .home {
@@ -96,7 +166,7 @@ export default {
   p {
     orphans: 3;
   }
-  
+
   .home {
     background-color: #FFF;
     /*overflow: visible;*/
@@ -117,7 +187,6 @@ export default {
     page-break-after: auto;
     /*overflow: visible;*/
     overflow: auto;
-
   }
 
   .print {
@@ -131,7 +200,6 @@ export default {
     padding: 0;
     line-height: 1.4em;
     overflow: auto;
-
   }
 }
 </style>
