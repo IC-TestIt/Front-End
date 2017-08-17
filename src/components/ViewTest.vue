@@ -1,26 +1,27 @@
 <template>
 <div class="viewTest">
   <div class="viewTest-header">
-    <h1 class="viewTest-TestTitle print">{{test.description}}</h1>
+    <h1 class="viewTest-TestTitle print">{{test.title}}</h1>
+    <h2 class="viewTest-TestDescription print">{{test.description}}</h2>
   </div>
   <div class="viewTest-Test">
     <v-stepper vertical v-model="e6">
       <div v-for="(question, index) in test.questions" :key="question.key">
-        <v-stepper-step step="T" v-bind:complete="e6 > index" editable>
+        <v-stepper-step :step="index + 1" v-bind:complete="e6 > index" editable>
           <h3 class="viewTest-QuestionTitle print">{{question.description}}</h3>
         </v-stepper-step>
-        <v-stepper-content step="T" editable>
-          <hr class="viewTest-LineQuestion print" v-if="question.alternatives === undefined ">
-          <hr class="viewTest-LineQuestion print" v-if="question.alternatives === undefined ">
-          <hr class="viewTest-LineQuestion print" v-if="question.alternatives === undefined ">
-          <hr class="viewTest-LineQuestion print" v-if="question.alternatives === undefined ">
-          <hr class="viewTest-LineQuestion print" v-if="question.alternatives === undefined ">
-          <hr class="viewTest-LineQuestion print" v-if="question.alternatives === undefined ">
+        <v-stepper-content :step="index + 1" editable>
+          <hr class="viewTest-LineQuestion" v-if="question.alternatives === undefined ">
+          <hr class="viewTest-LineQuestion" v-if="question.alternatives === undefined ">
+          <hr class="viewTest-LineQuestion" v-if="question.alternatives === undefined ">
+          <hr class="viewTest-LineQuestion" v-if="question.alternatives === undefined ">
+          <hr class="viewTest-LineQuestion" v-if="question.alternatives === undefined ">
+          <hr class="viewTest-LineQuestion" v-if="question.alternatives === undefined ">
           <div class="viewTest-AlternativeCircle pa-2 print" v-if="question.alternatives !== undefined" v-for="a in question.alternatives" :key="a.key">
-            <span class="viewTest-Alternative"><v-icon class="pa-2">panorama_fish_eye</v-icon>{{a.description}}</span>
+            <span class="viewTest-Alternative"><v-icon class="pa-2">panorama_fish_eye</v-icon>{{a.description}}<v-icon class="pa-2" v-if="a.isCorrect === true">check</v-icon></span>
           </div>
-          <!-- <v-btn primary @click.native="e6 = index + 1">Continue</v-btn> -->
-          <!-- <v-btn flat @click.native="e6 = index - 1">Cancel</v-btn> -->
+          <v-btn primary @click.native="e6 = (index + 2)">Proxima</v-btn>
+          <v-btn flat @click.native="e6 = index">Anterior</v-btn>
         </v-stepper-content>
       </div>
     </v-stepper>
@@ -46,37 +47,7 @@ export default {
   },
   data: () => ({
     e6: 0,
-    test: {
-      description: 'Matematica',
-      questions: [{
-        description: '1+1',
-        alternatives: [{
-          description: '1'
-        }, {
-          description: '2'
-        }, {
-          description: '3'
-        }]
-      }, {
-        description: '2+2'
-
-      }, {
-        description: '3+3'
-
-      }, {
-        description: '4+4',
-        alternatives: [{
-          description: '5'
-        }, {
-          description: '7'
-        }, {
-          description: '8'
-        }]
-      }, {
-        description: '5+5'
-
-      }]
-    }
+    test: {}
   })
 }
 </script>
@@ -113,6 +84,13 @@ export default {
 .viewTest-TestTitle {
   font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
   font-size: 20pt;
+  text-align: center;
+  color: #000;
+}
+
+.viewTest-TestDescription {
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  font-size: 16pt;
   text-align: center;
   color: #000;
 }
