@@ -14,9 +14,9 @@ function onlyTeacher (t, f, next) {
   redirect(t, f, next, auth.isTeacher())
 }
 
-function onlyUser (t, f, next) {
-  redirect(t, f, next, auth.loggedIn())
-}
+// function onlyUser (t, f, next) {
+//   redirect(t, f, next, auth.loggedIn())
+// }
 
 function redirect (to, from, next, condition) {
   if (!condition) {
@@ -45,8 +45,8 @@ export default new Router({
   {
     path: '/home/',
     name: 'Main',
-    component: Main,
-    beforeEnter: onlyUser
+    component: Main
+    // ,beforeEnter: onlyUser
   },
   {
     path: '/turma/:id',

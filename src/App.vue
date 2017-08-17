@@ -11,12 +11,14 @@
 <script>
 import VHeader from './components/Header'
 import VFooter from './components/Footer'
+import VMenu from './components/Menu'
 
 export default {
   name: 'app-main',
   components: {
     VHeader,
-    VFooter
+    VFooter,
+    VMenu
   }
 }
 </script>
