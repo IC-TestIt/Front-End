@@ -3,6 +3,7 @@ import auth from '../auth'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Main from '@/components/Main'
+import MyTests from '@/components/MyTests'
 import CreateTest from '@/components/CreateTest'
 import CreateClass from '@/components/CreateClass'
 import FinishSignUp from '@/components/FinishSignUp'
@@ -33,7 +34,7 @@ export default new Router({
   },
   {
     path: '/signup/',
-    name: 'FinishSignUp',
+    name: 'SignUp',
     component: FinishSignUp
   },
   {
@@ -49,7 +50,7 @@ export default new Router({
   },
   {
     path: '/turma/:id',
-    name: 'CreateClass',
+    name: 'CompleteClass',
     component: CreateClass,
     beforeEnter: onlyTeacher
   },
@@ -64,6 +65,11 @@ export default new Router({
     name: 'CreateTest',
     component: CreateTest,
     beforeEnter: onlyTeacher
+  },
+  {
+    path: '/provas',
+    name: 'MyTests',
+    component: MyTests
   },
   {
     path: '/logout',

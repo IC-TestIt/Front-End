@@ -9,7 +9,7 @@
           <form class="createClass-class" v-on:submit="createClass()">
             <v-text-field label="Descrição da Turma" v-model="room.description"></v-text-field>
             <div class="text-xs-center">
-              <v-btn primary dark>Cadastrar</v-btn>
+              <v-btn primary dark type="submit" :loading="loading1">Cadastrar</v-btn>
             </div>
           </form>
         </v-flex>
@@ -22,7 +22,7 @@
             <v-text-field label="Email" v-model="student.email"></v-text-field>
             <v-text-field label="Identificador (Ex: RA, CPF, RG)" v-model="student.identifier"></v-text-field>
             <div class="text-xs-center">
-              <v-btn primary dark>Adicionar</v-btn>
+              <v-btn primary dark type="submit" :loading="loading2">Adicionar</v-btn>
             </div>
           </form>
         </v-flex>
@@ -64,13 +64,15 @@ export default {
         birthday: '12/12/2010'
       },
       classId: null,
-      students: this.getStudents(),
+      students: [],
       routeId: this.$route.params.id,
       headers: [
         {text: 'Nome', value: 'name'},
         {text: 'Email', value: 'email'},
         {text: 'Identificador', value: 'identifier'}
-      ]
+      ],
+      loading1: false,
+      loading2: false
     }
   },
   mounted () {
@@ -78,34 +80,54 @@ export default {
   },
   methods: {
     createClass: function (e) {
+      this.loading1 = true
       this.room.teacherId = localStorage.getItem('teacherId')
       baseService.post(`/class`, this.room).then(r => {
         if (r.status === 200) {
           this.classId = r.data.classId
           this.$router.push(this.classId)
+          this.$toastr('info', {position: 'toast-top-right', msg: 'Turma criada com Sucesso'})
         }
+        this.loading1 = false
+      }).catch(e => {
+        this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro ao cadastrar a Turma'})
+        this.loading1 = false
       })
     },
     addStudent: function (e) {
+      this.loading2 = true
       baseService.get(`/student/exists/${this.student.email}`).then(r => {
         let newStudent = r.data
-        console.log(newStudent)
         if (newStudent === 0) {
           baseService.post(`/user`, this.student).then(r => {
             newStudent = r.data
             baseService.post(`/class/${this.routeId}/student/${newStudent.studentId}`)
             this.getStudents()
+          }).catch(e => {
+            console.log(e)
+            this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro ao realizar o cadastro incial do aluno'})
           })
         } else {
-          baseService.post(`/class/${this.routeId}/student/${newStudent}`)
+          baseService.post(`/class/${this.routeId}/student/${newStudent}`).catch(e => {
+            this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro ao associar o aluno a turma'})
+          })
           this.getStudents()
         }
+        this.$toastr('info', {position: 'toast-top-right', msg: 'Aluno adicionado a turma com Sucesso'})
+        this.loading2 = false
+      }).catch(e => {
+        console.log(e)
+        this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro, por favor tente mais tarde'})
+        this.loading2 = false
       })
     },
     getStudents: function () {
       let id = this.$route.params.id
       baseService.get(`/class/${id}`).then(r => {
         this.students = r.data
+      }).catch(e => {
+        console.log(e)
+        this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro ao obter os alunos'})
       })
     }
   }

@@ -1,12 +1,11 @@
 <template>
-  <div>
-    <VHeader></VHeader>
-    <div id="app-container" class="home">
-      <VMenu></VMenu>
-      <router-view></router-view>
-    </div>
-    <VFooter></VFooter>
-  </div>
+  <v-app>
+      <VHeader></VHeader>
+      <div id="app-container" class="home">
+        <router-view></router-view>
+      </div>
+      <VFooter></VFooter>
+  </v-app>
 </template>
 
 <script>
