@@ -64,8 +64,8 @@ export default new Router({
   {
     path: '/prova/',
     name: 'CreateTest',
-    component: CreateTest,
-    beforeEnter: onlyTeacher
+    component: CreateTest
+    // beforeEnter: onlyTeacher
   },
   {
     path: '/provas',
@@ -75,13 +75,8 @@ export default new Router({
   {
     path: '/verprova/:id',
     name: 'viewTest',
-    component: ViewTest
-    // beforeEnter: onlyTeacher
-  },
-  {
-    path: '/verprova/',
-    name: 'viewTest',
-    component: ViewTest
+    component: ViewTest,
+    beforeEnter: onlyTeacher
   },
   {
     path: '/logout',
