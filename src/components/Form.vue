@@ -23,7 +23,7 @@
           </v-flex>
         </v-layout>
         <v-layout row>
-          <span v-if="!compare(user.password, rpassword)">*Senhas não coincidem</span>
+          <span v-if="!compare(user.password, rpassword)" class="error-msg">*Senhas não coincidem</span>
         </v-layout>
         <v-layout row>
           <v-flex xs12>
@@ -36,7 +36,7 @@
           </v-flex>
         </v-layout>
         <div class="text-xs-center">
-          <v-btn primary dark type="submit">Cadastrar</v-btn>
+          <v-btn primary dark type="submit" :loading="loading">Cadastrar</v-btn>
         </div>
       </v-container>
     </form>
@@ -53,7 +53,7 @@ export default {
   },
   mounted () {
   },
-  props: ['user', 'handleSubmit'],
+  props: ['user', 'handleSubmit', 'loading'],
   methods: {
     compare: function (password, rpassword) {
       if (password === rpassword) {
@@ -72,7 +72,7 @@ export default {
 </script>
 
 <style lang="css">
-.vform span {
+.error-msg {
   color: #F00;
 }
 
