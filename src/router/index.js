@@ -65,7 +65,7 @@ export default new Router({
     path: '/prova/',
     name: 'CreateTest',
     component: CreateTest
-    // beforeEnter: onlyTeacher
+    beforeEnter: onlyTeacher
   },
   {
     path: '/provas',
