@@ -4,27 +4,14 @@
     <h1 class="viewTest-TestTitle print">{{test.title}}</h1>
     <h2 class="viewTest-TestDescription print">{{test.description}}</h2>
   </div>
-  <div class="viewTest-Test">
-    <v-stepper vertical v-model="e6">
-      <div v-for="(question, index) in test.questions" :key="question.key">
-        <v-stepper-step :step="index + 1" v-bind:complete="e6 > index" editable>
-          <h3 class="viewTest-QuestionTitle print">{{question.description}}</h3>
-        </v-stepper-step>
-        <v-stepper-content :step="index + 1" editable>
-          <hr class="viewTest-LineQuestion" v-if="question.alternatives === undefined ">
-          <hr class="viewTest-LineQuestion" v-if="question.alternatives === undefined ">
-          <hr class="viewTest-LineQuestion" v-if="question.alternatives === undefined ">
-          <hr class="viewTest-LineQuestion" v-if="question.alternatives === undefined ">
-          <hr class="viewTest-LineQuestion" v-if="question.alternatives === undefined ">
-          <hr class="viewTest-LineQuestion" v-if="question.alternatives === undefined ">
-          <div class="viewTest-AlternativeCircle pa-2 print" v-if="question.alternatives !== undefined" v-for="a in question.alternatives" :key="a.key">
-            <span class="viewTest-Alternative"><v-icon class="pa-2">panorama_fish_eye</v-icon>{{a.description}}<v-icon class="pa-2" v-if="a.isCorrect === true">check</v-icon></span>
-          </div>
-          <v-btn primary @click.native="e6 = (index + 2)">Proxima</v-btn>
-          <v-btn flat @click.native="e6 = index">Anterior</v-btn>
-        </v-stepper-content>
-      </div>
-    </v-stepper>
+  <div class="viewTest-Test" v-for="(question, index) in test.questions" :key="question.key">
+    <p>Questão {{index + 1}} - {{question.description}}</p>
+    <div v-if="question.isAlternative === false" v-for="n in 5">
+      <hr class="viewTest-LineQuestion">
+    </div>
+    <div v-if="question.isAlternative === true" v-for="a in question.alternatives" :key="a.key">
+      <span class="viewTest-Alternative"><v-icon class="pa-2">panorama_fish_eye</v-icon>{{a.description}}<v-icon class="pa-2" v-if="a.isCorrect === true">check</v-icon></span>
+    </div>
   </div>
 </div>
 </template>
@@ -34,6 +21,8 @@ import baseService from '../services/baseService'
 
 export default {
   name: 'viewTest',
+  components: {
+  },
   mounted () {
     this.getTest()
   },
@@ -41,6 +30,7 @@ export default {
     getTest: function () {
       let id = this.$route.params.id
       baseService.get(`/test/${id}`).then(r => {
+        console.log(r.data)
         this.test = r.data
       })
     }
