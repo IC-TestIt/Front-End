@@ -6,11 +6,19 @@
   </div>
   <div class="viewTest-Test" v-for="(question, index) in test.questions" :key="question.key">
     <p>Questão {{index + 1}} - {{question.description}}</p>
-    <div v-if="question.isAlternative === false" v-for="n in 5">
-      <hr class="viewTest-LineQuestion">
+    <div v-if="!question.isAlternative">
+      <hr class="viewTest-LineQuestion" v-for="n in 5">
     </div>
-    <div v-if="question.isAlternative === true" v-for="a in question.alternatives" :key="a.key">
-      <span class="viewTest-Alternative"><v-icon class="pa-2" v-if="a.isCorrect === false">panorama_fish_eye</v-icon><v-icon class="pa-2" v-if="a.isCorrect === true">highlight_off</v-icon>{{a.description}}</span>
+    <div v-else-if="question.isAlternative" v-for="a in question.alternatives" :key="a.key">
+      <span class="viewTest-Alternative">
+        <v-icon class="pa-2" v-if="!a.isCorrect">
+          panorama_fish_eye
+        </v-icon>
+        <v-icon class="pa-2" v-if="a.isCorrect">
+          highlight_off
+        </v-icon>
+        {{a.description}}
+      </span>
     </div>
   </div>
 </div>
