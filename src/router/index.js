@@ -7,6 +7,7 @@ import MyTests from '@/components/MyTests'
 import CreateTest from '@/components/CreateTest'
 import CreateClass from '@/components/CreateClass'
 import FinishSignUp from '@/components/FinishSignUp'
+import ViewTest from '@/components/ViewTest'
 
 Vue.use(Router)
 
@@ -34,12 +35,12 @@ export default new Router({
   },
   {
     path: '/signup/',
-    name: 'SignUp',
+    name: 'FinishSignUp',
     component: FinishSignUp
   },
   {
     path: '/signup/:id',
-    name: 'FinishSignUp',
+    name: 'SignUp',
     component: FinishSignUp
   },
   {
@@ -70,6 +71,12 @@ export default new Router({
     path: '/provas',
     name: 'MyTests',
     component: MyTests
+  },
+  {
+    path: '/verprova/:id',
+    name: 'viewTest',
+    component: ViewTest,
+    beforeEnter: onlyTeacher
   },
   {
     path: '/logout',
