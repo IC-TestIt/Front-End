@@ -10,7 +10,7 @@
       <hr class="viewTest-LineQuestion">
     </div>
     <div v-if="question.isAlternative === true" v-for="a in question.alternatives" :key="a.key">
-      <span class="viewTest-Alternative"><v-icon class="pa-2">panorama_fish_eye</v-icon>{{a.description}}<v-icon class="pa-2" v-if="a.isCorrect === true">check</v-icon></span>
+      <span class="viewTest-Alternative"><v-icon class="pa-2" v-if="a.isCorrect === false">panorama_fish_eye</v-icon><v-icon class="pa-2" v-if="a.isCorrect === true">highlight_off</v-icon>{{a.description}}</span>
     </div>
   </div>
 </div>
