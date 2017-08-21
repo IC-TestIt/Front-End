@@ -1,28 +1,37 @@
-<template> 
-      <div class="main">
-        <div >
-           <VMenu></VMenu>               
-        </div>
-        <v-container fluid>         
-            <v-layout row wrap  class="ml-5">
-              <v-flex xs3 v-for="i in 4" :key="i" class="pt-3">
-                <v-card dark class="card-panel white elevation-1 mt-3 mx-3">
-                  <div class="py-5 px-5 text-xs-center">
-                    <v-card-text class="black--text title my-3">1</v-card-text>                     
-                  </div>
+<template>      
+        
+        <v-container>         
+            <v-layout class="text-xs-center mt-3">
+               <v-flex xs5>
+                 <v-card dark class="mx-2 green lighten-1" >
+                   <v-card-text class="py-5">one</v-card-text>
+                 </v-card>
+               </v-flex>
+               <v-flex xs5>
+                 <v-card dark class="mx-2 deep-purple lighten-2">
+                    <v-card-text class="py-5">two</v-card-text>
+                  </v-card>
+                </v-flex>
+               <v-flex xs5>
+                 <v-card dark class=" mx-2 orange darken-1">
+                    <v-card-text class="py-5">three</v-card-text>
+                 </v-card>
+               </v-flex>
+               <v-flex xs5>
+                 <v-card dark class=" mx-2 red darken-1">
+                    <v-card-text class="py-5">four</v-card-text>
+                 </v-card>
+               </v-flex>
+             </v-layout>
+             <v-layout class="">
+               <v-flex xs12 class="mt-5 text-xs-center">
+                <v-card dark class="card-panel white elevation-1 py-5 px-5">                  
+                    <v-card-text class="black--text display-1 my-5">Grafico</v-card-text>                  
                 </v-card>
-              </v-flex>
-              <v-flex xs12 class="mt-5">
-                <v-card dark class="card-panel white elevation-1  mt-1 py-5">
-                  <div class="my-5 px-5 text-xs-center">
-                    <v-card-text class="black--text display-1">Grafico</v-card-text>
-                  </div>
-                </v-card>
-              </v-flex>
-            </v-layout>       
+              </v-flex>              
+            </v-layout>     
         </v-container>
       
-      </div>
 </template>
 
 <script>
