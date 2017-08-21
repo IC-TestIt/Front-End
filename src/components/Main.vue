@@ -4,17 +4,17 @@
            <VMenu></VMenu>               
         </div>
         <v-container fluid>         
-            <v-layout row wrap>
-              <v-flex xs3 v-for="i in 4" :key="i" class="menus">
-                <v-card dark class="card-panel white elevation-1 mt-4">
-                  <div class="py-5">
-                    <v-card-text class="black--text title">1</v-card-text>
+            <v-layout row wrap  class="ml-5">
+              <v-flex xs3 v-for="i in 4" :key="i" class="pt-3">
+                <v-card dark class="card-panel white elevation-1 mt-3 mx-3">
+                  <div class="py-5 px-5 text-xs-center">
+                    <v-card-text class="black--text title my-3">1</v-card-text>                     
                   </div>
                 </v-card>
               </v-flex>
-              <v-flex xs12>
+              <v-flex xs12 class="mt-5">
                 <v-card dark class="card-panel white elevation-1  mt-1 py-5">
-                  <div class="my-4">
+                  <div class="my-5 px-5 text-xs-center">
                     <v-card-text class="black--text display-1">Grafico</v-card-text>
                   </div>
                 </v-card>
@@ -51,3 +51,10 @@ export default {
   }
 }
 </script>
+
+<style>
+  .menus{
+    text-align: center;
+  }
+</style>
+
