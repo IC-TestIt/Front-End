@@ -39,7 +39,7 @@
                 <v-btn class="red" v-on:click="removeQuestion(index)">Remover Questão</v-btn>
               </v-flex>
               <v-flex>
-                <v-btn primary type="submit" v-if="lastQuestion(index)">Finalizar</v-btn>
+                <v-btn primary type="submit" v-if="lastQuestion(index)" :loading="loading">Finalizar</v-btn>
               </v-flex>
             </v-card>
           </div>
@@ -59,9 +59,9 @@ export default {
       {
         description: '',
         value: '',
-        testId: this.testId,
         answer: '',
         isAlternative: false,
+        testId: '',
         alternatives: [
           {
             description: '', isCorrect: false
@@ -69,22 +69,46 @@ export default {
         ]
       }
     ],
-    typeQuestion: [{text: 'Alternativa', value: true}, {text: 'Dissertativa', value: false}]
+    typeQuestion: [{text: 'Alternativa', value: true}, {text: 'Dissertativa', value: false}],
+    loading: false
   }),
   methods: {
     step2 (e) {
+      let id = this.testId
+      let success = true
+      this.loading = true
       e.preventDefault()
       this.questions.forEach(function (question) {
-        question.testId = this.testId
-        if (question.isAlternative === true) {
-          baseService.post('question/alternative', question)
+        question.testId = id
+        if (question.isAlternative) {
+          console.log(question)
+          baseService.post('question/alternative', question).then(r => {
+            if (r.status === 200) {
+              success = true
+            } else {
+              success = false
+            }
+          })
         } else {
-          baseService.post('question/essay', question)
+          console.log(question)
+          baseService.post('question/essay', question).then(r => {
+            if (r.status === 200) {
+              success = true
+            } else {
+              success = false
+            }
+          })
         }
       })
+      if (success) {
+        this.$toastr('info', {position: 'toast-top-right', msg: 'Questões Adicionadas com Sucesso'})
+        this.loading = false
+      } else {
+        this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro ao adicionar questões'})
+        this.loading = false
+      }
     },
     addQuestion: function () {
-      console.log(this.testId)
       this.questions.push({
         description: '',
         value: '',
