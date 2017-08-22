@@ -75,38 +75,27 @@ export default {
   methods: {
     step2 (e) {
       let id = this.testId
-      let success = true
+      let sucess = true
       this.loading = true
       e.preventDefault()
       this.questions.forEach(function (question) {
         question.testId = id
         if (question.isAlternative) {
-          console.log(question)
           baseService.post('question/alternative', question).then(r => {
-            if (r.status === 200) {
-              success = true
-            } else {
-              success = false
-            }
+            sucess = r.status === 200
           })
         } else {
-          console.log(question)
           baseService.post('question/essay', question).then(r => {
-            if (r.status === 200) {
-              success = true
-            } else {
-              success = false
-            }
+            sucess = r.status === 200
           })
         }
       })
-      if (success) {
+      if (sucess) {
         this.$toastr('info', {position: 'toast-top-right', msg: 'Questões Adicionadas com Sucesso'})
-        this.loading = false
       } else {
         this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro ao adicionar questões'})
-        this.loading = false
       }
+      this.loading = false
     },
     addQuestion: function () {
       this.questions.push({
