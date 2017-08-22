@@ -34,7 +34,7 @@ export default {
       test: {
         description: '',
         title: '',
-        teacherId: 1
+        teacherId: null
       },
       testId: 0,
       loading: false
@@ -47,7 +47,6 @@ export default {
     step1 (e) {
       this.loading = true
       e.preventDefault()
-      this.e1 = '2'
       baseService.post('test', this.test).then((r) => {
         this.testId = r.data.testId
         this.$emit('get-test-id', r.data.testId)
