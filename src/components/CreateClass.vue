@@ -44,6 +44,7 @@
 
 <script>
 import baseService from '../services/baseService'
+import authService from '../auth'
 
 export default {
   name: 'vclass',
@@ -67,9 +68,9 @@ export default {
       students: [],
       routeId: this.$route.params.id,
       headers: [
-        {text: 'Nome', value: 'name'},
-        {text: 'Email', value: 'email'},
-        {text: 'Identificador', value: 'identifier'}
+        {text: 'Nome', value: 'name', align: 'left'},
+        {text: 'Email', value: 'email', align: 'center'},
+        {text: 'Identificador', value: 'identifier', align: 'center'}
       ],
       loading1: false,
       loading2: false
@@ -81,11 +82,12 @@ export default {
   methods: {
     createClass: function (e) {
       this.loading1 = true
-      this.room.teacherId = localStorage.getItem('teacherId')
+      this.room.teacherId = authService.teacherId()
+      console.log(this.room)
       baseService.post(`/class`, this.room).then(r => {
         if (r.status === 200) {
           this.classId = r.data.classId
-          this.$router.push(this.classId)
+          // this.$router.push({name: 'turma', params: {id: r.data.this.classId}})
           this.$toastr('info', {position: 'toast-top-right', msg: 'Turma criada com Sucesso'})
         }
         this.loading1 = false
@@ -96,7 +98,9 @@ export default {
     },
     addStudent: function (e) {
       this.loading2 = true
+      console.log(e)
       baseService.get(`/student/exists/${this.student.email}`).then(r => {
+        console.log(r.data)
         let newStudent = r.data
         if (newStudent === 0) {
           baseService.post(`/user`, this.student).then(r => {
