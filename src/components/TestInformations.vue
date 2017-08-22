@@ -17,7 +17,7 @@
             <v-text-field label="Descrição da Prova" v-model="test.description"></v-text-field>
           </v-flex>
         </v-layout>
-        <v-btn primary type="submit">Cadastrar</v-btn>
+        <v-btn primary type="submit" :loading="loading" :disabled="step1Complete()">Cadastrar</v-btn>
       </v-card>
     </form>
   </div>
@@ -34,22 +34,28 @@ export default {
       test: {
         description: '',
         title: '',
-        teacherId: 0
+        teacherId: 1
       },
-      testId: 0
+      testId: 0,
+      loading: false
     }
   },
   mounted () {
-    this.test.teacherId = authService.teacherId
+    this.test.teacherId = authService.teacherId()
   },
   methods: {
     step1 (e) {
+      this.loading = true
       e.preventDefault()
       this.e1 = '2'
       baseService.post('test', this.test).then((r) => {
         this.testId = r.data.testId
         this.$emit('get-test-id', r.data.testId)
+        this.loading = false
       })
+    },
+    step1Complete: function () {
+      return this.testId !== 0
     }
   }
 }
