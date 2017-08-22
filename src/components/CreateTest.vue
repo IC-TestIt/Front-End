@@ -79,9 +79,4 @@ export default {
 .CreateTest-WarningText {
   color: #F00;
 }
-
-.create-test-step-3-button {
-  color: #FFF;
-  background-color: #FFF;
-}
 </style>

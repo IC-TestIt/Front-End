@@ -30,8 +30,8 @@
                   <v-text-field label="Descrição da Alternativa" v-model="a.description"></v-text-field>
                   <v-radio color="primary" tabindex="question.index" v-model="a.isCorrect" label="Alternativa Correta" input-value="true"></v-radio>
                   <small class="CreateTest-WarningText" v-if="!alternativeLimit(question) && lastAlternative(question, index)">O numero maximo de alternativas é 5</small>
-                  <v-btn class="green" v-on:click="addAlternative(question)" v-if="lastAlternative(question, index)">Adicionar Alternativa</v-btn>
-                  <v-btn class="red" v-on:click="removeAlternative(question, index)">Remover Alternativa</v-btn>
+                  <v-btn class="indigo" outline v-on:click="addAlternative(question)" v-if="lastAlternative(question, index)">Adicionar Alternativa</v-btn>
+                  <v-btn class="red" outline v-on:click="removeAlternative(question, index)">Remover Alternativa</v-btn>
                 </div>
               </v-flex>
               <v-flex class="mb-5" xs6>
