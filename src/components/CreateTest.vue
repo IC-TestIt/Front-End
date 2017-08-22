@@ -55,8 +55,8 @@ export default {
     }
   }
 }
-</script>data: () => ({
-  })
+</script>
+
 <style>
 .createTest {
   overflow: scroll;
@@ -80,7 +80,7 @@ export default {
   color: #F00;
 }
 
-.CreateTest-step-3-button {
+.create-test-step-3-button {
   color: #FFF;
   background-color: #FFF;
 }
