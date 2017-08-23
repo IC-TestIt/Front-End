@@ -37,6 +37,9 @@ export default {
       loading: false
     }
   },
+  beforeCreate () {
+    auth.logout()
+  },
   methods: {
     handleSubmit (e) {
       e.preventDefault()
