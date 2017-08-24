@@ -51,18 +51,29 @@
                         <td class="text-xs-center" >{{ props.item.title }}</td>
                         <td class="text-xs-center">{{ props.item.description }}</td>
                         <td class="text-xs-center">
-                            <v-dialog v-model="dialog" persistent scrollable>
-                                <v-btn primary dark slot="activator">Aplicar</v-btn>
+                            <v-dialog v-model="dialog" persistent hide-overlay>
+                                <v-btn primary dark slot="activator" @click.native="dialog = true">Aplicar</v-btn>
                                 <v-card>
                                     <v-card-title>Selecione a Turma</v-card-title>
                                     <v-divider></v-divider>
                                     <v-card-text style="height: 300px">
-                                        <v-checkbox v-model="classes"></v-checkbox>
+                                        <!--<v-select
+                                        v-bind:items="classes"
+                                        v-model="test.classIds"
+                                        label="Turma"
+                                        multiple
+                                        chips
+                                        item-text="description"
+                                        item-value="id"
+                                        return-object
+                                        ></v-select>-->
+                                        <v-text-field v-model="test.beginDate" label="Data de Inicio" type="date" class="input-group--focused"></v-text-field>
+                                        <v-text-field v-model="test.endDate" label="Data Final" type="date" class="input-group--focused"></v-text-field>
                                     </v-card-text>
                                     <v-divider></v-divider>
                                     <v-card-actions>
                                         <v-btn class="blue--text darken-1" flat @click.native="dialog = false">Fechar</v-btn>
-                                        <v-btn class="blue--text darken-1" flat @click.native="dialog = false">Salvar</v-btn>
+                                        <v-btn class="blue--text darken-1" flat @click.native="save(props.item.id)">Salvar</v-btn>
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
@@ -82,10 +93,13 @@ export default {
   name: 'CreateTest',
   data () {
     return {
-      dialogm1: '',
       dialog: false,
       tests: [],
-      select1: [],
+      test: {
+        classIds: [],
+        beginDate: '',
+        endDate: ''
+      },
       classes: [],
       headers: [
         {text: 'Título', value: 'title', align: 'center'},
@@ -111,7 +125,26 @@ export default {
       })
     },
     getClasses () {
-      baseService.get(`/teacher/${auth.teacherId()}/classes/`)
+      baseService.get(`/teacher/${auth.teacherId()}/classes/`).then(r => {
+        this.classes = r.data.map(c => {
+          return {
+            description: c.description,
+            id: c.id
+          }
+        })
+      })
+    },
+    save (id) {
+    //   baseService.post(`/test/${test}`)
+      console.log({
+        id: id,
+        classIds: this.test.classIds.map(c => {
+          return c.id
+        }),
+        endDate: this.test.endDate,
+        beginDate: this.test.beginDate
+      })
+      this.dialog = false
     }
   }
 }
