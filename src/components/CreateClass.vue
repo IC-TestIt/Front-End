@@ -86,7 +86,7 @@ export default {
       baseService.post(`/class`, this.room).then(r => {
         if (r.status === 200) {
           this.classId = r.data.classId
-          this.$router.push(this.classId)
+          window.location.href += '/' + this.classId
           this.$toastr('info', {position: 'toast-top-right', msg: 'Turma criada com Sucesso'})
         }
         this.loading1 = false
