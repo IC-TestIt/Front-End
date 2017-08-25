@@ -41,10 +41,10 @@
                 </v-card>
             </v-flex>
             <v-flex xs0 md12 class="mr-5 ml-5 pa-1">
-                <v-data-table 
-                    v-bind:headers="headers" 
-                    :items="tests" 
-                    hide-actions 
+                <v-data-table
+                    v-bind:headers="headers"
+                    :items="tests"
+                    hide-actions
                     class="white elevation-1"
                 >
                     <template slot="items" scope="props">
@@ -52,12 +52,12 @@
                         <td class="text-xs-center">{{ props.item.description }}</td>
                         <td class="text-xs-center">
                             <v-dialog v-model="dialog" persistent hide-overlay>
-                                <v-btn primary dark slot="activator" @click.native="dialog = true">Aplicar</v-btn>
+                                <v-btn primary dark slot="activator" @click-native="dialog = true">Aplicar</v-btn>
                                 <v-card>
                                     <v-card-title>Selecione a Turma</v-card-title>
                                     <v-divider></v-divider>
                                     <v-card-text style="height: 300px">
-                                        <!--<v-select
+                                        <v-select
                                         v-bind:items="classes"
                                         v-model="test.classIds"
                                         label="Turma"
@@ -66,7 +66,7 @@
                                         item-text="description"
                                         item-value="id"
                                         return-object
-                                        ></v-select>-->
+                                        ></v-select>
                                         <v-text-field v-model="test.beginDate" label="Data de Inicio" type="date" class="input-group--focused"></v-text-field>
                                         <v-text-field v-model="test.endDate" label="Data Final" type="date" class="input-group--focused"></v-text-field>
                                     </v-card-text>
@@ -97,9 +97,11 @@ export default {
       tests: [],
       test: {
         classIds: [],
-        beginDate: '',
-        endDate: ''
+        beginDate: null,
+        endDate: null
       },
+      menuBegin: false,
+      menuEnd: false,
       classes: [],
       headers: [
         {text: 'Título', value: 'title', align: 'center'},
@@ -135,23 +137,23 @@ export default {
       })
     },
     save (id) {
-    //   baseService.post(`/test/${test}`)
-      console.log({
-        id: id,
-        classIds: this.test.classIds.map(c => {
-          return c.id
-        }),
-        endDate: this.test.endDate,
-        beginDate: this.test.beginDate
+      this.test.classIds = this.test.classIds.map(c => {
+        return c.id
       })
+      baseService.post(`/test/${id}/classes`, this.test)
       this.dialog = false
     }
   }
 }
 </script>
 
-<style lang="stylus">
+<style lang="css">
 .my-tests-title {
-    color: #006
+  color: #006;
+}
+
+.my-tests {
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 </style>
