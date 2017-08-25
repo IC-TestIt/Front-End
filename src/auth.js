@@ -28,5 +28,8 @@ export default {
   },
   studentId () {
     return localStorage.getItem('studentId')
+  },
+  userId () {
+    return localStorage.getItem('userId')
   }
 }
