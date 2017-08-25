@@ -31,22 +31,7 @@
 
 <script>
 export default {
-  name: 'main',
-  data () {
-    return {
-      loggedIn: false
-    }
-  },
-  mounted () {
-    this.loggedIn = localStorage.getItem('token') !== null
-  },
-  methods: {
-    logOut: function () {
-      localStorage.clear()
-      this.loggedIn = false
-      this.$router.push('/')
-    }
-  }
+  name: 'main' 
 }
 </script>
 
