@@ -19,7 +19,9 @@
         <v-btn flat @click.native="step = 1">Voltar</v-btn>
       </v-stepper-content>
       <v-stepper-content step="3">
-        <reviewTest></reviewTest>
+        <reviewTest :testId="testId"></reviewTest>
+        <v-btn primary @click.native="step = 1">Finalizar</v-btn>
+        <v-btn flat @click.native="step = 2">Cancel</v-btn>
       </v-stepper-content>
     </v-stepper>
   </v-container>
