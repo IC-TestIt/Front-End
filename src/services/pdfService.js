@@ -9,7 +9,7 @@ const post = (route, data) => {
 }
 
 const get = () => {
-  return `${process.env.PDF}` + '/PDF/prova.pdf'
+  return `${process.env.PDF}/PDF/prova.pdf`
 }
 
 export default {
