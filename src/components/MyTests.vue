@@ -8,7 +8,7 @@
                 <v-card class="green darken-1 white--text ma-5 text-xs-center">
                     <v-card-title primary-title>
                         <v-flex xs12>
-                            <div class="headline">0</div>
+                            <div class="headline">{{this.tests.length}}</div>
                         </v-flex>
                         <v-flex xs12>
                             <div class="pt-3 ">Total de Provas</div>
@@ -41,28 +41,39 @@
                 </v-card>
             </v-flex>
             <v-flex xs0 md12 class="mr-5 ml-5 pa-1">
-                <v-data-table 
-                    v-bind:headers="headers" 
-                    :items="tests" 
-                    hide-actions 
+                <v-data-table
+                    v-bind:headers="headers"
+                    :items="tests"
+                    hide-actions
                     class="white elevation-1"
                 >
                     <template slot="items" scope="props">
-                        <td class="text-xs-center" >{{ props.item.Title }}</td>
-                        <td class="text-xs-center">{{ props.item.Description }}</td>
+                        <td class="text-xs-center" >{{ props.item.title }}</td>
+                        <td class="text-xs-center">{{ props.item.description }}</td>
                         <td class="text-xs-center">
-                            <v-dialog v-model="dialog" scrollable>
-                                <v-btn primary dark slot="activator" @click.native="dialog = true">Aplicar</v-btn>
+                            <v-dialog v-model="dialog" persistent hide-overlay>
+                                <v-btn primary dark slot="activator" @click-native="dialog = true">Aplicar</v-btn>
                                 <v-card>
                                     <v-card-title>Selecione a Turma</v-card-title>
                                     <v-divider></v-divider>
                                     <v-card-text style="height: 300px">
-                                        <v-radio label="Turma 1" v-model="dialogm1" value="1"></v-radio>
+                                        <v-select
+                                        v-bind:items="classes"
+                                        v-model="test.classIds"
+                                        label="Turma"
+                                        multiple
+                                        chips
+                                        item-text="description"
+                                        item-value="id"
+                                        return-object
+                                        ></v-select>
+                                        <v-text-field v-model="test.beginDate" label="Data de Inicio" type="date" class="input-group--focused"></v-text-field>
+                                        <v-text-field v-model="test.endDate" label="Data Final" type="date" class="input-group--focused"></v-text-field>
                                     </v-card-text>
                                     <v-divider></v-divider>
                                     <v-card-actions>
                                         <v-btn class="blue--text darken-1" flat @click.native="dialog = false">Fechar</v-btn>
-                                        <v-btn class="blue--text darken-1" flat @click.native="dialog = false">Salvar</v-btn>
+                                        <v-btn class="blue--text darken-1" flat @click.native="save(props.item.id)">Salvar</v-btn>
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
@@ -82,21 +93,30 @@ export default {
   name: 'CreateTest',
   data () {
     return {
-      dialogm1: '',
       dialog: false,
-      tests: [{
-        Title: 'Prova 1',
-        Description: 'A primeira prova'
-      }],
+      tests: [],
+      test: {
+        classIds: [],
+        beginDate: null,
+        endDate: null
+      },
+      menuBegin: false,
+      menuEnd: false,
+      classes: [],
       headers: [
-        {text: 'Título', value: 'Title', align: 'center'},
-        {text: 'Descrição', value: 'Description', align: 'center'},
+        {text: 'Título', value: 'title', align: 'center'},
+        {text: 'Descrição', value: 'description', align: 'center'},
         {text: 'Ações', value: '', align: 'center'}
       ]
     }
   },
+  mounted () {
+    this.getTests()
+    this.getClasses()
+  },
   methods: {
     getTests () {
+      console.log(auth.teacherId())
       baseService.get(`/teacher/${auth.teacherId()}/tests`).then(r => {
         if (r.status === 200) {
           console.log(r.data)
@@ -105,13 +125,35 @@ export default {
           this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro na obtenção das provas!'})
         }
       })
+    },
+    getClasses () {
+      baseService.get(`/teacher/${auth.teacherId()}/classes/`).then(r => {
+        this.classes = r.data.map(c => {
+          return {
+            description: c.description,
+            id: c.id
+          }
+        })
+      })
+    },
+    save (id) {
+      this.test.classIds = this.test.classIds.map(c => {
+        return c.id
+      })
+      baseService.post(`/test/${id}/classes`, this.test)
+      this.dialog = false
     }
   }
 }
 </script>
 
-<style lang="stylus">
+<style lang="css">
 .my-tests-title {
-    color: #006
+  color: #006;
+}
+
+.my-tests {
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 </style>
