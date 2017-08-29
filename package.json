@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@deveodk/vue-toastr": "^1.0.4",
+    "js-base64": "^2.1.9",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
     "vue": "^2.3.3",
