@@ -10,10 +10,10 @@
             <form>
               <v-text-field label="Resposta da Questão" v-model="question.answer" v-if="!question.isAlternative" textarea></v-text-field>
               <span v-if="question.isAlternative">Selecione a alternativa correta</span>
-              <div class="" v-if="question.isAlternative" v-for="(alternative, index) in question.alternatives" :key="alternative.key">
-                <v-radio color="primary" :tabindex="index" :label="alternative.description" v-model="answers[index]" :value="alternative.id"></v-radio>
+              <div class="" v-if="question.isAlternative" v-for="alternative in question.alternatives" :key="alternative.key">
+                <v-radio color="primary" :tabindex="index" :label="alternative.description" v-model="realizedQuestion.answer" :value="alternative.id"></v-radio>
               </div>
-              <v-btn primary v-on:click="imprimeResposta()">Responder Questão</v-btn>
+              <v-btn>Responder Questão</v-btn>
             </form>
           </v-flex>
         </v-layout>
@@ -25,21 +25,9 @@
 export default {
   name: 'answerQuestion',
   data: () => ({
-    realizedQuestion: {questionId: '', answer: '', isAlternative: false},
-    question: {description: '', isAlternative: true, alternatives: [{description: '1', id: 1}, {description: '2', id: 2}, {description: '3', id: 3}]},
-    answers: []
+    realizedQuestion: {questionId: '', answer: '', isAlternative: false}
   }),
-  methods: {
-    imprimeResposta () {
-      console.log(this.answers)
-    }
-  },
-  mounted () {
-    if (this.question.isAlternative) {
-      this.realizedQuestion.isAlternative = true
-    }
-  }
-  // props: ['question']
+  props: ['question']
 }
 </script>
 <style lang="css" scoped>
