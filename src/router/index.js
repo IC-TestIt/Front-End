@@ -9,6 +9,7 @@ import CreateClass from '@/components/CreateClass'
 import FinishSignUp from '@/components/FinishSignUp'
 import ViewTest from '@/components/ViewTest'
 import MyExams from '@/components/MyExams'
+import DoTest from '@/components/DoTest'
 
 Vue.use(Router)
 
@@ -77,6 +78,11 @@ export default new Router({
     path: '/avaliacoes',
     name: 'MyExams',
     component: MyExams
+  },
+  {
+    path: '/realizar/:id',
+    name: 'DoTest',
+    component: DoTest
   },
   {
     path: '/verprova/:id',
