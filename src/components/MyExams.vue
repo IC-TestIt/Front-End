@@ -8,7 +8,7 @@
                 <v-card class="green darken-1 white--text ma-5 text-xs-center">
                     <v-card-title primary-title>
                         <v-flex xs12>
-                            <div class="headline">0</div>
+                            <div class="headline">{{this.exams.length}}</div>
                         </v-flex>
                         <v-flex xs12>
                             <div class="pt-3 ">Total de Avaliações</div>
@@ -48,8 +48,8 @@
                     class="white elevation-1"
                 >
                     <template slot="items" scope="props">
-                        <td class="text-xs-center" >{{ props.item.Title }}</td>
-                        <td class="text-xs-center">{{ props.item.Description }}</td>
+                        <td class="text-xs-center" >{{ props.item.title }}</td>
+                        <td class="text-xs-center">{{ props.item.description }}</td>
                         <td class="text-xs-center">
                           <v-btn primary dark>Realizar</v-btn>
                         </td>
@@ -61,20 +61,34 @@
 </template>
 
 <script>
+import baseService from '../services/baseService'
+import auth from '../auth'
 
 export default {
   name: 'MyExams',
   data () {
     return {
-      exams: [{
-        Title: 'Prova 1',
-        Description: 'A primeira prova'
-      }],
+      exams: [],
       headers: [
         {text: 'Título', value: 'Title', align: 'center'},
         {text: 'Descrição', value: 'Description', align: 'center'},
         {text: 'Ações', value: '', align: 'center'}
       ]
+    }
+  },
+  mounted () {
+    this.getExams()
+  },
+  methods: {
+    getExams () {
+      baseService.get(`/student/${auth.studentId()}/exams`).then(r => {
+        console.log(r.data)
+        if (r.status === 200) {
+          this.exams = r.data
+        } else {
+          this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro na obtenção das provas!'})
+        }
+      })
     }
   }
 }
