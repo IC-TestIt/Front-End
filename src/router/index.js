@@ -80,7 +80,7 @@ export default new Router({
     component: MyExams
   },
   {
-    path: '/realizar/:id',
+    path: '/RealizeExam/:id',
     name: 'DoTest',
     component: DoTest
   },
