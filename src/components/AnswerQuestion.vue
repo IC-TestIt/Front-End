@@ -4,7 +4,7 @@
       <v-container fluid>
         <v-layout row justify-space-around>
           <v-flex md6 fill-height="true">
-            <p class="answerQuestion-question-title">{{question.description}}</p>
+            <p class="answerQuestion-question-title">{{ question.description }}</p>
           </v-flex>
           <v-flex md4 fill-height="true">
             <form>
