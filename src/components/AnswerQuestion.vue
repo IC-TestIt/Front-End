@@ -1,6 +1,6 @@
 <template>
   <div class="answerQuestion">
-    <v-card class="answerQuestion-card lighten-1 z-depth-1 mt-3 mb-5 pa-5" height="70vh" width="500vw">
+    <v-card class="answerQuestion-card lighten-1 z-depth-1 mt-3 mb-5 pa-5" height="60vh" width="500vw">
       <v-container fluid>
         <v-layout row justify-space-around>
           <v-flex md6 fill-height="true">
