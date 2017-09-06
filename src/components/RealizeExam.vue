@@ -1,9 +1,29 @@
 <template>
-  <div class="realizeExam text-xs-center">
-    <h2 class="realizeExam-exam-title">{{ exam.title }}</h2>
-    <DynamicList @get-current="getCurrentQuestion" :list="exam.questions" :current="currentQuestion"></DynamicList>
-    <AnswerQuestion :question="currentQuestion" :realizedQuestion="currentRealizedQuestion"></AnswerQuestion>
-  </div>
+<div class='realizeExam text-xs-center'>
+  <v-container fluid>
+    <v-layout row-wrap>
+      <v-flex xs6>
+        <h2 class='realizeExam-exam-title'>{{ exam.title }}</h2>
+      </v-flex>
+      <v-flex xs6>
+        <DynamicList @get-current='getCurrentQuestion' :list='exam.questions' :current='currentQuestion'></DynamicList>
+      </v-flex>
+    </v-layout>
+    <v-layout row-wrap>
+      <v-flex xs12>
+        <AnswerQuestion :question='currentQuestion' :realizedQuestion='currentRealizedQuestion'></AnswerQuestion>
+      </v-flex>
+    </v-layout>
+    <v-layout row>
+      <v-flex xs2>
+        <v-btn class="green">Salvar Prova</v-btn>
+      </v-flex>
+      <v-flex xs2>
+        <v-btn class="yellow">Entregar Prova</v-btn>
+      </v-flex>
+    </v-layout>
+  </v-container>
+</div>
 </template>
 
 <script>
@@ -51,7 +71,11 @@ export default {
       if (index !== -1) {
         this.currentRealizedQuestion = this.realizedQuestions[index]
       } else {
-        this.currentRealizedQuestion = { questionId: question.id, essayAnswer: '', alternativeId: '' }
+        this.currentRealizedQuestion = {
+          questionId: question.id,
+          essayAnswer: '',
+          alternativeId: ''
+        }
         this.realizedQuestions.push(this.currentRealizedQuestion)
       }
     },
@@ -72,12 +96,16 @@ export default {
 </script>
 
 <style>
-  .menus{
-    text-align: center;
-  }
+.menus {
+  text-align: center;
+}
 
-  .realizeExam-exam-title {
-    color: #000;
-    font-size: 35px;
-  }
+.realizeExam {
+  overflow-y: scroll;
+}
+
+.realizeExam-exam-title {
+  color: #000;
+  font-size: 35px;
+}
 </style>
