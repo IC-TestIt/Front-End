@@ -8,7 +8,8 @@
       overflow
       v-if="auth.loggedIn()"
     >
-    <VMenuBar></VMenuBar>
+    <VMenuStudent v-if="getStudent()"></VMenuStudent>
+    <VMenuteacher v-if="getTeacher()"></VMenuteacher>
         
     </v-navigation-drawer>
     <v-toolbar class="indigo darken-4" dark>
@@ -29,42 +30,30 @@
 
 <script>
 import auth from './auth'
-import VMenuBar from './components/MenuBar.vue'
+import VMenuStudent from './components/MenuStudent.vue'
+import VMenuteacher from './components/Menuteacher.vue'
 
 export default {
   name: 'app-main',
   components: {
-    VMenuBar
+    VMenuteacher,
+    VMenuStudent
   },
   data () {
     return {
       drawer: false,
-      auth: auth,
-      items: [{
-        action: 'create',
-        title: 'PROVAS',
-        items: [
-          {
-            title: 'Cadastrar'
-          },
-          {
-            title: 'Minhas Provas'
-          }
-        ]
-      },
-      {
-        action: 'people',
-        title: 'TURMAS',
-        active: false,
-        items: [
-          { title: 'Criar Turma' }
-        ]
-      }]
+      auth: auth     
     }
   },
   methods: {
     hide () {
       this.drawer = !this.drawer
+    },
+    getTeacher () {
+      this.status = auth.getTeacher()
+    },
+    getStudent () {
+      this.status = auth.getStudent()
     }
   }
 }
