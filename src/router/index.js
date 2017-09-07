@@ -9,11 +9,16 @@ import CreateClass from '@/components/CreateClass'
 import FinishSignUp from '@/components/FinishSignUp'
 import ViewTest from '@/components/ViewTest'
 import MyExams from '@/components/MyExams'
+import RealizeExam from '@/components/RealizeExam'
 
 Vue.use(Router)
 
 function onlyTeacher (t, f, next) {
   redirect(t, f, next, auth.isTeacher())
+}
+
+function onlyStudent (t, f, next) {
+  redirect(t, f, next, auth.isStudent())
 }
 
 function onlyUser (t, f, next) {
@@ -71,12 +76,20 @@ export default new Router({
   {
     path: '/provas',
     name: 'MyTests',
-    component: MyTests
+    component: MyTests,
+    beforeEnter: onlyTeacher
   },
   {
     path: '/avaliacoes',
     name: 'MyExams',
-    component: MyExams
+    component: MyExams,
+    beforeEnter: onlyStudent
+  },
+  {
+    path: '/realizar/:id',
+    name: 'RealizeExam',
+    component: RealizeExam,
+    beforeEnter: onlyStudent
   },
   {
     path: '/verprova/:id',
