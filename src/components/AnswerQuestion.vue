@@ -1,14 +1,15 @@
 <template>
   <div class="answerQuestion">
-    <v-card class="answerQuestion-card lighten-1 z-depth-1 mt-3 mb-3 pa-5" height="60vh" width="500vw">
+    <v-card class="answerQuestion-card lighten-1 z-depth-1 mt-3 mb-3 " height="50vh" width="500vw">
       <v-container fluid>
         <v-layout row justify-space-around>
           <v-flex md6 fill-height="true">
-            <p class="answerQuestion-question-title">{{ question.description }}</p>
+            <strong style="font-size: 23px;">Questão {{index}}</strong>
+            <p class="answerQuestion-question-title">{{question.description}}</p>  
           </v-flex>
           <v-flex md4 fill-height="true">
             <form>
-              <v-text-field v-once label="Resposta da Questão" v-model="realizedQuestion.essayAnswer" v-if="!question.isAlternative" textarea></v-text-field>
+              <v-text-field class="input-group--focused" v-once label="Resposta da Questão" v-model="realizedQuestion.essayAnswer" v-if="!question.isAlternative" multi-line></v-text-field>
               <span v-if="question.isAlternative">Selecione a alternativa correta</span>
               <AlternativeQuestion @get-alternative="getAlternative" :question="question" :realizeQuestion="realizedQuestion"></AlternativeQuestion>
             </form>
@@ -23,7 +24,7 @@ import AlternativeQuestion from './AlternativeQuestion'
 
 export default {
   name: 'answerQuestion',
-  props: ['question', 'realizedQuestion'],
+  props: ['question', 'realizedQuestion', 'index'],
   components: {
     AlternativeQuestion
   },
@@ -37,6 +38,8 @@ export default {
 <style lang="css" scoped>
 .answerQuestion-card {
   width: 90vw;
+  overflow: auto;
+  overflow-x: hidden;
 }
 
 .answerQuestion-question-title {

@@ -1,6 +1,6 @@
 <template>
   <div class="dynamicList text-xs-center">
-    <v-pagination light v-bind:length.number="list.length" v-model="index" @next="change" @previous="change" @input="change"></v-pagination>
+    <v-pagination light :length=list.length v-model="index" @next="change" @previous="change" @input="change"></v-pagination>
   </div>
 </template>
 
@@ -10,17 +10,18 @@ export default {
   name: 'dynamicList',
   data () {
     return {
-      index: 1
+      index: 1,
+      current: null,
+      size: 0
     }
   },
-  props: ['list', 'current'],
+  props: ['list'],
   methods: {
     change () {
       this.current = this.list[this.index - 1]
       this.$emit('get-current', this.current)
+      this.$emit('get-index', this.index)
     }
   }
 }
 </script>
-<style lang="css">
-</style>
