@@ -7,7 +7,7 @@
             <v-text-field label="Email" type="email" v-model="user.email"></v-text-field>
           </v-flex>
         </v-layout>
-        
+
       <v-layout row>
         <v-flex xs12>
             <v-text-field label="Senha" type="password" v-model="user.password"></v-text-field>
@@ -46,10 +46,11 @@ export default {
       this.loading = true
       auth.logIn(this.user.email, this.user.password).then((r) => {
         this.$toastr('info', {position: 'toast-top-right', msg: 'Usuário Logado com Sucesso'})
-        this.$router.push('/turma')
+        this.$router.push('/home')
         this.loading = false
       }).catch(e => {
         this.$toastr('error', {position: 'toast-top-right', msg: 'Email e/ou Senha inválido(s)!'})
+        this.$router.push('/home')
         auth.logout()
         this.loading = false
       })

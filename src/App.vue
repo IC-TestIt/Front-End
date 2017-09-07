@@ -8,11 +8,12 @@
       overflow
       v-if="auth.loggedIn()"
     >
-    <VMenuBar></VMenuBar>
+    <VMenuStudent v-if="auth.isStudent()"></VMenuStudent>
+    <VMenuTeacher v-if="auth.isTeacher()"></VMenuTeacher>
 
     </v-navigation-drawer>
     <v-toolbar class="indigo darken-4" dark>
-      <v-toolbar-side-icon @click.stop="hide" v-show="auth.loggedIn()"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click.native.stop="hide" v-show="auth.loggedIn()"></v-toolbar-side-icon>
       <v-toolbar-title>Test It</v-toolbar-title>
       <v-spacer></v-spacer>
       <div v-if="auth.loggedIn()" class="logout">
@@ -34,37 +35,19 @@
 
 <script>
 import auth from './auth'
-import VMenuBar from './components/MenuBar.vue'
+import VMenuStudent from './components/MenuStudent'
+import VMenuTeacher from './components/MenuTeacher'
 
 export default {
   name: 'app-main',
   components: {
-    VMenuBar
+    VMenuTeacher,
+    VMenuStudent
   },
   data () {
     return {
-      drawer: false,
-      auth: auth,
-      items: [{
-        action: 'create',
-        title: 'PROVAS',
-        items: [
-          {
-            title: 'Cadastrar'
-          },
-          {
-            title: 'Minhas Provas'
-          }
-        ]
-      },
-      {
-        action: 'people',
-        title: 'TURMAS',
-        active: false,
-        items: [
-          { title: 'Criar Turma' }
-        ]
-      }]
+      drawer: true,
+      auth: auth
     }
   },
   methods: {
