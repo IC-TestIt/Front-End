@@ -48,10 +48,11 @@
                     class="white elevation-1"
                 >
                     <template slot="items" scope="props">
-                        <td class="text-xs-center" >{{ props.item.title }}</td>
-                        <td class="text-xs-center">{{ props.item.description }}</td>
+                        <td class="text-xs-center" >{{ props.item.name }}</td>
+                        <td class="text-xs-center">{{ props.item.className }}</td>
+                        <td class="text-xs-center">{{ props.item.teacherName }}</td>
                         <td class="text-xs-center">
-                          <v-btn primary dark>Realizar</v-btn>
+                          <v-btn primary dark v-on:click="realizeExam(props.item.classTestId)">Realizar</v-btn>
                         </td>
                     </template>
                 </v-data-table>
@@ -68,10 +69,12 @@ export default {
   name: 'MyExams',
   data () {
     return {
+      auth: auth,
       exams: [],
       headers: [
         {text: 'Título', value: 'Title', align: 'center'},
-        {text: 'Descrição', value: 'Description', align: 'center'},
+        {text: 'Turma', value: 'Class', align: 'center'},
+        {text: 'Professor', value: 'Teacher', align: 'center'},
         {text: 'Ações', value: '', align: 'center'}
       ]
     }
@@ -81,13 +84,20 @@ export default {
   },
   methods: {
     getExams () {
-      baseService.get(`/student/${auth.studentId()}/exams`).then(r => {
+      baseService.get(`/student/${auth.studentId()}/tests`).then(r => {
         console.log(r.data)
         if (r.status === 200) {
           this.exams = r.data
         } else {
           this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro na obtenção das provas!'})
         }
+      })
+    },
+    realizeExam (id) {
+      let exam = {classTestsId: id, studentId: auth.studentId()}
+      baseService.post(`/exam`, exam).then(r => {
+        console.log(r.data)
+        this.$router.push('/realizar/' + r.data.examId)
       })
     }
   }
