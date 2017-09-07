@@ -6,20 +6,28 @@
         <h2 class='realizeExam-exam-title'>{{ exam.title }}</h2>
       </v-flex>
       <v-flex xs6>
-        <DynamicList @get-current='getCurrentQuestion' :list='exam.questions' :current='currentQuestion'></DynamicList>
+        <DynamicList @get-current='getCurrentQuestion' @get-index='getIndex' :list='exam.questions' :current='currentQuestion'></DynamicList>
       </v-flex>
     </v-layout>
     <v-layout row-wrap>
       <v-flex xs12>
-        <AnswerQuestion :question='currentQuestion' :realizedQuestion='currentRealizedQuestion'></AnswerQuestion>
+        <AnswerQuestion :question='currentQuestion' :realizedQuestion='currentRealizedQuestion' :index='index'></AnswerQuestion>
       </v-flex>
     </v-layout>
     <v-layout row>
-      <v-flex xs2>
-        <v-btn class="green">Salvar Prova</v-btn>
+      <v-flex v-if="timeOut">
+        <v-alert error value="true" md12>
+          Tempo para realização expirado
+        </v-alert>
       </v-flex>
-      <v-flex xs2>
-        <v-btn class="yellow">Entregar Prova</v-btn>
+      <v-flex md8 v-if="!timeOut">
+        <Timer :endTime="exam.endDate" @time-out="getTimeOut"></Timer>
+      </v-flex>
+      <v-flex md2 v-if="!timeOut">
+        <v-btn class="indigo darken-4" dark>Salvar Prova</v-btn>
+      </v-flex>
+      <v-flex md2 v-if="!timeOut">
+        <v-btn class="green" dark>Entregar Prova</v-btn>
       </v-flex>
     </v-layout>
   </v-container>
@@ -30,12 +38,14 @@
 import baseService from '../services/baseService'
 import DynamicList from './DynamicList'
 import AnswerQuestion from './AnswerQuestion'
+import Timer from './Timer'
 
 export default {
   name: 'realizeExam',
   components: {
     DynamicList,
-    AnswerQuestion
+    AnswerQuestion,
+    Timer
   },
   props: ['examId'],
   data () {
@@ -43,7 +53,9 @@ export default {
       currentQuestion: '',
       realizedQuestions: [],
       currentRealizedQuestion: '',
-      exam: ''
+      exam: '',
+      index: 1,
+      timeOut: false
     }
   },
   beforeMount () {
@@ -90,6 +102,12 @@ export default {
       if (index !== -1) {
         this.realizedQuestions[index] = question
       }
+    },
+    getIndex (index) {
+      this.index = index
+    },
+    getTimeOut (bool) {
+      this.timeOut = bool
     }
   }
 }
@@ -98,10 +116,6 @@ export default {
 <style>
 .menus {
   text-align: center;
-}
-
-.realizeExam {
-  overflow-y: scroll;
 }
 
 .realizeExam-exam-title {
