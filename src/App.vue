@@ -9,12 +9,17 @@
       v-if="auth.loggedIn()"
     >
     <VMenuBar></VMenuBar>
-        
+
     </v-navigation-drawer>
     <v-toolbar class="indigo darken-4" dark>
       <v-toolbar-side-icon @click.stop="hide" v-show="auth.loggedIn()"></v-toolbar-side-icon>
       <v-toolbar-title>Test It</v-toolbar-title>
       <v-spacer></v-spacer>
+      <div v-if="auth.loggedIn()" class="logout">
+        <a v-on:click="logout()">
+          <i class="fa fa-sign-out" aria-hidden="true"></i>
+        </a>
+      </div>
     </v-toolbar>
     <main>
       <v-container fluid id="app-container" class="home">
@@ -65,6 +70,9 @@ export default {
   methods: {
     hide () {
       this.drawer = !this.drawer
+    },
+    logout () {
+      this.$router.push('/logout')
     }
   }
 }
@@ -72,4 +80,11 @@ export default {
 
 <style lang="stylus">
   @import './assets/styles/main'
+
+  .logout i
+    font-size: 5vh
+
+  .fa-sign-out:before
+    color: white;
+
 </style>
