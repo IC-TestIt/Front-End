@@ -51,14 +51,18 @@ export default {
       items: [
         {
           action: 'create',
-          title: 'INICIO'
-        },
-        {
-          action: 'create',
           title: 'PROVAS',
           items: [
-                { title: 'Realizar', link: 'http://localhost:8080/#/realizar/1' },
+                { title: 'Cadastrar', link: 'http://localhost:8080/#/prova' },
                 { title: 'Minhas Provas', link: 'http://localhost:8080/#/provas' }
+          ]
+        },
+        {
+          action: 'people',
+          title: 'TURMAS',
+          active: false,
+          items: [
+                { title: 'Criar Turma', link: 'http://localhost:8080/#/turma' }
           ],
           right: true,
           rightDrawer: true

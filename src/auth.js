@@ -18,10 +18,10 @@ export default {
     return localStorage.getItem('token') !== null
   },
   isTeacher () {
-    return localStorage.getItem('teacherId') !== null
+    return localStorage.getItem('teacherId') !== '0'
   },
   isStudent () {
-    return localStorage.getItem('studentId') !== null
+    return localStorage.getItem('studentId') !== '0'
   },
   teacherId () {
     return localStorage.getItem('teacherId')
