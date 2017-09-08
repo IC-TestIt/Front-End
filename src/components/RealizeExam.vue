@@ -24,10 +24,10 @@
         <Timer :endTime="exam.endDate" @time-out="getTimeOut"></Timer>
       </v-flex>
       <v-flex md2 v-if="!timeOut">
-        <v-btn class="indigo darken-4" dark>Salvar Prova</v-btn>
+        <v-btn class="indigo darken-4" dark v-on:click="saveExam()">Salvar Prova</v-btn>
       </v-flex>
       <v-flex md2 v-if="!timeOut">
-        <v-btn class="green" dark>Entregar Prova</v-btn>
+        <v-btn class="green" dark v-on:click="endExam()">Entregar Prova</v-btn>
       </v-flex>
     </v-layout>
   </v-container>
@@ -47,7 +47,6 @@ export default {
     AnswerQuestion,
     Timer
   },
-  props: ['examId'],
   data () {
     return {
       currentQuestion: '',
@@ -65,6 +64,7 @@ export default {
     getExam: function () {
       let id = this.$route.params.id
       baseService.get(`/exam/${id}`).then(response => {
+        console.log(response.data)
         if (response.status === 200) {
           this.exam = response.data
           this.currentQuestion = this.exam.questions[0]
@@ -86,7 +86,8 @@ export default {
         this.currentRealizedQuestion = {
           questionId: question.id,
           essayAnswer: '',
-          alternativeId: ''
+          alternativeId: '',
+          examId: this.exam.id
         }
         this.realizedQuestions.push(this.currentRealizedQuestion)
       }
@@ -102,6 +103,20 @@ export default {
       if (index !== -1) {
         this.realizedQuestions[index] = question
       }
+    },
+    saveExam () {
+      let id = this.$route.params.id
+      let exam = {answeredQuestions: this.realizedQuestions}
+      baseService.put(`/exam/save/${id}`, exam).then(r => {
+        console.log(r.data)
+      })
+    },
+    endExam () {
+      let id = this.$route.params.id
+      let exam = {answeredQuestions: this.realizedQuestions}
+      baseService.put(`/exam/${id}`, exam).then(r => {
+        console.log(r.data)
+      })
     },
     getIndex (index) {
       this.index = index
