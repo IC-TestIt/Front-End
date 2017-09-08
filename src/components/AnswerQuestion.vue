@@ -5,13 +5,13 @@
         <v-layout row justify-space-around>
           <v-flex md6 fill-height="true">
             <strong style="font-size: 23px;">Questão {{index}}</strong>
-            <p class="answerQuestion-question-title">{{question.description}}</p>  
+            <p class="answerQuestion-question-title">{{question.description}}</p>
           </v-flex>
           <v-flex md4 fill-height="true">
             <form>
-              <v-text-field class="input-group--focused" v-once label="Resposta da Questão" v-model="realizedQuestion.essayAnswer" v-if="!question.isAlternative" multi-line></v-text-field>
+              <v-text-field class="input-group--focused" label="Resposta da Questão" v-model="realizedQuestion.essayAnswer" v-if="!question.isAlternative" multi-line></v-text-field>
               <span v-if="question.isAlternative">Selecione a alternativa correta</span>
-              <AlternativeQuestion @get-alternative="getAlternative" :question="question" :realizeQuestion="realizedQuestion"></AlternativeQuestion>
+              <AlternativeQuestion v-if="question.isAlternative" @get-alternative="getAlternative" :question="question" :realizeQuestion="realizedQuestion"></AlternativeQuestion>
             </form>
           </v-flex>
         </v-layout>
