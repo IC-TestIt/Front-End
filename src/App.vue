@@ -56,6 +56,12 @@ export default {
     },
     logout () {
       this.$router.push('/logout')
+    },
+    getStudent () {
+      this.status = auth.isStudent()
+    },
+    getTeacher () {
+      this.status = auth.isTeacher()
     }
   }
 }

@@ -1,18 +1,35 @@
 <template>      
         
         <v-container>         
-           <VInfo></VInfo>
+           <VInfoStudent v-if="auth.isStudent()"></VInfoStudent>
+           <VInfoTeacher v-if="auth.isTeacher()"></VInfoTeacher>
         </v-container>
       
 </template>
 
 <script>
-import VInfo from './Info.vue'
+import VInfoStudent from './InfoStudent.vue'
+import VInfoTeacher from './InfoTeacher.vue'
+import auth from '../auth'
 
 export default {
   name: 'main',
   components: {
-    VInfo
+    VInfoStudent,
+    VInfoTeacher
+  },
+  data () {
+    return {
+      auth: auth
+    }
+  },
+  methods: {
+    getStudent () {
+      this.status = auth.isStudent()
+    },
+    getTeacher () {
+      this.status = auth.isTeacher()
+    }
   }
 }
 </script>
