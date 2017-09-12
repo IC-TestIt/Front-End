@@ -1,36 +1,41 @@
 <template>
 <div class='realizeExam text-xs-center'>
-  <v-container fluid>
-    <v-layout row-wrap>
-      <v-flex xs6>
-        <h2 class='realizeExam-exam-title'>{{ exam.title }}</h2>
-      </v-flex>
-      <v-flex xs6>
-        <DynamicList @get-current='getCurrentQuestion' @get-index='getIndex' :list='exam.questions' :current='currentQuestion'></DynamicList>
-      </v-flex>
-    </v-layout>
-    <v-layout row-wrap>
-      <v-flex xs12>
-        <AnswerQuestion :question='currentQuestion' :realizedQuestion='currentRealizedQuestion' :index='index'></AnswerQuestion>
-      </v-flex>
-    </v-layout>
-    <v-layout row>
-      <v-flex v-if="timeOut">
-        <v-alert error value="true" md12>
-          Tempo para realização expirado
-        </v-alert>
-      </v-flex>
-      <v-flex md8 v-if="!timeOut">
-        <Timer :endTime="exam.endDate" @time-out="getTimeOut"></Timer>
-      </v-flex>
-      <v-flex md2 v-if="!timeOut">
-        <v-btn class="indigo darken-4" dark v-on:click="saveExam()">Salvar Prova</v-btn>
-      </v-flex>
-      <v-flex md2 v-if="!timeOut">
-        <v-btn class="green" dark v-on:click="endExam()">Entregar Prova</v-btn>
-      </v-flex>
-    </v-layout>
-  </v-container>
+    <v-container fluid>
+      <div>
+        <v-layout row-wrap>
+          <v-flex xs6>
+            <h2 class='realizeExam-exam-title'>{{ exam.title }}</h2>
+          </v-flex>
+          <v-flex xs6>
+            <DynamicList v-show="exam.status !== 2" @get-current='getCurrentQuestion' @get-index='getIndex' :list='exam.questions' :current='currentQuestion'></DynamicList>
+          </v-flex>
+        </v-layout>
+        <v-layout row-wrap>
+          <v-flex xs12>
+            <AnswerQuestion :status='exam.status' :question='currentQuestion' :realizedQuestion='currentRealizedQuestion' :index='index'></AnswerQuestion>
+          </v-flex>
+        </v-layout>
+        <v-layout row>
+          <v-flex v-if="timeOut || exam.status === 2">
+            <v-alert error value="true" md12 v-if="exam.status !== 2">
+              Tempo para realização expirado
+            </v-alert>
+            <v-alert error value="true" md12 v-else>
+              A Prova já foi entregue
+            </v-alert>
+          </v-flex>
+          <v-flex md8 v-if="!timeOut && exam.status !== 2">
+            <Timer :endTime="exam.endDate" @time-out="getTimeOut"></Timer>
+          </v-flex>
+          <v-flex md2 v-if="!timeOut && exam.status !== 2">
+            <v-btn class="indigo darken-4" dark v-on:click="saveExam()">Salvar Prova</v-btn>
+          </v-flex>
+          <v-flex md2 v-if="!timeOut && exam.status !== 2">
+            <v-btn class="green" dark v-on:click="endExam()">Entregar Prova</v-btn>
+          </v-flex>
+        </v-layout>
+      </div>
+    </v-container>
 </div>
 </template>
 
@@ -67,9 +72,14 @@ export default {
         console.log(response.data)
         if (response.status === 200) {
           this.exam = response.data
-          this.currentQuestion = this.exam.questions[0]
-          this.realizedQuestions = this.exam.answeredQuestions
-          this.findAnswer(this.currentQuestion)
+          if (this.exam.status !== 2) {
+            this.currentQuestion = this.exam.questions[0]
+            this.realizedQuestions = this.exam.answeredQuestions
+            this.findAnswer(this.currentQuestion)
+          } else {
+            this.currentQuestion = 0
+            this.realizedQuestions = 0
+          }
         }
       })
     },
@@ -136,5 +146,9 @@ export default {
 .realizeExam-exam-title {
   color: #000;
   font-size: 35px;
+}
+
+.realizeExam-error {
+  font-size: 20px;
 }
 </style>
