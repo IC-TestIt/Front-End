@@ -2,7 +2,7 @@
         
         <v-container>         
            <VInfoStudent v-if="auth.isStudent()"></VInfoStudent>
-           <VInfoTeacher v-if="auth.isTeacher()"></VInfoTeacher>
+           <VInfoTeacher v-else></VInfoTeacher>
         </v-container>
       
 </template>
@@ -26,9 +26,6 @@ export default {
   methods: {
     getStudent () {
       this.status = auth.isStudent()
-    },
-    getTeacher () {
-      this.status = auth.isTeacher()
     }
   }
 }
