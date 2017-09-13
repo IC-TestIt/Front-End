@@ -40,6 +40,23 @@
                     </v-card-title>
                 </v-card>
             </v-flex>
+            <v-flex>
+                <v-card transparent>
+                     <v-btn
+                        absolute
+                        dark
+                        buttom
+                        fab
+                        small
+                        top
+                        right
+                        class="pink"
+                        v-on:click="linkes"
+                      >
+              <v-icon>add</v-icon>
+            </v-btn>
+                </v-card>
+            </v-flex>
             <v-flex md12 class="mr-5 ml-5 pa-1">
                 <v-data-table
                     :headers="headers"
@@ -90,6 +107,9 @@ export default {
           this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro na obtenção de turmas!'})
         }
       })
+    },
+    linkes () {
+      this.$router.push('/turma')
     }
   }
 }
