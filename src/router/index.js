@@ -10,6 +10,7 @@ import FinishSignUp from '@/components/FinishSignUp'
 import ViewTest from '@/components/ViewTest'
 import MyExams from '@/components/MyExams'
 import RealizeExam from '@/components/RealizeExam'
+import MyClasses from '@/components/MyClasses'
 
 Vue.use(Router)
 
@@ -96,6 +97,11 @@ export default new Router({
     name: 'viewTest',
     component: ViewTest,
     beforeEnter: onlyTeacher
+  },
+  {
+    path: '/turmas',
+    name: 'MyClasses',
+    component: MyClasses
   },
   {
     path: '/logout',
