@@ -101,7 +101,8 @@ export default new Router({
   {
     path: '/turmas',
     name: 'MyClasses',
-    component: MyClasses
+    component: MyClasses,
+    beforeEnter: onlyTeacher
   },
   {
     path: '/logout',
