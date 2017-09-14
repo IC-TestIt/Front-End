@@ -2,10 +2,10 @@
     <div>
         <v-layout row wrap>
            <v-flex md12>
-                <h3 class="my-tests-title text-xs-center ma-1 pt-4">Minhas Turmas</h3>
+                <h3 class="indigo lighten-2 my-tests-title text-xs-center ma-1 pt-4">Minhas Turmas</h3>
             </v-flex>
             <v-flex  md4>
-                <v-card class="indigo lighten-1 white--text ma-5 text-xs-center">
+                <v-card class="green darken-1 white--text ma-5 text-xs-center">
                     <v-card-title primary-title>
                         <v-flex xs12>
                             <div class="headline">0</div>
@@ -29,7 +29,7 @@
                 </v-card>
             </v-flex>
             <v-flex  md4>
-                <v-card class="indigo lighten-1 white--text ma-5 text-xs-center">
+                <v-card class="orange darken-1 white--text ma-5 text-xs-center">
                     <v-card-title primary-title>
                         <v-flex xs12>
                             <div class="headline">0</div>
@@ -100,7 +100,8 @@ export default {
           this.classes = r.data.map(item => {
             return {
               description: item.description,
-              id: item.id
+              id: item.id,
+              size: item.size
             }
           })
         } else {
