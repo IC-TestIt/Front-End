@@ -2,7 +2,7 @@
     <div>
         <v-layout row wrap>
            <v-flex md12>
-                <h3 class="indigo lighten-2 my-tests-title text-xs-center ma-1 pt-4">Minhas Turmas</h3>
+                <h3 class="title my-tests-title text-xs-center ma-1 pt-4">Minhas Turmas</h3>
             </v-flex>
             <v-flex  md4>
                 <v-card class="green darken-1 white--text ma-5 text-xs-center">
@@ -115,3 +115,11 @@ export default {
   }
 }
 </script>
+
+<style>
+
+.title{
+    color: #006;
+}
+
+</style>
