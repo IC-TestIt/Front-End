@@ -52,7 +52,7 @@
                         <td class="text-xs-center">{{ props.item.description }}</td>
                         <td class="text-xs-center">
                             <v-dialog v-model="dialog" persistent hide-overlay>
-                                <v-btn primary dark slot="activator" @click-native="dialog = true">Aplicar</v-btn>
+                                <v-btn primary dark slot="activator" @click.native="dialog = true">Aplicar</v-btn>
                                 <v-card>
                                     <v-card-title>Selecione a Turma</v-card-title>
                                     <v-divider></v-divider>
@@ -73,7 +73,7 @@
                                     <v-divider></v-divider>
                                     <v-card-actions>
                                         <v-btn class="blue--text darken-1" flat @click.native="dialog = false">Fechar</v-btn>
-                                        <v-btn class="blue--text darken-1" flat @click.native="save(props.item.id)">Salvar</v-btn>
+                                        <v-btn class="blue--text darken-1" flat @click.native="save(props.item.id)" :loading="loading">Salvar</v-btn>
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
@@ -94,6 +94,7 @@ export default {
   data () {
     return {
       dialog: false,
+      loading: false,
       tests: [],
       test: {
         classIds: [],
@@ -137,11 +138,21 @@ export default {
       })
     },
     save (id) {
+      this.loading = true
       this.test.classIds = this.test.classIds.map(c => {
         return c.id
       })
-      baseService.post(`/test/${id}/classes`, this.test)
-      this.dialog = false
+      baseService.post(`/test/${id}/classes`, this.test).then(r => {
+        if (r.status === 200) {
+          this.dialog = false
+          this.test = {
+            classIds: [],
+            beginDate: null,
+            endDate: null
+          }
+          this.loading = false
+        }
+      })
     }
   }
 }
