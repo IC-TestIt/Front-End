@@ -10,18 +10,18 @@
         <v-stepper-step step="3" :editable="step1Complete()">Aplicar Prova</v-stepper-step>
       </v-stepper-header>
       <v-stepper-content step="1">
+        <v-btn primary v-if="testId !== 0" @click.native="step = 2">Proximo</v-btn>
         <testInformations @get-test-id="getTestId"></testInformations>
-        <v-btn primary @click.native="step = 2" v-if="step1Complete()">Proximo</v-btn>
       </v-stepper-content>
       <v-stepper-content step="2">
-        <addQuestions :testId="testId"></addQuestions>
         <v-btn primary @click.native="step = 3">Proximo</v-btn>
         <v-btn flat @click.native="step = 1">Voltar</v-btn>
+        <addQuestions :testId="testId"></addQuestions>
       </v-stepper-content>
       <v-stepper-content step="3">
-        <reviewTest :testId="testId"></reviewTest>
         <v-btn primary @click.native="step = 1">Finalizar</v-btn>
         <v-btn flat @click.native="step = 2">Cancel</v-btn>
+        <reviewTest :testId="testId"></reviewTest>
       </v-stepper-content>
     </v-stepper>
   </v-container>
@@ -44,9 +44,6 @@ export default {
       step: 1,
       testId: 0
     }
-  },
-  mounted () {
-
   },
   methods: {
     getTestId: function (id) {
