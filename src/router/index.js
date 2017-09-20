@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Main from '@/components/Main'
 import MyTests from '@/components/MyTests'
+import MyClasses from '@/components/MyClasses'
 import CreateTest from '@/components/CreateTest'
 import CreateClass from '@/components/CreateClass'
 import FinishSignUp from '@/components/FinishSignUp'
@@ -71,6 +72,12 @@ export default new Router({
     path: '/prova/',
     name: 'CreateTest',
     component: CreateTest,
+    beforeEnter: onlyTeacher
+  },
+  {
+    path: '/turmas',
+    name: 'MyClasses',
+    component: MyClasses,
     beforeEnter: onlyTeacher
   },
   {
