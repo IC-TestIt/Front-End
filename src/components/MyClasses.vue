@@ -68,7 +68,7 @@
                         <td class="text-xs-center">{{ props.item.description }}</td>
                         <td class="text-xs-center">{{ props.item.size }}</td>
                         <td class="text-xs-center">
-                          <v-btn class="blue--text darken-1" v-on:click="deleteClass(props.item.id)">Apagar</v-btn>
+                          <v-btn class="red white--text darken-1" v-on:click="deleteClass(props.item.id)">Apagar</v-btn>
                         </td>
                     </template>
                 </v-data-table>
@@ -100,7 +100,6 @@ export default {
     getClasses () {
       baseService.get(`/teacher/${auth.teacherId()}/classes`).then(r => {
         if (r.status === 200) {
-          console.log(r.data)
           this.classes = r.data.map(item => {
             return {
               description: item.description,
@@ -114,8 +113,7 @@ export default {
       })
     },
     deleteClass (id) {
-      baseService.delet(`/class/${id}`).then(r => {
-        console.log(r.data)
+      baseService.del(`/class/${id}`).then(r => {
         this.getClasses()
       })
     },
@@ -125,10 +123,11 @@ export default {
   }
 }
 </script>
+
 <style>
 
-.title{
-    color: #006;
+.title {
+  color: #006;
 }
 
-</style
+</style>
