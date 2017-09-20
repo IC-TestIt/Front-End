@@ -31,7 +31,7 @@ const put = (route, data) => {
   return http.put(route, data)
 }
 
-const delet = (route) => {
+const del = (route) => {
   return http.delete(route)
 }
 
@@ -40,5 +40,5 @@ export default {
   get,
   post,
   put,
-  delet
+  del
 }
