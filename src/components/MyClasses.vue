@@ -64,9 +64,12 @@
                     hide-actions
                     class="white elevation-1"
                 >
-                    <template slot="items" scope="props">                       
+                    <template slot="items" scope="props">
                         <td class="text-xs-center">{{ props.item.description }}</td>
                         <td class="text-xs-center">{{ props.item.size }}</td>
+                        <td class="text-xs-center">
+                          <v-btn class="blue--text darken-1" v-on:click="deleteClass(props.item.id)">Apagar</v-btn>
+                        </td>
                     </template>
                 </v-data-table>
             </v-flex>
@@ -84,7 +87,8 @@ export default {
     return {
       headers: [
         {text: 'Descrição', value: 'description', align: 'center'},
-        {text: 'Quantidade de alunos', value: 'size', align: 'center'}
+        {text: 'Quantidade de alunos', value: 'size', align: 'center'},
+        {text: 'Ações', value: '', align: 'center'}
       ],
       classes: []
     }
@@ -107,6 +111,12 @@ export default {
         } else {
           this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro na obtenção de turmas!'})
         }
+      })
+    },
+    deleteClass (id) {
+      baseService.delet(`/class/${id}`).then(r => {
+        console.log(r.data)
+        this.getClasses()
       })
     },
     linkes () {
