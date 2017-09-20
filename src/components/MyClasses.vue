@@ -2,7 +2,7 @@
     <div class="my-classes">
         <v-layout row wrap>
             <v-flex xs12>
-                <h3 class="my-classes-title text-xs-center ma-1 pt-4">Minhas Avaliações</h3>
+                <h3 class="my-classes-title text-xs-center ma-1 pt-4">Minhas Turmas</h3>
             </v-flex>
             <v-flex xs12 md4>
                 <v-card class="green darken-1 white--text ma-5 text-xs-center">
@@ -11,7 +11,7 @@
                             <div class="headline">{{this.classes.length}}</div>
                         </v-flex>
                         <v-flex xs12>
-                            <div class="pt-3 ">Total de Avaliações</div>
+                            <div class="pt-3 ">Total de Turmas</div>
                         </v-flex>
                     </v-card-title>
                 </v-card>
@@ -23,7 +23,7 @@
                             <div class="headline">0</div>
                         </v-flex>
                         <v-flex xs12>
-                            <div class="pt-3">Avaliações Realizadas</div>
+                            <div class="pt-3">Total de Alunos das Turmas</div>
                         </v-flex>
                     </v-card-title>
                 </v-card>
@@ -35,7 +35,7 @@
                             <div class="headline">0</div>
                         </v-flex>
                         <v-flex xs12>
-                            <div class="pt-3">Avaliações Pendentes</div>
+                            <div class="pt-3">Total de Turmas sem Alunos</div>
                         </v-flex>
                     </v-card-title>
                 </v-card>
@@ -93,6 +93,7 @@ export default {
     deleteClass (id) {
       baseService.delet(`/class/${id}`).then(r => {
         console.log(r.data)
+        this.getClasses()
       })
     }
   }
