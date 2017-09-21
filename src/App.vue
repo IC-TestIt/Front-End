@@ -46,7 +46,7 @@ export default {
   },
   data () {
     return {
-      drawer: true,
+      drawer: false,
       auth: auth
     }
   },
