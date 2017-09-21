@@ -64,9 +64,12 @@
                     hide-actions
                     class="white elevation-1"
                 >
-                    <template slot="items" scope="props">                       
+                    <template slot="items" scope="props">
                         <td class="text-xs-center">{{ props.item.description }}</td>
                         <td class="text-xs-center">{{ props.item.size }}</td>
+                        <td class="text-xs-center">
+                          <v-btn class="red white--text darken-1" v-on:click="deleteClass(props.item.id)">Apagar</v-btn>
+                        </td>
                     </template>
                 </v-data-table>
             </v-flex>
@@ -84,7 +87,8 @@ export default {
     return {
       headers: [
         {text: 'Descrição', value: 'description', align: 'center'},
-        {text: 'Quantidade de alunos', value: 'size', align: 'center'}
+        {text: 'Quantidade de alunos', value: 'size', align: 'center'},
+        {text: 'Ações', value: '', align: 'center'}
       ],
       classes: []
     }
@@ -96,7 +100,6 @@ export default {
     getClasses () {
       baseService.get(`/teacher/${auth.teacherId()}/classes`).then(r => {
         if (r.status === 200) {
-          console.log(r.data)
           this.classes = r.data.map(item => {
             return {
               description: item.description,
@@ -109,16 +112,22 @@ export default {
         }
       })
     },
+    deleteClass (id) {
+      baseService.del(`/class/${id}`).then(r => {
+        this.getClasses()
+      })
+    },
     linkes () {
       this.$router.push('/turma')
     }
   }
 }
 </script>
+
 <style>
 
-.title{
-    color: #006;
+.title {
+  color: #006;
 }
 
-</style
+</style>
