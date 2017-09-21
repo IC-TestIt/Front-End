@@ -33,17 +33,6 @@
         {{ minutes.time }}
       </v-progress-circular>
     </v-flex>
-    <v-flex md2 v-if="!timeOut">
-        <v-progress-circular
-         v-bind:size="70"
-         v-bind:width="10"
-         v-bind:rotate="-90"
-         v-bind:value="seconds.value"
-         class="green--text"
-        >
-          {{ seconds.time }}
-        </v-progress-circular>
-    </v-flex>
     <v-flex md4 v-if="!timeOut">
     </v-flex>
     </v-layout>
