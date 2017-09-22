@@ -28,7 +28,7 @@ function onlyUser (t, f, next) {
 
 function redirect (to, from, next, condition) {
   if (!condition) {
-    next('/')
+    next('/logout')
   } else {
     next()
   }
