@@ -16,9 +16,7 @@
                  <v-icon class="world">{{ item.action }}</v-icon>
                </v-list-tile-action>
                <v-list-tile-content>
-                 <a :href="item.link">
-                 <v-list-tile-title class="world" :href="item.link">{{ item.title }}</v-list-tile-title>
-                 </a>
+                 <v-list-tile-title class="world" :click="redirect(item.link)">{{ item.title }}</v-list-tile-title>
                </v-list-tile-content>
                <v-list-tile-action>
                  <v-icon>keyboard_arrow_down</v-icon>
@@ -53,8 +51,8 @@ export default {
           action: 'create',
           title: 'PROVAS',
           items: [
-                { title: 'Cadastrar', link: 'http://localhost:8080/#/prova' },
-                { title: 'Minhas Provas', link: 'http://localhost:8080/#/provas' }
+            { title: 'Cadastrar', link: '/prova' },
+            { title: 'Minhas Provas', link: '/provas' }
           ]
         },
         {
@@ -62,7 +60,8 @@ export default {
           title: 'TURMAS',
           active: false,
           items: [
-                { title: 'Criar Turma', link: 'http://localhost:8080/#/turma' }
+            { title: 'Criar Turma', link: '/turma' },
+            { title: 'Minhas Turmas', link: '/turmas' }
           ],
           right: true,
           rightDrawer: true
@@ -78,6 +77,9 @@ export default {
           this.name = response.data.name
         }
       })
+    },
+    redirect (link) {
+      this.$router.push(link)
     }
   },
   mounted () {
