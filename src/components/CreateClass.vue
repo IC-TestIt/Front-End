@@ -1,19 +1,37 @@
 <template lang="html">
   <div class="createClass">
     <v-container fluid>
-      <v-layout row justify-space-around>
-        <v-flex xs5 class="ma-3 pa-3 createClass-form">
+      <v-layout left  class="">
+        <v-flex  class="pl-1 ">
+          <v-data-table v-bind:headers="headers" :items="students" hide-actions class="elevation-1 createClass-table">
+            <template slot="items" scope="props">
+              <td class="text-xs-left">{{ props.item.name }}</td>
+              <td class="text-xs-center">{{ props.item.email }}</td>
+              <td class="text-xs-center">{{ props.item.identifier }}</td>
+            </template>
+          </v-data-table>
+        </v-flex>
+      </v-layout>
+      
+      <v-layout  class="createClass-layout-form" right>
+      
+        <v-flex v-show="!hidden" class="pa-3 createClass-form ">
           <div class="text-xs-center createClass-subtitle">
             <span>Cadastrar Turma</span>
           </div>
           <form class="createClass-class" v-on:submit="createClass($event)">
             <v-text-field label="Descrição da Turma" v-model="room.description"></v-text-field>
             <div class="text-xs-center">
-              <v-btn primary dark type="submit" :loading="loading1">Cadastrar</v-btn>
+              <v-btn  primary @click="hidden = !hidden" dark type="submit" :loading="loading1">
+                    {{ hidden ? 'Cadastrar' : 'Cadastrar' }}
+              </v-btn>
             </div>
           </form>
-        </v-flex>
-        <v-flex xs7 class="ma-3 ml-1 pa-3 createClass-form">
+        </v-flex>        
+      </v-layout>
+      
+      <v-layout right class=" createClass-layout-form2">
+        <v-flex  class=" pa-3 createClass-form2 " v-show="hidden">
           <div class="text-xs-center createClass-subtitle">
             <span>Adicionar Aluno</span>
           </div>
@@ -27,17 +45,7 @@
           </form>
         </v-flex>
       </v-layout>
-      <v-layout justify-space-around class="">
-        <v-flex xs12 class="ma-1 pa-1">
-          <v-data-table v-bind:headers="headers" :items="students" hide-actions class="elevation-1 createClass-table">
-            <template slot="items" scope="props">
-              <td class="text-xs-left">{{ props.item.name }}</td>
-              <td class="text-xs-center">{{ props.item.email }}</td>
-              <td class="text-xs-center">{{ props.item.identifier }}</td>
-            </template>
-          </v-data-table>
-        </v-flex>
-      </v-layout>
+     
     </v-container>
   </div>
 </template>
@@ -50,7 +58,9 @@ export default {
   name: 'vclass',
   data () {
     return {
+      hidden: false,
       room: {
+
         description: null,
         teacherId: null
       },
@@ -86,13 +96,14 @@ export default {
       baseService.post(`/class`, this.room).then(r => {
         if (r.status === 200) {
           this.classId = r.data.classId
-          window.location.href += '/' + this.classId
+          /* window.location.href += '/' + this.classId */
           this.$toastr('info', {position: 'toast-top-right', msg: 'Turma criada com Sucesso'})
         }
         this.loading1 = false
       }).catch(e => {
         this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro ao cadastrar a Turma'})
         this.loading1 = false
+        this.hidden = !this.hidden
       })
     },
     addStudent: function (e) {
@@ -155,7 +166,7 @@ export default {
 }
 
 .createClass-AddStudent {
-  height: 30vh;
+  height: 50vh;
   overflow-y: scroll;
 }
 
@@ -163,13 +174,24 @@ export default {
   background-color: #FAFAFA;
   padding: 20px;
   box-shadow: 1px 1px 1px #888888;
+  margin-top: 13vh;
+  margin-left: 15vh;
+}
+
+.createClass-form2 {
+  background-color: #FAFAFA;
+  padding: 20px;
+  box-shadow: 1px 1px 1px #888888;
+
 }
 
 .createClass-table {
   background-color: #FAFAFA;
   overflow-y: scroll;
-  height: 28vh;
+  height: 68vh;
   box-shadow: 1px 1px 1px #888888;
+  width: 70vh;
+  
 }
 
 .createClass-subtitle {
@@ -182,5 +204,23 @@ export default {
   margin-bottom: 5px;
 }
 
+.createClass-layout-form{
+  width: 80vh;    
+}
+
+.createClass-layout-form2{
+  width: 70vh;
+  height: 60vh;
+  margin-left: 5vh;
+
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.25s ease-out;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 
 </style>
