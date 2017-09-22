@@ -16,9 +16,7 @@
                  <v-icon class="world">{{ item.action }}</v-icon>
                </v-list-tile-action>
                <v-list-tile-content>
-                 <a :href="item.link">
-                 <v-list-tile-title class="world" :href="item.link">{{ item.title }}</v-list-tile-title>
-                 </a>
+                 <v-list-tile-title class="world" :click="redirect(item.link)">{{ item.title }}</v-list-tile-title>
                </v-list-tile-content>
                <v-list-tile-action>
                  <v-icon>keyboard_arrow_down</v-icon>
@@ -55,10 +53,9 @@ export default {
         },
         {
           action: 'create',
-          title: 'PROVAS',
+          title: 'AVALIAÇÕES',
           items: [
-                { title: 'Realizar', link: 'http://localhost:8080/#/realizar/1' },
-                { title: 'Minhas Provas', link: 'http://localhost:8080/#/provas' }
+            { title: 'Minhas Avaliações', link: '/avaliacoes' }
           ],
           right: true,
           rightDrawer: true
@@ -74,6 +71,9 @@ export default {
           this.name = response.data.name
         }
       })
+    },
+    redirect (link) {
+      this.$router.push(link)
     }
   },
   mounted () {
