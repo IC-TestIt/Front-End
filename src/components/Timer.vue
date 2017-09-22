@@ -2,47 +2,36 @@
   <v-layout row>
   <v-flex md2 v-if="!timeOut">
     <v-progress-circular
-      v-bind:size="70"
+      v-bind:size="80"
       v-bind:width="10"
       v-bind:rotate="-90"
       v-bind:value="days.value"
       class="indigo--text"
     >
-      {{ days.time }}
+      {{ days.time }} Dias
     </v-progress-circular>
   </v-flex>
   <v-flex md2 v-if="!timeOut">
     <v-progress-circular
-      v-bind:size="70"
+      v-bind:size="80"
       v-bind:width="10"
       v-bind:rotate="-90"
       v-bind:value="hours.value"
       class="green--text"
     >
-        {{ hours.time }}
+        {{ hours.time }} Horas
     </v-progress-circular>
    </v-flex>
    <v-flex md2 v-if="!timeOut">
       <v-progress-circular
-       v-bind:size="70"
+       v-bind:size="80"
        v-bind:width="10"
        v-bind:rotate="-90"
        v-bind:value="minutes.value"
        class="indigo--text"
       >
-        {{ minutes.time }}
+        {{ minutes.time }} Minutos
       </v-progress-circular>
-    </v-flex>
-    <v-flex md2 v-if="!timeOut">
-        <v-progress-circular
-         v-bind:size="70"
-         v-bind:width="10"
-         v-bind:rotate="-90"
-         v-bind:value="seconds.value"
-         class="green--text"
-        >
-          {{ seconds.time }}
-        </v-progress-circular>
     </v-flex>
     <v-flex md4 v-if="!timeOut">
     </v-flex>
