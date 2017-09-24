@@ -119,6 +119,9 @@ export default {
       let exam = {answeredQuestions: this.realizedQuestions}
       baseService.put(`/exam/save/${id}`, exam).then(r => {
         console.log(r.data)
+        if (r.status === 200) {
+          this.$toastr('info', {position: 'toast-top-right', msg: 'Prova salva com sucesso'})
+        }
       })
     },
     endExam () {
