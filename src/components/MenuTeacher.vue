@@ -1,5 +1,5 @@
 <template>
-  <div class="menuBar">        
+  <div class="menuBar">
        <v-toolbar flat class="transparent">
            <v-list class="pa-0">
              <v-list-tile avatar tag="div" class="indigo darken-4 py-3">
@@ -16,7 +16,7 @@
                  <v-icon class="world">{{ item.action }}</v-icon>
                </v-list-tile-action>
                <v-list-tile-content>
-                 <v-list-tile-title class="world" :click="redirect(item.link)">{{ item.title }}</v-list-tile-title>
+                 <v-list-tile-title class="world" :to="item.link">{{ item.title }}</v-list-tile-title>
                </v-list-tile-content>
                <v-list-tile-action>
                  <v-icon>keyboard_arrow_down</v-icon>
@@ -33,7 +33,7 @@
                </v-list-tile-action>
              </v-list-tile>
            </v-list-group>
-         </v-list>         
+         </v-list>
   </div>
 </template>
 
@@ -77,9 +77,6 @@ export default {
           this.name = response.data.name
         }
       })
-    },
-    redirect (link) {
-      this.$router.push(link)
     }
   },
   mounted () {
@@ -88,4 +85,3 @@ export default {
 }
 
 </script>
-
