@@ -122,6 +122,8 @@ export default {
         if (r.status === 200) {
           this.$toastr('info', {position: 'toast-top-right', msg: 'Prova salva com sucesso'})
         }
+      }).catch(e => {
+        this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro ao salvar a prova'})
       })
     },
     endExam () {
