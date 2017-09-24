@@ -11,16 +11,12 @@
       </v-stepper-header>
       <v-stepper-content step="1">
         <v-flex xs12 class="text-xs-right">
-          <v-btn primary @click.native="step = 2" v-if="testId !== 0">Proximo</v-btn>
+          <v-btn primary @click.native="step = 2">Proximo</v-btn>
         </v-flex>
         <testInformations @get-test-id="getTestId"></testInformations>
       </v-stepper-content>
       <v-stepper-content step="2">
-        <v-flex xs12 class="text-xs-right">
-          <v-btn primary @click.native="step = 3">Proximo</v-btn>
-          <v-btn flat @click.native="step = 1">Voltar</v-btn>
-        </v-flex>
-        <addQuestions :testId="testId"></addQuestions>
+        <addQuestions :testId="testId" @next-step="nextStep" @previous-step="previousStep"></addQuestions>
       </v-stepper-content>
       <v-stepper-content step="3">
         <v-flex xs12 class="text-xs-right">
@@ -54,6 +50,12 @@ export default {
   methods: {
     getTestId: function (id) {
       this.testId = id
+    },
+    nextStep () {
+      this.step = 3
+    },
+    previousStep () {
+      this.step = 1
     },
     step1Complete: function () {
       return this.testId !== 0
