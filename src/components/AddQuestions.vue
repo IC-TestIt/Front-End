@@ -119,6 +119,7 @@ export default {
       description: '',
       value: '',
       answer: '',
+      order: '',
       keywords: [],
       isAlternative: false,
       testId: '',
@@ -145,9 +146,23 @@ export default {
         question.order = index
         if (!question.isAlternative && Array.isArray(question.keywords) && question.keywords.length > 0) {
           question.keywords = question.keywords.reduce((total, k) => total + ',' + k)
+        } else if (question.keywords.length === 0) {
+          question.keywords = ''
         }
       })
-      console.log(this.questions)
+      let mappedQuestions = this.questions.map((question) => {
+        return {
+          id: question.id,
+          description: question.description,
+          value: question.value,
+          testId: question.testId,
+          answer: question.answer,
+          keywords: question.keywords,
+          order: question.order,
+          alternatives: question.alternatives
+        }
+      })
+      console.log(mappedQuestions)
       baseService.post(`/question`, this.questions).then(r => {
         if (r.status === 200) {
           sucess = true
