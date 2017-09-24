@@ -28,13 +28,14 @@ function onlyUser (t, f, next) {
 
 function redirect (to, from, next, condition) {
   if (!condition) {
-    next('/')
+    next('/home')
   } else {
     next()
   }
 }
 
 export default new Router({
+  mode: 'history',
   routes: [{
     path: '/',
     name: 'Home',
