@@ -16,7 +16,7 @@
                  <v-icon class="world">{{ item.action }}</v-icon>
                </v-list-tile-action>
                <v-list-tile-content>
-                 <v-list-tile-title class="world" :click="redirect(item.link)">{{ item.title }}</v-list-tile-title>
+                 <v-list-tile-title class="world" :to="item.link">{{ item.title }}</v-list-tile-title>
                </v-list-tile-content>
                <v-list-tile-action>
                  <v-icon>keyboard_arrow_down</v-icon>
@@ -71,9 +71,6 @@ export default {
           this.name = response.data.name
         }
       })
-    },
-    redirect (link) {
-      this.$router.push(link)
     }
   },
   mounted () {
