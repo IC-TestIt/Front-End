@@ -31,7 +31,7 @@
             <v-btn class="indigo darken-4" dark v-on:click="saveExam()">Salvar Prova</v-btn>
           </v-flex>
           <v-flex md2 v-if="!timeOut && exam.status !== 2">
-            <v-btn class="green" dark v-on:click="endExam()">Entregar Prova</v-btn>
+            <v-btn class="green" dark v-on:click="endExam()">Finalizar Prova</v-btn>
           </v-flex>
         </v-layout>
       </div>
