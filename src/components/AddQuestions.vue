@@ -6,13 +6,16 @@
           <div class="">
             <v-flex xs12 class="ma-1 pa-2">
               <v-layout row wrap>
-                <v-flex class="ma-1 pa-2" xs8>
+                <v-flex class="" xs4>
                   <DynamicList @get-current='getCurrentQuestion' @get-index='getIndex' :list='questions' :current='currentQuestion'></DynamicList>
                 </v-flex>
-                <v-flex class="ma-1 pa-2" xs3>
+                <v-flex xs8 class="text-xs-right">
+                  <v-btn type="submit" primary :loading="loading" v-on:click="next()">Proximo</v-btn>
+                  <v-btn flat v-on:click="previous()">Voltar</v-btn>
+                </v-flex>
+                <v-flex class="" xs6>
                   <v-btn class="green" v-on:click="addQuestion()" fab small dark><v-icon>add</v-icon></v-btn>
                   <v-btn class="red" v-on:click="removeQuestion()" fab small dark><v-icon>remove</v-icon></v-btn>
-                  <v-btn primary type="submit" :loading="loading" dark>salvar</v-btn>
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -29,12 +32,15 @@
             </v-flex>
             <v-flex xs12>
               <v-layout row wrap>
-                <v-flex xs5 class="mr-1 pa-2">
+                <v-flex xs5 class="ma-1 pa-2">
                   <v-text-field label="Descrição da Questão" v-model="currentQuestion.description" multi-line></v-text-field>
                 </v-flex>
                 <v-flex xs5 class="ma-1 pa-2">
                   <v-text-field label="Resposta da Questão" v-if="!currentQuestion.isAlternative" v-model="currentQuestion.answer" multi-line></v-text-field>
                 </v-flex>
+                <!-- <v-flex xs5 class="ma-1 pa-2">
+                  <v-text-field label="Valor da Questão" v-model="currentQuestion.value"></v-text-field>
+                </v-flex> -->
               </v-layout>
             </v-flex>
             <v-flex xs12 class="ma-1 pa-2">
@@ -55,11 +61,6 @@
                   </v-layout>
                 </v-flex>
               </v-layout>
-              <v-layout row wrap>
-                <v-flex xs5 class="mr-1 pa-2">
-                  <v-text-field label="Valor da Questão" v-model="currentQuestion.value"></v-text-field>
-                </v-flex>
-              </v-layout>
             </v-flex>
             <div class="" v-for="(a, index) in currentQuestion.alternatives" :key="a.key" v-if="currentQuestion.isAlternative">
               <v-layout row wrap>
@@ -76,6 +77,9 @@
                 </v-flex>
               </v-layout>
             </div>
+            <v-flex xs5 class="ma-1 pa-2">
+              <v-text-field label="Valor da Questão" v-model="currentQuestion.value"></v-text-field>
+            </v-flex>
           </div>
         </form>
       </v-layout>
@@ -99,6 +103,7 @@ export default {
         description: '',
         value: '',
         answer: '',
+        order: '',
         keywords: [],
         isAlternative: false,
         testId: '',
@@ -135,13 +140,14 @@ export default {
       let id = this.testId
       let sucess = true
       this.loading = true
-      this.questions.forEach(function (question) {
+      this.questions.forEach(function (question, index) {
         question.testId = id
-        if (!question.isAlternative) {
+        question.order = index
+        if (!question.isAlternative && Array.isArray(question.keywords) && question.keywords.length > 0) {
           question.keywords = question.keywords.reduce((total, k) => total + ',' + k)
         }
       })
-      console.log(this.questions[0].keywords)
+      console.log(this.questions)
       baseService.post(`/question`, this.questions).then(r => {
         if (r.status === 200) {
           sucess = true
@@ -167,6 +173,7 @@ export default {
         description: '',
         value: '',
         testId: this.testId,
+        order: '',
         keywords: [],
         answer: '',
         isAlternative: false,
@@ -208,7 +215,7 @@ export default {
       return length < 5
     },
     addKeyword () {
-      if (this.keyword !== '' && !(/\s|,|\./g.test(this.keyword)) && /\w{2,}/.test(this.keyword)) {
+      if (this.keyword !== '' && !(/\s|,|\./g.test(this.keyword))) {
         this.currentQuestion.keywords.push(this.keyword)
       } else {
         this.$toastr('error', {position: 'toast-top-right', msg: 'Palavra Chave Invalida!'})
@@ -220,6 +227,12 @@ export default {
         return w === word
       })
       this.currentQuestion.keywords.splice(index, 1)
+    },
+    next () {
+      this.$emit('next-step')
+    },
+    previous () {
+      this.$emit('previous-step')
     }
   }
 }
