@@ -4,7 +4,7 @@
            <v-list class="pa-0">
              <v-list-tile avatar tag="div" class="indigo darken-4 py-3">
                <v-list-tile-content>
-                 <v-list-tile-title  class="white--text headline" v-model="name">Bem vindo, {{ name }}</v-list-tile-title>
+                 <v-list-tile-title  class="white--text headline" v-model="name">{{ name }}</v-list-tile-title>
                </v-list-tile-content>
              </v-list-tile>
            </v-list>
@@ -51,8 +51,8 @@ export default {
           action: 'create',
           title: 'PROVAS',
           items: [
-            { title: 'Cadastrar', link: '/prova' },
-            { title: 'Minhas Provas', link: '/provas' }
+            { title: 'Cadastrar', link: '/#/prova' },
+            { title: 'Minhas Provas', link: '/#/provas' }
           ]
         },
         {
@@ -60,8 +60,8 @@ export default {
           title: 'TURMAS',
           active: false,
           items: [
-            { title: 'Criar Turma', link: '/turma' },
-            { title: 'Minhas Turmas', link: '/turmas' }
+            { title: 'Criar Turma', link: '/#/turma' },
+            { title: 'Minhas Turmas', link: '/#/turmas' }
           ],
           right: true,
           rightDrawer: true
