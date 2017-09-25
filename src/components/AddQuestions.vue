@@ -4,23 +4,23 @@
       <v-layout column wrap>
         <form class="createTest-QuestionForm" v-on:submit="step2($event)">
           <div class="">
+            <!-- <v-flex xs12 class="ma-1 pa-2 text-xs-center">
+              <h6>Questão {{index}}</h6>
+            </v-flex> -->
             <v-flex xs12 class="ma-1 pa-2">
               <v-layout row wrap>
-                <v-flex class="" xs4>
+                <v-flex class="" xs6>
                   <DynamicList @get-current='getCurrentQuestion' @get-index='getIndex' :list='questions' :current='currentQuestion'></DynamicList>
                 </v-flex>
-                <v-flex xs8 class="text-xs-right">
-                  <v-btn type="submit" primary :loading="loading" v-on:click="next()">Proximo</v-btn>
-                  <v-btn flat v-on:click="previous()">Voltar</v-btn>
-                </v-flex>
-                <v-flex class="" xs6>
+                <v-flex class="" xs2>
                   <v-btn class="green" v-on:click="addQuestion()" fab small dark><v-icon>add</v-icon></v-btn>
                   <v-btn class="red" v-on:click="removeQuestion()" fab small dark><v-icon>remove</v-icon></v-btn>
                 </v-flex>
+                <v-flex xs4 class="text-xs-right">
+                  <v-btn type="submit" primary :loading="loading" v-on:click="next()">Proximo</v-btn>
+                  <v-btn flat v-on:click="previous()">Voltar</v-btn>
+                </v-flex>
               </v-layout>
-            </v-flex>
-            <v-flex xs12 class="ma-1 pa-2 text-xs-center">
-              <h6>Questão {{index}}</h6>
             </v-flex>
             <v-flex xs8 class="ma-1 pa-2">
               <v-layout row wrap class="dark--text">
@@ -150,19 +150,6 @@ export default {
           question.keywords = ''
         }
       })
-      let mappedQuestions = this.questions.map((question) => {
-        return {
-          id: question.id,
-          description: question.description,
-          value: question.value,
-          testId: question.testId,
-          answer: question.answer,
-          keywords: question.keywords,
-          order: question.order,
-          alternatives: question.alternatives
-        }
-      })
-      console.log(mappedQuestions)
       baseService.post(`/question`, this.questions).then(r => {
         if (r.status === 200) {
           sucess = true
@@ -200,6 +187,17 @@ export default {
       if (length > 1) {
         this.currentQuestion = this.questions[this.index]
         this.questions.splice(this.index, 1)
+      } else if (length === 1) {
+        this.questions[0] = {
+          description: '',
+          value: '',
+          testId: this.testId,
+          order: '',
+          keywords: [],
+          answer: '',
+          isAlternative: false,
+          alternatives: [{description: '', isCorrect: false}]
+        }
       }
     },
     lastQuestion: function () {
@@ -223,6 +221,11 @@ export default {
       let length = question.alternatives.length
       if (length > 1) {
         question.alternatives.splice(index, 1)
+      } else if (length === 1) {
+        question.alternatives = [{
+          description: '',
+          isCorrect: false
+        }]
       }
     },
     alternativeLimit: function (question) {
