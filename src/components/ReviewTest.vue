@@ -3,25 +3,7 @@
     <v-card class="lighten-1 z-depth-1 mb-5 pa-5" height="150px">
       <v-layout align-center="true" justify-center="true">
         <v-flex xs3>
-          <v-dialog v-model="dialog" persistent hide-overlay>
-            <v-btn class="green darken-1 pa-2" slot="activator" dark>Associar Prova
-              <v-icon right dark>compare_arrows</v-icon>
-            </v-btn>
-            <v-card>
-              <v-card-title>Selecione a Turma</v-card-title>
-              <v-divider></v-divider>
-              <v-card-text style="height: 300px">
-                <v-select v-bind:items="classes" v-model="test.classIds" label="Turma" multiple chips item-text="description" item-value="id" return-object></v-select>
-                <v-text-field v-model="test.beginDate" label="Data de Inicio" type="date" class="input-group--focused"></v-text-field>
-                <v-text-field v-model="test.endDate" label="Data Final" type="date" class="input-group--focused"></v-text-field>
-              </v-card-text>
-              <v-divider></v-divider>
-              <v-card-actions>
-                <v-btn class="blue--text darken-1" flat @click="dialog = false">Fechar</v-btn>
-                <v-btn class="blue--text darken-1" flat @click="save()" :loading="loading">Salvar</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
+          <AssociateTest :classes="classes" :test="test" :save="save" :testId="testId"></AssociateTest>
         </v-flex>
         <v-flex xs3>
           <v-btn class="indigo darken-1 pa-2" dark v-on:click="viewTest()">Visualizar Prova
@@ -42,14 +24,16 @@
 import baseService from '../services/baseService'
 import auth from '../auth'
 import pdfService from '../services/pdfService'
+import AssociateTest from './AssociateTest'
 
 export default {
   name: 'reviewTest',
   props: ['testId'],
+  components: {
+    AssociateTest
+  },
   data: () => ({
     classes: [],
-    dialog: false,
-    loading: false,
     test: {
       classIds: [],
       beginDate: null,
