@@ -35,7 +35,7 @@ function redirect (to, from, next, condition) {
 }
 
 export default new Router({
-  mode: 'history',
+  // mode: 'history',
   routes: [{
     path: '/',
     name: 'Home',
