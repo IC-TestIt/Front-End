@@ -4,7 +4,7 @@
       <div>
         <v-layout row-wrap>
           <v-flex xs6>
-            <h2 class='realizeExam-exam-title'>{{ exam.title }}</h2>
+            <h2 class='realizeExam-exam-title'>{{ exam.title }} - {{ exam.description }}</h2>
           </v-flex>
           <v-flex xs6>
             <DynamicList v-show="exam.status !== 2" @get-current='getCurrentQuestion' @get-index='getIndex' :list='exam.questions' :current='currentQuestion'></DynamicList>
