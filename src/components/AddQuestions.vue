@@ -2,31 +2,28 @@
   <div class="addQuestion">
     <div class="white lighten-1 z-depth-1">
       <v-layout column wrap>
-        <form class="createTest-QuestionForm" v-on:submit="step2($event)">
+        <form class="createTest-QuestionForm" @submit="step2($event)">
           <div class="">
-            <!-- <v-flex xs12 class="ma-1 pa-2 text-xs-center">
-              <h6>Questão {{index}}</h6>
-            </v-flex> -->
             <v-flex xs12 class="ma-1 pa-2">
               <v-layout row wrap>
-                <v-flex class="" xs6>
+                <v-flex class="" xs5>
                   <DynamicList @get-current='getCurrentQuestion' @get-index='getIndex' :list='questions' :current='currentQuestion'></DynamicList>
                 </v-flex>
-                <v-flex class="" xs2>
-                  <v-btn class="green" v-on:click="addQuestion()" fab small dark><v-icon>add</v-icon></v-btn>
-                  <v-btn class="red" v-on:click="removeQuestion()" fab small dark><v-icon>remove</v-icon></v-btn>
+                <v-flex class="" xs4>
+                  <v-btn class="green" @click="questionModule.addQuestion(questions)" dark>Adicionar Questão</v-btn>
+                  <v-btn class="red" @click="questionModule.removeQuestion(questions, currentQuestion, index)" dark>Remover Questão</v-btn>
                 </v-flex>
-                <v-flex xs4 class="text-xs-right">
-                  <v-btn type="submit" primary :loading="loading" v-on:click="next()">Proximo</v-btn>
-                  <v-btn flat v-on:click="previous()">Voltar</v-btn>
+                <v-flex xs3 class="text-xs-right">
+                  <v-btn type="submit" primary :loading="loading" @click="next()">Proximo</v-btn>
+                  <v-btn flat @click="previous()">Voltar</v-btn>
                 </v-flex>
               </v-layout>
             </v-flex>
             <v-flex xs8 class="ma-1 pa-2">
               <v-layout row wrap class="dark--text">
-                <v-flex xs12 sm6 class="py-2">
+                <v-flex xs3 class="py-2">
                   <p>Tipo de Questão</p>
-                  <v-btn-toggle v-bind:items="typeQuestion" v-model="currentQuestion.isAlternative"></v-btn-toggle>
+                  <v-btn-toggle :items="typeQuestion" v-model="currentQuestion.isAlternative"></v-btn-toggle>
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -38,9 +35,6 @@
                 <v-flex xs5 class="ma-1 pa-2">
                   <v-text-field label="Resposta da Questão" v-if="!currentQuestion.isAlternative" v-model="currentQuestion.answer" multi-line></v-text-field>
                 </v-flex>
-                <!-- <v-flex xs5 class="ma-1 pa-2">
-                  <v-text-field label="Valor da Questão" v-model="currentQuestion.value"></v-text-field>
-                </v-flex> -->
               </v-layout>
             </v-flex>
             <v-flex xs12 class="ma-1 pa-2">
@@ -49,13 +43,13 @@
                   <v-text-field v-if="!currentQuestion.isAlternative" label="Palavras chave" v-model="keyword"></v-text-field>
                 </v-flex>
                 <v-flex xs1 class="ma-1">
-                  <v-btn class="indigo" v-on:click="addKeyword()" v-if="!currentQuestion.isAlternative" fab small dark><v-icon dark>add</v-icon></v-btn>
+                  <v-btn class="indigo" @click="addKeyword()" v-if="!currentQuestion.isAlternative" fab small dark><v-icon dark>add</v-icon></v-btn>
                 </v-flex>
                 <v-flex xs6 class="ma-1">
                   <v-layout row wrap>
                     <div v-for="k in currentQuestion.keywords">
                       <v-flex xs1>
-                        <v-chip class="indigo white--text" close @input="removeChip(k)">{{k}}</v-chip>
+                        <v-chip class="indigo white--text" close @input="removeChip()">{{k}}</v-chip>
                       </v-flex>
                     </div>
                   </v-layout>
@@ -71,15 +65,17 @@
                   <v-radio color="primary" :tabindex="currentQuestion.index" v-model="a.isCorrect" label="Alternativa Correta" :value="true"></v-radio>
                 </v-flex>
                 <v-flex class="ma-1 ml-2 pa-1 pl-2" xs3>
-                  <span class="CreateTest-WarningText" v-if="!alternativeLimit(currentQuestion) && lastAlternative(currentQuestion, index)">O numero maximo de alternativas é 5</span>
-                  <v-btn class="indigo" v-on:click="addAlternative(currentQuestion)" v-if="alternativeLimit(currentQuestion) && lastAlternative(currentQuestion, index)" fab small dark><v-icon dark>add</v-icon></v-btn>
-                  <v-btn class="red" v-on:click="removeAlternative(currentQuestion, index)" fab small dark><v-icon dark>remove</v-icon></v-btn>
+                  <span class="CreateTest-WarningText ma-1 mr-3" v-if="!questionModule.alternativeLimit(currentQuestion) && questionModule.lastAlternative(currentQuestion, index)">O numero maximo de alternativas é 5</span>
+                  <v-btn class="indigo" @click="questionModule.addAlternative(currentQuestion)" v-if="questionModule.alternativeLimit(currentQuestion) && questionModule.lastAlternative(currentQuestion, index)" fab small dark><v-icon dark>add</v-icon></v-btn>
+                  <v-btn class="red" @click="questionModule.removeAlternative(currentQuestion, index)" fab small dark><v-icon dark>remove</v-icon></v-btn>
                 </v-flex>
               </v-layout>
             </div>
-            <v-flex xs5 class="ma-1 pa-2">
-              <v-text-field label="Valor da Questão" v-model="currentQuestion.value"></v-text-field>
-            </v-flex>
+            <v-layout row wrap>
+              <v-flex xs2 class="ml-3 pa-2">
+                <v-text-field label="Valor da Questão" v-model="currentQuestion.value"></v-text-field>
+              </v-flex>
+            </v-layout>
           </div>
         </form>
       </v-layout>
@@ -89,6 +85,7 @@
 <script>
 import baseService from '../services/baseService'
 import DynamicList from './DynamicList'
+import questionModule from '../utils/questionModule'
 
 export default {
   name: 'addQuestion',
@@ -97,6 +94,7 @@ export default {
     DynamicList
   },
   data: () => ({
+    questionModule: questionModule,
     keyword: '',
     questions: [
       {
@@ -169,68 +167,6 @@ export default {
     },
     getIndex (index) {
       this.index = index
-    },
-    addQuestion: function () {
-      this.questions.push({
-        description: '',
-        value: '',
-        testId: this.testId,
-        order: '',
-        keywords: [],
-        answer: '',
-        isAlternative: false,
-        alternatives: [{description: '', isCorrect: false}]
-      })
-    },
-    removeQuestion: function () {
-      let length = this.questions.length
-      if (length > 1) {
-        this.currentQuestion = this.questions[this.index]
-        this.questions.splice(this.index, 1)
-      } else if (length === 1) {
-        this.questions[0] = {
-          description: '',
-          value: '',
-          testId: this.testId,
-          order: '',
-          keywords: [],
-          answer: '',
-          isAlternative: false,
-          alternatives: [{description: '', isCorrect: false}]
-        }
-      }
-    },
-    lastQuestion: function () {
-      let length = this.questions.length
-      return length === (this.index)
-    },
-    addAlternative: function (question) {
-      let length = question.alternatives.length
-      if (length < 5) {
-        question.alternatives.push({
-          description: '',
-          isCorrect: false
-        })
-      }
-    },
-    lastAlternative: function (question, index) {
-      let length = question.alternatives.length
-      return length === (index + 1)
-    },
-    removeAlternative: function (question, index) {
-      let length = question.alternatives.length
-      if (length > 1) {
-        question.alternatives.splice(index, 1)
-      } else if (length === 1) {
-        question.alternatives = [{
-          description: '',
-          isCorrect: false
-        }]
-      }
-    },
-    alternativeLimit: function (question) {
-      let length = question.alternatives.length
-      return length < 5
     },
     addKeyword () {
       if (this.keyword !== '' && !(/\s|,|\./g.test(this.keyword))) {
