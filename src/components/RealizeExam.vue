@@ -3,11 +3,14 @@
     <v-container fluid>
       <div>
         <v-layout row-wrap>
-          <v-flex xs6>
+          <v-flex xs6 >
             <h2 class='realizeExam-exam-title'>{{ exam.title + ' - ' + exam.description}}</h2>
           </v-flex>
-          <v-flex xs6>
-            <DynamicList v-show="exam.status !== 2" @get-current='getCurrentQuestion' @get-index='getIndex' :list='exam.questions' :current='currentQuestion'></DynamicList>
+          <v-flex xs3 v-if="!timeOut && exam.status !== 2">
+            <v-btn class="indigo darken-4" dark v-on:click="saveExam()">Salvar Prova</v-btn>
+          </v-flex>
+          <v-flex xs1 v-if="!timeOut && exam.status !== 2">
+            <v-btn class="green" dark v-on:click="endExam()">Finalizar Prova</v-btn>
           </v-flex>
         </v-layout>
         <v-layout row-wrap>
@@ -27,11 +30,8 @@
           <v-flex md8 v-if="!timeOut && exam.status !== 2">
             <Timer :endTime="exam.endDate" @time-out="getTimeOut"></Timer>
           </v-flex>
-          <v-flex md2 v-if="!timeOut && exam.status !== 2">
-            <v-btn class="indigo darken-4" dark v-on:click="saveExam()">Salvar Prova</v-btn>
-          </v-flex>
-          <v-flex md2 v-if="!timeOut && exam.status !== 2">
-            <v-btn class="green" dark v-on:click="endExam()">Finalizar Prova</v-btn>
+          <v-flex xs6>
+            <DynamicList v-show="exam.status !== 2" @get-current='getCurrentQuestion' @get-index='getIndex' :list='exam.questions' :current='currentQuestion'></DynamicList>
           </v-flex>
         </v-layout>
       </div>
