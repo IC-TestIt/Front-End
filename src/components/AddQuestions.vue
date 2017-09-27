@@ -9,17 +9,13 @@
                 <v-flex class="" xs5>
                   <DynamicList @get-current='getCurrentQuestion' @get-index='getIndex' :list='questions' :current='currentQuestion'></DynamicList>
                 </v-flex>
-                <v-flex class="" xs4>
-                  <v-btn class="green" @click="questionModule.addQuestion(questions)" dark>Adicionar Questão</v-btn>
-                  <v-btn class="red" @click="questionModule.removeQuestion(questions, currentQuestion, index)" dark>Remover Questão</v-btn>
-                </v-flex>
-                <v-flex xs3 class="text-xs-right">
+                <v-flex xs6 class="text-xs-right">
                   <v-btn type="submit" primary :loading="loading" @click="next()">Proximo</v-btn>
                   <v-btn flat @click="previous()">Voltar</v-btn>
                 </v-flex>
               </v-layout>
             </v-flex>
-            <v-flex xs8 class="ma-1 pa-2">
+            <v-flex xs12 class="ma-1 pa-2">
               <v-layout row wrap class="dark--text">
                 <v-flex xs3 class="py-2">
                   <p>Tipo de Questão</p>
@@ -75,7 +71,18 @@
               <v-flex xs2 class="ml-3 pa-2">
                 <v-text-field label="Valor da Questão" v-model="currentQuestion.value"></v-text-field>
               </v-flex>
+              <v-flex xs3></v-flex>
+              <v-flex xs2 class="ml-3 pa-2">
+                <v-btn class="green" @click="questionModule.addQuestion(questions)" dark>Adicionar Questão</v-btn>
+              </v-flex>
+              <v-flex class="py-2 ml-3" xs2 justify-end>
+                <v-btn class="red" @click="questionModule.removeQuestion(questions, currentQuestion, index)" dark>Remover Questão</v-btn>
+              </v-flex>
             </v-layout>
+            <v-flex xs10>
+              <v-layout row wrap justify-end>
+              </v-layout>
+            </v-flex>
           </div>
         </form>
       </v-layout>
