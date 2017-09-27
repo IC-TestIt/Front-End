@@ -1,7 +1,7 @@
 <template>
   <div class="testInformations">
     <form v-on:submit="step1($event)">
-      <v-card class="white lighten-1 z-depth-1 pa-5 ma-3" height="350px">
+      <div class="white lighten-1 z-depth-1 pa-5 ma-3" height="350px">
         <v-layout row wrap>
           <v-flex xs12>
             <h5 class="step-title">Informações Gerais</h5>
@@ -18,7 +18,7 @@
           </v-flex>
         </v-layout>
         <v-btn primary type="submit" :loading="loading" :disabled="step1Complete()">Cadastrar</v-btn>
-      </v-card>
+      </div>
     </form>
   </div>
 </template>
