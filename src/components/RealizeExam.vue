@@ -10,7 +10,26 @@
             <v-btn class="indigo darken-4" dark v-on:click="saveExam()">Salvar Prova</v-btn>
           </v-flex>
           <v-flex xs1 v-if="!timeOut && exam.status !== 2">
-            <v-btn class="green" dark v-on:click="endExam()">Finalizar Prova</v-btn>
+            <v-dialog v-model="dialog" persistent fullscreen>
+                <v-btn class="green" dark v-on:click="endExam()" slot="activator">Finalizar Prova</v-btn>
+                <v-container fluid style="min-height: 0" grid-list-lg>
+                  <v-layout row wrap>
+                    <v-flex xs12>
+                      <v-card class="indigo darken-4 white--text" height="500px">
+                        <v-card-title primary-title>
+                          <div class="realizeExam-modal">Parabéns, você terminou a prova :)</div>
+                        </v-card-title>
+                        <v-card-actions>
+                          <v-flex justify-center>
+                            <v-btn class="mt-5" @click="goMyTests()">Minhas Provas</v-btn>
+                            <v-btn class="mt-5" @click="goHome()">Pagina Inicial</v-btn> 
+                          </v-flex>                       
+                        </v-card-actions>
+                      </v-card>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+            </v-dialog>
           </v-flex>
         </v-layout>
         <v-layout row-wrap>
@@ -58,6 +77,7 @@ export default {
       realizedQuestions: [],
       currentRealizedQuestion: '',
       exam: '',
+      dialog: false,
       index: 1,
       timeOut: false
     }
@@ -133,6 +153,12 @@ export default {
         console.log(r.data)
       })
     },
+    goMyTests () {
+      this.$router.push('/avaliacoes')
+    },
+    goHome () {
+      this.$router.push('/home')
+    },
     getIndex (index) {
       this.index = index
     },
@@ -144,6 +170,12 @@ export default {
 </script>
 
 <style>
+
+.realizeExam-modal {
+  font-size: 90px;
+  text-align: center;
+}
+
 .menus {
   text-align: center;
 }
