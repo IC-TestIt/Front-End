@@ -186,7 +186,7 @@ export default {
 }
 
 .my-tests {
-  overflow-y: scroll;
+  overflow-y: hidden;
   overflow-x: hidden;
 }
 </style>
