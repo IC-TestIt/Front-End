@@ -117,10 +117,6 @@ export default {
   margin-bottom: 5vh;
 }
 
-.home {
-  overflow-y: scroll;
-}
-
 @media print {
   * {
     background: transparent !important;
