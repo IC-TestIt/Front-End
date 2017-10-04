@@ -115,6 +115,25 @@ export default {
   
 }
 
+::-webkit-scrollbar {
+    width: 8px;
+    opacity: transparent;
+}
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2); 
+    border-radius: 5px;
+    background: rgba(220,220,220,0.4); 
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.7); 
+    background: rgba(105,105,105,0.3); 
+}
+
+
+
 .home-text h1 {
   margin-left: 3%;
   font-size: 30px;
@@ -138,12 +157,12 @@ export default {
   margin-top: 20px;
   margin-left: 0;
   width: 30vw;
-  background: #FFF;
+  background: rgba(211,211,211);
   height: 60vh;
   overflow-x: hidden;
   overflow-y: scroll;  
   filter: drop-shadow(0px 0px 10px #000000);
-  
+  border-radius: 6px;  
 }
 
 
