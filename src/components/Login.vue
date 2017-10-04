@@ -62,7 +62,9 @@ export default {
 <style lang="css">
 
 .vlogin {
-  height: 52vh;
+  height: 55vh;
+  border-radius: 6px;
+  background-color: #ECECEC;
 }
 
 .vlogin .input-group__details:before {
