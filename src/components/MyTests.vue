@@ -17,7 +17,7 @@
                 </v-card>
             </v-flex>
             <v-flex xs12 md4>
-                <v-card class="indigo lighten-1 white--text ma-5 text-xs-center">
+                <v-card class="indigo lighten-1 white--text ma-5 text-xs-center">               
                     <v-card-title primary-title>
                         <v-flex xs12>
                             <div class="headline">0</div>
@@ -40,20 +40,34 @@
                     </v-card-title>
                 </v-card>
             </v-flex>
+           
             <v-flex xs0 md12 class="mr-5 ml-5 pa-1">
+                  <v-btn
+                    fab
+                    small
+                    class="red mr-3"
+                    right
+                    absolute
+                    dark
+                    @click="change(items.link)"
+                  >
+                    <v-icon>add</v-icon>
+            </v-btn>
                 <v-data-table
                     v-bind:headers="headers"
                     :items="tests"
                     hide-actions
                     class="white elevation-1"
-                >
+                >                
+                                              
                     <template slot="items" scope="props">
                         <td class="text-xs-center" >{{ props.item.title }}</td>
                         <td class="text-xs-center">{{ props.item.description }}</td>
                         <td class="text-xs-center">
                             <v-dialog v-model="dialog" persistent hide-overlay>
                                 <v-btn primary dark slot="activator" @click.native="dialog = true">Aplicar</v-btn>
-                                <v-card>
+                       
+                                <v-card>                                 
                                     <v-card-title>Selecione a Turma</v-card-title>
                                     <v-divider></v-divider>
                                     <v-card-text style="height: 300px">
@@ -79,7 +93,7 @@
                             </v-dialog>
                         </td>
                     </template>
-                </v-data-table>
+                </v-data-table>                
             </v-flex>
         </v-layout>
     </div>
@@ -93,6 +107,11 @@ export default {
   name: 'CreateTest',
   data () {
     return {
+      items: [
+        {
+          link: '/#/prova'
+        }
+      ],
       dialog: false,
       loading: false,
       tests: [],
@@ -153,6 +172,9 @@ export default {
           this.loading = false
         }
       })
+    },
+    change () {
+      this.$router.push('/prova')
     }
   }
 }
@@ -164,7 +186,7 @@ export default {
 }
 
 .my-tests {
-  overflow-y: scroll;
+  overflow-y: hidden;
   overflow-x: hidden;
 }
 </style>
