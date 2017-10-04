@@ -76,6 +76,10 @@ export default {
   color: #F00;
 }
 
+.vform{
+  background-color: #ECECEC;
+}
+
 @media only screen
 and (min-device-width : 320px)
 and (max-device-width : 568px)

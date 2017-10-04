@@ -1,12 +1,16 @@
 <template>
   <div class="home">
+    <div class="back-image">
+        <v-parallax src="../static/back-image.jpg" height="1000"></v-parallax>
+    </div>
     <div class="home-text">
       <h1>Uma nova ferramenta de ensino</h1>
       <p>
         O Test It é uma ferramenta de ensino, com a proposta de trazer uma plataforma de aprendizado
         com maior suporte as necessidades do aluno, e um maior número de opções e recursos para o professor.
       </p>
-    </div>
+    </div> 
+    
     <div class="home-form">
       <v-tabs dark fixed centered>
         <v-tabs-bar slot="activators" class="indigo darken-4">
@@ -30,6 +34,7 @@
         </v-tabs-content>
       </v-tabs>
     </div>
+    
   </div>
 </template>
 
@@ -94,7 +99,40 @@ export default {
   width: 50vw;
   padding: 15px;
   margin-right: 10px;
+  z-index: 0;
+  filter: drop-shadow(-10px 0px 15px #000000);
+  
 }
+
+.back-image{
+  z-index: 0;
+  opacity: 0.3;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  position: absolute;
+  filter: blur(4px); 
+  
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    opacity: transparent;
+}
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2); 
+    border-radius: 5px;
+    background: rgba(220,220,220,0.4); 
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.7); 
+    background: rgba(105,105,105,0.3); 
+}
+
+
 
 .home-text h1 {
   margin-left: 3%;
@@ -119,13 +157,14 @@ export default {
   margin-top: 20px;
   margin-left: 0;
   width: 30vw;
-  background: #FFF;
+  background: rgba(211,211,211);
   height: 60vh;
   overflow-x: hidden;
-  overflow-y: scroll;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
+  overflow-y: scroll;  
+  filter: drop-shadow(0px 0px 10px #000000);
+  border-radius: 6px;  
 }
+
 
 @media only screen
 and (min-device-width : 768px)

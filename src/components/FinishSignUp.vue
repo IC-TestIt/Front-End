@@ -63,11 +63,11 @@ export default {
 .signUp {
   display: flex;
   flex-direction: column;
-  height: 77vh;
+  height: 76vh;
   margin: 10px 40px;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow-y: scroll;  
   align-content: center;
+  background-color: #ECECEC;
 }
 
 .signUp h1 {
@@ -85,6 +85,7 @@ export default {
   width: 30vw;
   margin-left: 300px;
   margin-right: 300px;
+  background-color: #ECECEC;
 }
 
 .input-group__details:before {
