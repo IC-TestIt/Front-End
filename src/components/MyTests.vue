@@ -3,7 +3,8 @@
         <v-layout row wrap>
             <v-flex xs12>
                 <h3 class="my-tests-title text-xs-center ma-1 pt-4">Minhas Provas</h3>
-            </v-flex>
+            </v-flex>     
+            
             <v-flex xs12 md4>
                 <v-card class="green darken-1 white--text ma-5 text-xs-center">
                     <v-card-title primary-title>
@@ -40,13 +41,29 @@
                     </v-card-title>
                 </v-card>
             </v-flex>
+              <v-menu  offset-y >
+                    <v-btn  
+                        
+                        absolute                        
+                        primary 
+                        class="mr-5" 
+                        dark 
+                        right
+                        slot="activator"> Provas
+                        </v-btn>
+                        <v-list>
+                             <v-list-tile v-for="item in items" :key="item.title" @click="">
+                                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                            </v-list-tile>
+                        </v-list>
+              </v-menu> 
            
             <v-flex xs0 md12 class="mr-5 ml-5 pa-1">
                   <v-btn
                     fab
                     small
-                    class="red mr-3"
-                    right
+                    class="red ml-4"
+                    left
                     absolute
                     dark
                     @click="change(items.link)"
@@ -109,7 +126,13 @@ export default {
     return {
       items: [
         {
-          link: '/#/prova'
+          title: 'Corrigidas'
+        },
+        {
+          title: 'Não corrigidas'
+        },
+        {
+          title: 'Não aplicadas '
         }
       ],
       dialog: false,
@@ -189,4 +212,6 @@ export default {
   overflow-y: hidden;
   overflow-x: hidden;
 }
+
+
 </style>
