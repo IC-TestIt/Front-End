@@ -61,6 +61,7 @@
                 <v-data-table
                     :headers="headers"
                     :items="classes"
+                    :pagination.sync="pagination"
                     hide-actions
                     class="white elevation-1"
                 >
@@ -72,6 +73,9 @@
                         </td>
                     </template>
                 </v-data-table>
+                <div class="text-xs-center pt-2">
+                    <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+                </div>
             </v-flex>
         </v-layout>
     </div>
@@ -85,6 +89,9 @@ export default {
   name: 'myclasses',
   data () {
     return {
+      pagination: {
+        rowsPerPage: 3
+      },
       headers: [
         {text: 'Descrição', value: 'description', align: 'center'},
         {text: 'Quantidade de alunos', value: 'size', align: 'center'},
@@ -119,6 +126,11 @@ export default {
     },
     linkes () {
       this.$router.push('/turma')
+    }
+  },
+  computed: {
+    pages () {
+      return this.pagination.rowsPerPage ? Math.ceil(this.classes.length / this.pagination.rowsPerPage) : 0
     }
   }
 }
