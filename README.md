@@ -4,38 +4,36 @@ Esse projeto contém o Front-End do WebApp TestIt, a aplicação foi feita por e
 
 ## Pré-Requisitos
 
-```
-Node (versão >= 6.0)
-```
+* Node (versão >= 6.0)
+* [Yarn](https://yarnpkg.com/lang/en/docs/install/)
 
 ## Downloads
 
 * Linux
 ```bash
 $ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash
-
 $ nvm install stable
-
 $ nvm use stable
 ```
 * [Windows](https://github.com/coreybutler/nvm-windows/releases)
+
 
 ## Como Começar
 
 ```
 git clone git@github.com:IC-TestIt/Front-End.git
 cd Front-End
-npm install
-npm run dev
+yarn install
+yarn run dev
 ````
 
 
 ## Contribuição
 
 * Deve-se criar uma branch no seguinte padrão
-    * bug/bug-que-sera-corrigido
-    * feat/nova-funcionalidade
-    * impv/funcionalidade-a-ser-melhorada
+    * `bug/bug-que-sera-corrigido`
+    * `feat/nova-funcionalidade`
+    * `impv/funcionalidade-a-ser-melhorada`
 * Depois é só abrir um PR para a master e solicitar o Review do Time de Front-End
 
 ## Referencias
