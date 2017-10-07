@@ -8,6 +8,18 @@ Esse projeto contém o Front-End do WebApp TestIt, a aplicação foi feita por e
 Node (versão >= 6.0)
 ```
 
+## Downloads
+
+* Linux
+```bash
+$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash
+
+$ nvm install stable
+
+$ nvm use stable
+```
+* [Windows](https://github.com/coreybutler/nvm-windows/releases)
+
 ## Como Começar
 
 ```
