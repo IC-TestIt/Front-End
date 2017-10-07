@@ -1,8 +1,8 @@
 # Front-End TestIt
 
-This project haves all the content of the front-end of the web application TestIt, a web app built by the students participants of scientific initiation of Faculdade de Tecnologia de Sorocaba, this app haves the purpose of being a plataform where teachers can create tests and the students can realize them in a more easy way, that helps both teachers and students.
+Esse projeto contém o Front-End do WebApp TestIt, a aplicação foi feita por estudantes da FATEC Sorocaba, e tem como propósito de ser uma plataforma onde professores podem criar provas em geral e os alunos podem realizar em um ambiente fácil de usar. Um dos diferenciais do TestIt é auxiliar o professor com uma pré-correção de questões dissertativas.
 
-## Prerequisites
+## Pré-Requisitos
 
 ```
 Node
@@ -10,7 +10,7 @@ NPM
 Webpack
 ```
 
-## Getting Started
+## Como Começar
 
 ```
 git clone git@github.com:IC-TestIt/Front-End.git
@@ -19,8 +19,23 @@ npm install
 npm run build
 ````
 
-## References
+
+## Contribuição
+
+* Deve-se criar uma branch no seguinte padrão
+    * bug/bug-que-sera-corrigido
+    * feat/nova-funcionalidade
+    * impv/funcionalidade-a-ser-melhorada
+* Depois é só abrir um PR para a master e solicitar o Review do Time de Front-End
+
+## Referencias
 
 * [Vue.js](https://vuejs.org/)
 * [Sass](http://sass-lang.com/)
 * [Webpack](https://webpack.js.org/)
+
+## Colaboradores
+
+* [Medson Oliveira](http://github.com/medson10)
+* [Vitor Manfré](http://github.com/vitormdias)
+* [Matheus Novais](https://github.com/matheusnovais95)
