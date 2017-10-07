@@ -5,9 +5,7 @@ Esse projeto contém o Front-End do WebApp TestIt, a aplicação foi feita por e
 ## Pré-Requisitos
 
 ```
-Node
-NPM
-Webpack
+Node (versão >= 6.0)
 ```
 
 ## Como Começar
@@ -16,7 +14,7 @@ Webpack
 git clone git@github.com:IC-TestIt/Front-End.git
 cd Front-End
 npm install
-npm run build
+npm run dev
 ````
 
 
@@ -31,7 +29,7 @@ npm run build
 ## Referencias
 
 * [Vue.js](https://vuejs.org/)
-* [Sass](http://sass-lang.com/)
+* [Vuetify](https://vuetifyjs.com/vuetify/quick-start)
 * [Webpack](https://webpack.js.org/)
 
 ## Colaboradores
