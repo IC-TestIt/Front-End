@@ -27,6 +27,13 @@ yarn install
 yarn run dev
 ````
 
+**Gerando uma build:**
+`$ yarn run build`
+
+**Servindo uma build local:**
+`$ yarn start`
+Por padrão, o servidor iniciará na porta 3000. Caso prefica uma porta diferente, utilize o comando abaixo:
+`$ PORT=9000 yarn start`
 
 ## Contribuição
 

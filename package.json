@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
-    "start": "node dist/server.js",
+    "start": "pushstate-server dist ${PORT:-3000}",
     "build": "node build/build.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
@@ -77,6 +77,7 @@
     "ora": "^1.2.0",
     "path": "^0.12.7",
     "phantomjs-prebuilt": "^2.1.14",
+    "pushstate-server": "^3.0.1",
     "rimraf": "^2.6.0",
     "selenium-server": "^3.0.1",
     "semver": "^5.3.0",
