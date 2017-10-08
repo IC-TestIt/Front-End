@@ -49,8 +49,13 @@ Por padrão, o servidor iniciará na porta 3000. Caso prefica uma porta diferent
 * [Vuetify](https://vuetifyjs.com/vuetify/quick-start)
 * [Webpack](https://webpack.js.org/)
 
+## Dúvidas
+
+* [Slack](https://join.slack.com/t/ic-testit/shared_invite/enQtMjUzMDU3MzgwMDIwLTI0NGNiYzgxMDEwYzQ5MjBkODcxZDg0MTcyZGFlMWQzYTUyMWJmNmJlZWU2OTFkYjBjNGU2MTIwMDJmOTI0ZDQ)
+
 ## Colaboradores
 
 * [Medson Oliveira](http://github.com/medson10)
 * [Vitor Manfré](http://github.com/vitormdias)
 * [Matheus Novais](https://github.com/matheusnovais95)
+* [Gabriel Teles](https://github.com/gabteles)
