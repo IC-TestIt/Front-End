@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+
     <div class="back-image">
         <v-parallax src="../static/back-image.jpg" height="1000"></v-parallax>
     </div>
@@ -8,9 +9,17 @@
       <p>
         O Test It é uma ferramenta de ensino, com a proposta de trazer uma plataforma de aprendizado
         com maior suporte as necessidades do aluno, e um maior número de opções e recursos para o professor.
+
       </p>
-    </div> 
-    
+    </div>    
+  
+    <div class="back-image">
+         <v-parallax
+           src="/static/back-image.jpg"
+           height="700"           
+          ></v-parallax>
+    </div>
+
     <div class="home-form">
       <v-tabs dark fixed centered>
         <v-tabs-bar slot="activators" class="indigo darken-4">
@@ -84,6 +93,16 @@ export default {
 </script>
 
 <style>
+
+.back-image{
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 0.4;
+ 
+}
 
 .home h1, h2 {
   font-weight: normal;
