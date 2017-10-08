@@ -1,6 +1,5 @@
 # build files
 dist/
-!dist/server.js
 
 # Logs
 logs
@@ -61,3 +60,5 @@ typings/
 # dotenv environment variables file
 .env
 
+# npm lock file
+package-lock.json
