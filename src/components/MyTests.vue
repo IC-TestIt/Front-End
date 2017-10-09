@@ -41,8 +41,7 @@
                 </v-card>
             </v-flex>
              <!--<v-menu  offset-y >
-                    <v-btn  
-                        
+                    <v-btn
                         absolute                        
                         primary 
                         class="mr-5" 
@@ -68,13 +67,22 @@
                   >
                     <v-icon>add</v-icon>
             </v-btn>-->
-
+            <v-card class="pb-3 mb-4">
+                <v-card-title>
+                <v-text-field
+                    append-icon="search"
+                    label="Search"
+                    single-line
+                    hide-details
+                    v-model="search"
+                ></v-text-field>
+                <v-spacer></v-spacer>
+                </v-card-title>
                 <v-data-table
                     v-bind:headers="headers"
                     :items="tests"
                     :pagination.sync="pagination"
                     hide-actions
-                    class="white elevation-1"
                 >                             
                     <template slot="items" scope="props">
                         <td class="text-xs-center" >{{ props.item.title }}</td>
@@ -112,7 +120,8 @@
                 </v-data-table>
                 <div class="text-xs-center pt-2">
                     <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
-                </div>                
+                </div>
+            </v-card>
             </v-flex>
         </v-layout>
     </div>
@@ -127,7 +136,7 @@ export default {
   data () {
     return {
       pagination: {
-        rowsPerPage: 3
+        rowsPerPage: 5
       },
       items: [
         {
@@ -218,8 +227,8 @@ export default {
 }
 
 .my-tests {
-  overflow-y: hidden;
+  overflow-y: scroll;
   overflow-x: hidden;
-  height: 101%;
+  height: 102%;
 }
 </style>
