@@ -17,7 +17,7 @@
                 </v-card>
             </v-flex>
             <v-flex xs12 md4>
-                <v-card class="indigo lighten-1 white--text ma-5 text-xs-center">               
+                <v-card class="indigo lighten-1 white--text ma-5 text-xs-center">
                     <v-card-title primary-title>
                         <v-flex xs12>
                             <div class="headline">0</div>
@@ -40,7 +40,7 @@
                     </v-card-title>
                 </v-card>
             </v-flex>
-           
+
             <v-flex xs0 md12 class="mr-5 ml-5 pa-1">
                   <v-btn
                     fab
@@ -58,16 +58,16 @@
                     :items="tests"
                     hide-actions
                     class="white elevation-1"
-                >                
-                                              
+                >
+
                     <template slot="items" scope="props">
                         <td class="text-xs-center" >{{ props.item.title }}</td>
                         <td class="text-xs-center">{{ props.item.description }}</td>
-                        <td class="text-xs-center">
+                        <td class="text-xs-center mytests-buttons" >
                             <v-dialog v-model="dialog" persistent hide-overlay>
-                                <v-btn primary dark slot="activator" @click.native="dialog = true">Aplicar</v-btn>
-                       
-                                <v-card>                                 
+                                <v-btn primary dark slot="activator" @click.native="dialog = true" v-if="props.item.status === 0">Aplicar</v-btn>
+
+                                <v-card>
                                     <v-card-title>Selecione a Turma</v-card-title>
                                     <v-divider></v-divider>
                                     <v-card-text style="height: 300px">
@@ -91,9 +91,14 @@
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
+                            <v-btn secondary v-if="props.item.status === 0">Editar</v-btn>
+                            <v-btn secondary v-if="props.item.status === 0">Exportar</v-btn>
+                            <v-btn secondary v-if="props.item.status === 2">Corrigir</v-btn>
+                            <v-btn secondary v-if="props.item.status === 3">Notas</v-btn>
+                            <v-btn secondary v-if="props.item.status === 0">Excluir</v-btn>
                         </td>
                     </template>
-                </v-data-table>                
+                </v-data-table>
             </v-flex>
         </v-layout>
     </div>
@@ -183,6 +188,11 @@ export default {
 <style lang="css">
 .my-tests-title {
   color: #006;
+}
+
+.mytests-buttons {
+    display: flex;
+    justify-content: space-around;
 }
 
 .my-tests {
