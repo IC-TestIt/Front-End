@@ -2,7 +2,7 @@
     <div class="my-tests">
         <v-layout row wrap>
             <v-flex xs12>
-                <h3 class="my-tests-title text-xs-center ma-1 pt-4">Minhas Provas</h3>
+                <h3 class="my-tests-title text-xs-center ma-1">Minhas Provas</h3>
             </v-flex>
             <v-flex xs12 md4>
                 <v-card class="green darken-1 white--text ma-5 text-xs-center">
@@ -40,7 +40,7 @@
                     </v-card-title>
                 </v-card>
             </v-flex>
-             <v-menu  offset-y >
+             <!--<v-menu  offset-y >
                     <v-btn  
                         
                         absolute                        
@@ -51,13 +51,13 @@
                         slot="activator"> Provas
                         </v-btn>
                         <v-list>
-                             <v-list-tile v-for="item in items" :key="item.title" @click="">
+                             <v-list-tile v-for="item in items" :key="item.title">
                                 <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                             </v-list-tile>
                         </v-list>
-              </v-menu> 
-            <v-flex xs0 md12 class="mr-5 ml-5 pa-1">
-                  <v-btn
+              </v-menu> -->
+            <v-flex xs0 md12 class="mr-5 ml-5 ">
+                  <!--<v-btn
                     fab
                     small
                     class="red mr-3"
@@ -67,15 +67,15 @@
                     @click="change(items.link)"
                   >
                     <v-icon>add</v-icon>
-            </v-btn>
+            </v-btn>-->
 
                 <v-data-table
                     v-bind:headers="headers"
                     :items="tests"
+                    :pagination.sync="pagination"
                     hide-actions
                     class="white elevation-1"
-                >                
-                                              
+                >                             
                     <template slot="items" scope="props">
                         <td class="text-xs-center" >{{ props.item.title }}</td>
                         <td class="text-xs-center">{{ props.item.description }}</td>
@@ -109,7 +109,10 @@
                             </v-dialog>
                         </td>
                     </template>
-                </v-data-table>                
+                </v-data-table>
+                <div class="text-xs-center pt-2">
+                    <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+                </div>                
             </v-flex>
         </v-layout>
     </div>
@@ -123,6 +126,9 @@ export default {
   name: 'CreateTest',
   data () {
     return {
+      pagination: {
+        rowsPerPage: 3
+      },
       items: [
         {
           title: 'Corrigidas'
@@ -158,7 +164,6 @@ export default {
   },
   methods: {
     getTests () {
-      console.log(auth.teacherId())
       baseService.get(`/teacher/${auth.teacherId()}/tests`).then(r => {
         if (r.status === 200) {
           console.log(r.data)
@@ -198,6 +203,11 @@ export default {
     change () {
       this.$router.push('/prova')
     }
+  },
+  computed: {
+    pages () {
+      return this.pagination.rowsPerPage ? Math.ceil(this.tests.length / this.pagination.rowsPerPage) : 0
+    }
   }
 }
 </script>
@@ -210,5 +220,6 @@ export default {
 .my-tests {
   overflow-y: hidden;
   overflow-x: hidden;
+  height: 101%;
 }
 </style>
