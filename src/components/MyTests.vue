@@ -131,19 +131,19 @@ export default {
       search: '',
       items: [
         {
-          text: 'Corrigida',
+          text: 'Não Aplicada',
           value: 1
         },
         {
-          text: 'Não Corrigida',
+          text: 'Em Andamento',
           value: 2
         },
         {
-          text: 'Aplicada',
+          text: 'Não Corrigida',
           value: 3
         },
         {
-          text: 'Não Aplicada',
+          text: 'Corrigida',
           value: 4
         }
       ],
