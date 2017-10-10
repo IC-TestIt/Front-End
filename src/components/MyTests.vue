@@ -65,7 +65,7 @@
                         <td class="text-xs-center">{{ props.item.description }}</td>
                         <td class="text-xs-center mytests-buttons" >
                             <v-dialog v-model="dialog" persistent hide-overlay>
-                                <v-btn primary dark slot="activator" @click.native="dialog = true" v-if="props.item.status === 0">Aplicar</v-btn>
+                                <v-btn primary dark slot="activator" @click.native="dialog = true" v-if="props.item.status === 1">Aplicar</v-btn>
 
                                 <v-card>
                                     <v-card-title>Selecione a Turma</v-card-title>
@@ -91,11 +91,11 @@
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
-                            <v-btn secondary v-if="props.item.status === 0">Editar</v-btn>
-                            <v-btn secondary v-if="props.item.status === 0">Exportar</v-btn>
-                            <v-btn secondary v-if="props.item.status === 2">Corrigir</v-btn>
-                            <v-btn secondary v-if="props.item.status === 3">Notas</v-btn>
-                            <v-btn secondary v-if="props.item.status === 0">Excluir</v-btn>
+                            <v-btn secondary v-if="props.item.status === 1">Editar</v-btn>
+                            <v-btn secondary v-if="props.item.status === 1">Exportar</v-btn>
+                            <v-btn secondary v-if="props.item.status === 3">Corrigir</v-btn>
+                            <v-btn secondary v-if="props.item.status === 4">Notas</v-btn>
+                            <v-btn secondary v-if="props.item.status === 1">Excluir</v-btn>
                         </td>
                     </template>
                 </v-data-table>
