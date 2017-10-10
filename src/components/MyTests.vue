@@ -17,7 +17,7 @@
                 </v-card>
             </v-flex>
             <v-flex xs12 md4>
-                <v-card class="indigo lighten-1 white--text ma-5 text-xs-center">               
+                <v-card class="indigo lighten-1 white--text ma-5 text-xs-center">
                     <v-card-title primary-title>
                         <v-flex xs12>
                             <div class="headline">0</div>
@@ -40,21 +40,6 @@
                     </v-card-title>
                 </v-card>
             </v-flex>
-             <!--<v-menu  offset-y >
-                    <v-btn
-                        absolute                        
-                        primary 
-                        class="mr-5" 
-                        dark 
-                        right
-                        slot="activator"> Provas
-                        </v-btn>
-                        <v-list>
-                             <v-list-tile v-for="item in items" :key="item.title">
-                                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                            </v-list-tile>
-                        </v-list>
-              </v-menu> -->
             <v-flex xs0 md12 class="mr-5 ml-5 ">
                   <!--<v-btn
                     fab
@@ -69,29 +54,34 @@
             </v-btn>-->
             <v-card class="pb-3 mb-4">
                 <v-card-title>
-                <v-text-field
-                    append-icon="search"
-                    label="Search"
-                    single-line
-                    hide-details
+                <v-select
+                    :items="items"
                     v-model="search"
-                ></v-text-field>
+                    label="Filtro"
+                    item-text="text"
+                    item-value="value"
+                    multiple
+                    chips
+
+                ></v-select>
                 <v-spacer></v-spacer>
                 </v-card-title>
                 <v-data-table
-                    v-bind:headers="headers"
+                    :headers="headers"
                     :items="tests"
                     :pagination.sync="pagination"
+                    :search="search"
+                    :custom-filter="filterStatus"
                     hide-actions
-                >                             
+                >
                     <template slot="items" scope="props">
-                        <td class="text-xs-center" >{{ props.item.title }}</td>
-                        <td class="text-xs-center">{{ props.item.description }}</td>
+                        <td class="text-xs-center" >{{ props.item.testTitle }}</td>
+                        <td class="text-xs-center">{{ props.item.className }}</td>
+                        <td class="text-xs-center">{{ findStatus(props.item.status) }}</td>
                         <td class="text-xs-center">
                             <v-dialog v-model="dialog" persistent hide-overlay>
-                                <v-btn primary dark slot="activator" @click.native="dialog = true">Aplicar</v-btn>
-                       
-                                <v-card>                                 
+                                <v-btn primary dark slot="activator">Aplicar</v-btn>
+                                <v-card>
                                     <v-card-title>Selecione a Turma</v-card-title>
                                     <v-divider></v-divider>
                                     <v-card-text style="height: 300px">
@@ -138,15 +128,23 @@ export default {
       pagination: {
         rowsPerPage: 5
       },
+      search: '',
       items: [
         {
-          title: 'Corrigidas'
+          text: 'Corrigida',
+          value: 1
         },
         {
-          title: 'Não corrigidas'
+          text: 'Não Corrigida',
+          value: 2
         },
         {
-          title: 'Não aplicadas '
+          text: 'Aplicada',
+          value: 3
+        },
+        {
+          text: 'Não Aplicada',
+          value: 4
         }
       ],
       dialog: false,
@@ -162,7 +160,8 @@ export default {
       classes: [],
       headers: [
         {text: 'Título', value: 'title', align: 'center'},
-        {text: 'Descrição', value: 'description', align: 'center'},
+        {text: 'Turma', value: 'class', align: 'center'},
+        {text: 'Situação', value: 'status', align: 'center'},
         {text: 'Ações', value: '', align: 'center'}
       ]
     }
@@ -172,6 +171,13 @@ export default {
     this.getClasses()
   },
   methods: {
+    findStatus (status) {
+      return this.items[status - 1].text
+    },
+    filterStatus (items, search, filter) {
+      search = search.toString().toLowerCase()
+      return items.filter(row => filter(row['status'], search))
+    },
     getTests () {
       baseService.get(`/teacher/${auth.teacherId()}/tests`).then(r => {
         if (r.status === 200) {
@@ -181,6 +187,9 @@ export default {
           this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro na obtenção das provas!'})
         }
       })
+    },
+    changeSelect (value) {
+      this.search = value
     },
     getClasses () {
       baseService.get(`/teacher/${auth.teacherId()}/classes/`).then(r => {
