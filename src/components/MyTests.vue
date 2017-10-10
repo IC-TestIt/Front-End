@@ -40,8 +40,10 @@
                     </v-card-title>
                 </v-card>
             </v-flex>
-            <v-flex xs0 md12 class="mr-5 ml-5 ">
-                  <!--<v-btn
+
+            <v-flex xs0 md12 class="mr-5 ml-5 pa-1">
+                  <v-btn
+
                     fab
                     small
                     class="red mr-3"
@@ -73,14 +75,17 @@
                     :search="search"
                     :custom-filter="filterStatus"
                     hide-actions
+                    class="white elevation-1"
                 >
+
                     <template slot="items" scope="props">
                         <td class="text-xs-center" >{{ props.item.testTitle }}</td>
                         <td class="text-xs-center">{{ props.item.className }}</td>
                         <td class="text-xs-center">{{ findStatus(props.item.status) }}</td>
-                        <td class="text-xs-center">
+                        <td class="text-xs-center mytests-buttons" >
                             <v-dialog v-model="dialog" persistent hide-overlay>
-                                <v-btn primary dark slot="activator">Aplicar</v-btn>
+                                <v-btn primary dark slot="activator" @click.native="dialog = true" v-if="props.item.status === 1">Aplicar</v-btn>
+
                                 <v-card>
                                     <v-card-title>Selecione a Turma</v-card-title>
                                     <v-divider></v-divider>
@@ -105,6 +110,11 @@
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
+                            <v-btn secondary v-if="props.item.status === 1">Editar</v-btn>
+                            <v-btn secondary v-if="props.item.status === 1">Exportar</v-btn>
+                            <v-btn secondary v-if="props.item.status === 3">Corrigir</v-btn>
+                            <v-btn secondary v-if="props.item.status === 4">Notas</v-btn>
+                            <v-btn secondary v-if="props.item.status === 1">Excluir</v-btn>
                         </td>
                     </template>
                 </v-data-table>
@@ -233,6 +243,11 @@ export default {
 <style lang="css">
 .my-tests-title {
   color: #006;
+}
+
+.mytests-buttons {
+    display: flex;
+    justify-content: space-around;
 }
 
 .my-tests {
