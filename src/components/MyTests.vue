@@ -2,7 +2,7 @@
     <div class="my-tests">
         <v-layout row wrap>
             <v-flex xs12>
-                <h3 class="my-tests-title text-xs-center ma-1 pt-4">Minhas Provas</h3>
+                <h3 class="my-tests-title text-xs-center ma-1">Minhas Provas</h3>
             </v-flex>
             <v-flex xs12 md4>
                 <v-card class="green darken-1 white--text ma-5 text-xs-center">
@@ -43,6 +43,7 @@
 
             <v-flex xs0 md12 class="mr-5 ml-5 pa-1">
                   <v-btn
+
                     fab
                     small
                     class="red mr-3"
@@ -52,17 +53,35 @@
                     @click="change(items.link)"
                   >
                     <v-icon>add</v-icon>
-            </v-btn>
+            </v-btn>-->
+            <v-card class="pb-3 mb-4">
+                <v-card-title>
+                <v-select
+                    :items="items"
+                    v-model="search"
+                    label="Filtro"
+                    item-text="text"
+                    item-value="value"
+                    multiple
+                    chips
+
+                ></v-select>
+                <v-spacer></v-spacer>
+                </v-card-title>
                 <v-data-table
-                    v-bind:headers="headers"
+                    :headers="headers"
                     :items="tests"
+                    :pagination.sync="pagination"
+                    :search="search"
+                    :custom-filter="filterStatus"
                     hide-actions
                     class="white elevation-1"
                 >
 
                     <template slot="items" scope="props">
-                        <td class="text-xs-center" >{{ props.item.title }}</td>
-                        <td class="text-xs-center">{{ props.item.description }}</td>
+                        <td class="text-xs-center" >{{ props.item.testTitle }}</td>
+                        <td class="text-xs-center">{{ props.item.className }}</td>
+                        <td class="text-xs-center">{{ findStatus(props.item.status) }}</td>
                         <td class="text-xs-center mytests-buttons" >
                             <v-dialog v-model="dialog" persistent hide-overlay>
                                 <v-btn primary dark slot="activator" @click.native="dialog = true" v-if="props.item.status === 1">Aplicar</v-btn>
@@ -99,6 +118,10 @@
                         </td>
                     </template>
                 </v-data-table>
+                <div class="text-xs-center pt-2">
+                    <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+                </div>
+            </v-card>
             </v-flex>
         </v-layout>
     </div>
@@ -112,9 +135,26 @@ export default {
   name: 'CreateTest',
   data () {
     return {
+      pagination: {
+        rowsPerPage: 5
+      },
+      search: '',
       items: [
         {
-          link: '/#/prova'
+          text: 'Não Aplicada',
+          value: 1
+        },
+        {
+          text: 'Em Andamento',
+          value: 2
+        },
+        {
+          text: 'Não Corrigida',
+          value: 3
+        },
+        {
+          text: 'Corrigida',
+          value: 4
         }
       ],
       dialog: false,
@@ -130,7 +170,8 @@ export default {
       classes: [],
       headers: [
         {text: 'Título', value: 'title', align: 'center'},
-        {text: 'Descrição', value: 'description', align: 'center'},
+        {text: 'Turma', value: 'class', align: 'center'},
+        {text: 'Situação', value: 'status', align: 'center'},
         {text: 'Ações', value: '', align: 'center'}
       ]
     }
@@ -140,8 +181,14 @@ export default {
     this.getClasses()
   },
   methods: {
+    findStatus (status) {
+      return this.items[status - 1].text
+    },
+    filterStatus (items, search, filter) {
+      search = search.toString().toLowerCase()
+      return items.filter(row => filter(row['status'], search))
+    },
     getTests () {
-      console.log(auth.teacherId())
       baseService.get(`/teacher/${auth.teacherId()}/tests`).then(r => {
         if (r.status === 200) {
           console.log(r.data)
@@ -150,6 +197,9 @@ export default {
           this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro na obtenção das provas!'})
         }
       })
+    },
+    changeSelect (value) {
+      this.search = value
     },
     getClasses () {
       baseService.get(`/teacher/${auth.teacherId()}/classes/`).then(r => {
@@ -181,6 +231,11 @@ export default {
     change () {
       this.$router.push('/prova')
     }
+  },
+  computed: {
+    pages () {
+      return this.pagination.rowsPerPage ? Math.ceil(this.tests.length / this.pagination.rowsPerPage) : 0
+    }
   }
 }
 </script>
@@ -196,7 +251,8 @@ export default {
 }
 
 .my-tests {
-  overflow-y: hidden;
+  overflow-y: scroll;
   overflow-x: hidden;
+  height: 102%;
 }
 </style>
