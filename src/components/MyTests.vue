@@ -53,7 +53,7 @@
                     @click="change(items.link)"
                   >
                     <v-icon>add</v-icon>
-            </v-btn>-->
+            </v-btn>
             <v-card class="pb-3 mb-4">
                 <v-card-title>
                 <v-select
@@ -81,10 +81,11 @@
                     <template slot="items" scope="props">
                         <td class="text-xs-center" >{{ props.item.testTitle }}</td>
                         <td class="text-xs-center">{{ props.item.className }}</td>
+                        <td class="text-xs-center">{{ convertDate(props.item.endDate) }}</td>
                         <td class="text-xs-center">{{ findStatus(props.item.status) }}</td>
                         <td class="text-xs-center mytests-buttons" >
+                            <v-btn primary dark @click="dialog = true" v-if="props.item.status === 1">Aplicar</v-btn>
                             <v-dialog v-model="dialog" persistent hide-overlay>
-                                <v-btn primary dark slot="activator" @click.native="dialog = true" v-if="props.item.status === 1">Aplicar</v-btn>
 
                                 <v-card>
                                     <v-card-title>Selecione a Turma</v-card-title>
@@ -110,11 +111,11 @@
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
-                            <v-btn secondary v-if="props.item.status === 1">Editar</v-btn>
-                            <v-btn secondary v-if="props.item.status === 1">Exportar</v-btn>
-                            <v-btn secondary v-if="props.item.status === 3">Corrigir</v-btn>
-                            <v-btn secondary v-if="props.item.status === 4">Notas</v-btn>
-                            <v-btn secondary v-if="props.item.status === 1">Excluir</v-btn>
+                            <v-btn primary v-if="props.item.status === 1">Editar</v-btn>
+                            <v-btn primary v-if="props.item.status === 1">Exportar</v-btn>
+                            <v-btn primary v-if="props.item.status === 3">Corrigir</v-btn>
+                            <v-btn primary v-if="props.item.status === 4">Notas</v-btn>
+                            <v-btn primary v-if="props.item.status === 1">Excluir</v-btn>
                         </td>
                     </template>
                 </v-data-table>
@@ -130,11 +131,14 @@
 <script>
 import baseService from '../services/baseService'
 import auth from '../auth'
+import { convertDate } from '../utils/index'
 
 export default {
   name: 'CreateTest',
   data () {
     return {
+      convertDate: convertDate,
+      testsLength: 0,
       pagination: {
         rowsPerPage: 5
       },
@@ -171,6 +175,7 @@ export default {
       headers: [
         {text: 'Título', value: 'title', align: 'center'},
         {text: 'Turma', value: 'class', align: 'center'},
+        {text: 'Data Final', value: 'endDate', align: 'center'},
         {text: 'Situação', value: 'status', align: 'center'},
         {text: 'Ações', value: '', align: 'center'}
       ]
@@ -179,6 +184,7 @@ export default {
   mounted () {
     this.getTests()
     this.getClasses()
+    this.testsLength = this.tests.length
   },
   methods: {
     findStatus (status) {
@@ -186,12 +192,13 @@ export default {
     },
     filterStatus (items, search, filter) {
       search = search.toString().toLowerCase()
-      return items.filter(row => filter(row['status'], search))
+      let itemsFiltered = items.filter(row => filter(row['status'], search))
+      this.testsLength = itemsFiltered.length
+      return itemsFiltered
     },
     getTests () {
       baseService.get(`/teacher/${auth.teacherId()}/tests`).then(r => {
         if (r.status === 200) {
-          console.log(r.data)
           this.tests = r.data
         } else {
           this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro na obtenção das provas!'})
@@ -234,7 +241,7 @@ export default {
   },
   computed: {
     pages () {
-      return this.pagination.rowsPerPage ? Math.ceil(this.tests.length / this.pagination.rowsPerPage) : 0
+      return this.pagination.rowsPerPage ? Math.ceil(this.testsLength / this.pagination.rowsPerPage) : 0
     }
   }
 }
