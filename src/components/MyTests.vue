@@ -81,7 +81,7 @@
                     <template slot="items" scope="props">
                         <td class="text-xs-center" >{{ props.item.testTitle }}</td>
                         <td class="text-xs-center">{{ props.item.className }}</td>
-                        <td class="text-xs-center">{{ index.convertDate(props.item.endDate) }}</td>
+                        <td class="text-xs-center">{{ convertDate(props.item.endDate) }}</td>
                         <td class="text-xs-center">{{ findStatus(props.item.status) }}</td>
                         <td class="text-xs-center mytests-buttons" >
                             <v-btn primary dark @click="dialog = true" v-if="props.item.status === 1">Aplicar</v-btn>
@@ -131,13 +131,13 @@
 <script>
 import baseService from '../services/baseService'
 import auth from '../auth'
-import index from '../utils/index'
+import { convertDate } from '../utils/index'
 
 export default {
   name: 'CreateTest',
   data () {
     return {
-      index: index,
+      convertDate: convertDate,
       testsLength: 0,
       pagination: {
         rowsPerPage: 5
@@ -199,7 +199,6 @@ export default {
     getTests () {
       baseService.get(`/teacher/${auth.teacherId()}/tests`).then(r => {
         if (r.status === 200) {
-          console.log(r.data)
           this.tests = r.data
         } else {
           this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro na obtenção das provas!'})
