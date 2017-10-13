@@ -113,27 +113,27 @@
                             </v-dialog>
                             <v-btn primary v-if="props.item.status === 1">Editar</v-btn>
                             <v-btn primary v-if="props.item.status === 1">Exportar</v-btn>
-                            <v-btn primary v-if="props.item.status === 3" @click="dialog2 = true">Corrigir</v-btn>
+                            <v-btn primary v-if="props.item.status === 3" @click="dialog2 = true, filterClassTests(props.item.testId)">Corrigir</v-btn>
                             <v-dialog v-model="dialog2" persistent hide-overlay>
                                 <v-card>
                                     <v-card-title>Selecione a Turma</v-card-title>
                                     <v-divider></v-divider>
                                     <v-card-text style="height: 300px">
                                         <v-select
-                                        :items="classes"
+                                        :items="classTestsFiltered"
                                         v-model="classTestsCorrection"
                                         label="Turma"
                                         multiple
                                         chips
-                                        item-text="description"
-                                        item-value="id"
+                                        item-text="className"
+                                        item-value="classTestId"
                                         return-object
                                         ></v-select>
                                     </v-card-text>
                                     <v-divider></v-divider>
                                     <v-card-actions>
                                         <v-btn class="blue--text darken-1" flat @click.native="dialog2 = false">Fechar</v-btn>
-                                        <v-btn class="blue--text darken-1" flat @click.native="" :loading="loading">Salvar</v-btn>
+                                        <v-btn class="blue--text darken-1" flat @click.native="" :loading="loading">Corrigir</v-btn>
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
@@ -163,6 +163,7 @@ export default {
     return {
       convertDate: convertDate,
       testsLength: 0,
+      classTestsFiltered: [],
       pagination: {
         rowsPerPage: 5
       },
@@ -216,6 +217,9 @@ export default {
   methods: {
     findStatus (status) {
       return this.items[status - 1].text
+    },
+    filterClassTests (id) {
+      this.classTestsFiltered = this.tests.filter((item) => item.testId === id)
     },
     filterStatus (items, search, filter) {
       search = search.toString().toLowerCase()
