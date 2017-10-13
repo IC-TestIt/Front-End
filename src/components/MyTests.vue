@@ -75,7 +75,7 @@
                     :search="search"
                     :custom-filter="filterStatus"
                     hide-actions
-                    class="white elevation-1"
+                    class="white"
                 >
 
                     <template slot="items" scope="props">
@@ -113,7 +113,31 @@
                             </v-dialog>
                             <v-btn primary v-if="props.item.status === 1">Editar</v-btn>
                             <v-btn primary v-if="props.item.status === 1">Exportar</v-btn>
-                            <v-btn primary v-if="props.item.status === 3">Corrigir</v-btn>
+                            <v-btn primary v-if="props.item.status === 3" @click="dialog2 = true">Corrigir</v-btn>
+                            <v-dialog v-model="dialog2" persistent hide-overlay>
+                                <v-card>
+                                    <v-card-title>Selecione a Turma</v-card-title>
+                                    <v-divider></v-divider>
+                                    <v-card-text style="height: 300px">
+                                        <v-select
+                                        :items="classes"
+                                        v-model="classTestsCorrection"
+                                        label="Turma"
+                                        multiple
+                                        chips
+                                        item-text="description"
+                                        item-value="id"
+                                        return-object
+                                        ></v-select>
+                                    </v-card-text>
+                                    <v-divider></v-divider>
+                                    <v-card-actions>
+                                        <v-btn class="blue--text darken-1" flat @click.native="dialog2 = false">Fechar</v-btn>
+                                        <v-btn class="blue--text darken-1" flat @click.native="" :loading="loading">Salvar</v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-dialog>
+
                             <v-btn primary v-if="props.item.status === 4">Notas</v-btn>
                             <v-btn primary v-if="props.item.status === 1">Excluir</v-btn>
                         </td>
@@ -162,8 +186,11 @@ export default {
         }
       ],
       dialog: false,
+      dialog2: false,
       loading: false,
       tests: [],
+      filteredClasses: [],
+      classTestsCorrection: [],
       test: {
         classIds: [],
         beginDate: null,
