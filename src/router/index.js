@@ -11,6 +11,7 @@ import ViewTest from '@/components/ViewTest'
 import MyExams from '@/components/MyExams'
 import RealizeExam from '@/components/RealizeExam'
 import MyClasses from '@/components/MyClasses'
+import CorrectTest from '@/components/CorrectTests'
 
 Vue.use(Router)
 
@@ -97,6 +98,12 @@ export default new Router({
     path: '/verprova/:id',
     name: 'viewTest',
     component: ViewTest,
+    beforeEnter: onlyTeacher
+  },
+  {
+    path: '/corrigirprova',
+    name: 'CorrectTests',
+    component: CorrectTest,
     beforeEnter: onlyTeacher
   },
   {

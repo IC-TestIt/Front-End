@@ -2,7 +2,7 @@
     <div class="my-tests">
         <v-layout row wrap>
             <v-flex xs12>
-                <h3 class="my-tests-title text-xs-center ma-1 pt-4">Minhas Provas</h3>
+                <h3 class="my-tests-title text-xs-center ma-1">Minhas Provas</h3>
             </v-flex>
             <v-flex xs12 md4>
                 <v-card class="green darken-1 white--text ma-5 text-xs-center">
@@ -17,7 +17,7 @@
                 </v-card>
             </v-flex>
             <v-flex xs12 md4>
-                <v-card class="indigo lighten-1 white--text ma-5 text-xs-center">               
+                <v-card class="indigo lighten-1 white--text ma-5 text-xs-center">
                     <v-card-title primary-title>
                         <v-flex xs12>
                             <div class="headline">0</div>
@@ -40,6 +40,7 @@
                     </v-card-title>
                 </v-card>
             </v-flex>
+
              <v-menu  offset-y >
                     <v-btn  
                         
@@ -56,8 +57,10 @@
                             </v-list-tile>
                         </v-list>
               </v-menu> 
+
             <v-flex xs0 md12 class="mr-5 ml-5 pa-1">
                   <v-btn
+
                     fab
                     small
                     class="red mr-3"
@@ -69,21 +72,41 @@
                     <v-icon>add</v-icon>
             </v-btn>
 
+            <v-card class="pb-3 mb-4">
+                <v-card-title>
+                <v-select
+                    :items="items"
+                    v-model="search"
+                    label="Filtro"
+                    item-text="text"
+                    item-value="value"
+                    multiple
+                    chips
+
+                ></v-select>
+                <v-spacer></v-spacer>
+                </v-card-title>
+
                 <v-data-table
-                    v-bind:headers="headers"
+                    :headers="headers"
                     :items="tests"
+                    :pagination.sync="pagination"
+                    :search="search"
+                    :custom-filter="filterStatus"
                     hide-actions
                     class="white elevation-1"
-                >                
-                                              
+                >
+
                     <template slot="items" scope="props">
-                        <td class="text-xs-center" >{{ props.item.title }}</td>
-                        <td class="text-xs-center">{{ props.item.description }}</td>
-                        <td class="text-xs-center">
+                        <td class="text-xs-center" >{{ props.item.testTitle }}</td>
+                        <td class="text-xs-center">{{ props.item.className }}</td>
+                        <td class="text-xs-center">{{ convertDate(props.item.endDate) }}</td>
+                        <td class="text-xs-center">{{ findStatus(props.item.status) }}</td>
+                        <td class="text-xs-center mytests-buttons" >
+                            <v-btn primary dark @click="dialog = true" v-if="props.item.status === 1">Aplicar</v-btn>
                             <v-dialog v-model="dialog" persistent hide-overlay>
-                                <v-btn primary dark slot="activator" @click.native="dialog = true">Aplicar</v-btn>
-                       
-                                <v-card>                                 
+
+                                <v-card>
                                     <v-card-title>Selecione a Turma</v-card-title>
                                     <v-divider></v-divider>
                                     <v-card-text style="height: 300px">
@@ -107,9 +130,18 @@
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
+                            <v-btn primary v-if="props.item.status === 1">Editar</v-btn>
+                            <v-btn primary v-if="props.item.status === 1">Exportar</v-btn>
+                            <v-btn primary v-if="props.item.status === 3">Corrigir</v-btn>
+                            <v-btn primary v-if="props.item.status === 4">Notas</v-btn>
+                            <v-btn primary v-if="props.item.status === 1">Excluir</v-btn>
                         </td>
                     </template>
-                </v-data-table>                
+                </v-data-table>
+                <div class="text-xs-center pt-2">
+                    <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+                </div>
+            </v-card>
             </v-flex>
         </v-layout>
     </div>
@@ -118,11 +150,18 @@
 <script>
 import baseService from '../services/baseService'
 import auth from '../auth'
+import { convertDate } from '../utils/index'
 
 export default {
   name: 'CreateTest',
   data () {
     return {
+      convertDate: convertDate,
+      testsLength: 0,
+      pagination: {
+        rowsPerPage: 5
+      },
+      search: '',
       items: [
         {
           title: 'Corrigidas'
@@ -131,7 +170,21 @@ export default {
           title: 'Não corrigidas'
         },
         {
-          title: 'Não aplicadas '
+          title: 'Não aplicadas ',
+          text: 'Não Aplicada',
+          value: 1
+        },
+        {
+          text: 'Em Andamento',
+          value: 2
+        },
+        {
+          text: 'Não Corrigida',
+          value: 3
+        },
+        {
+          text: 'Corrigida',
+          value: 4
         }
       ],
       dialog: false,
@@ -147,7 +200,9 @@ export default {
       classes: [],
       headers: [
         {text: 'Título', value: 'title', align: 'center'},
-        {text: 'Descrição', value: 'description', align: 'center'},
+        {text: 'Turma', value: 'class', align: 'center'},
+        {text: 'Data Final', value: 'endDate', align: 'center'},
+        {text: 'Situação', value: 'status', align: 'center'},
         {text: 'Ações', value: '', align: 'center'}
       ]
     }
@@ -155,18 +210,29 @@ export default {
   mounted () {
     this.getTests()
     this.getClasses()
+    this.testsLength = this.tests.length
   },
   methods: {
+    findStatus (status) {
+      return this.items[status - 1].text
+    },
+    filterStatus (items, search, filter) {
+      search = search.toString().toLowerCase()
+      let itemsFiltered = items.filter(row => filter(row['status'], search))
+      this.testsLength = itemsFiltered.length
+      return itemsFiltered
+    },
     getTests () {
-      console.log(auth.teacherId())
       baseService.get(`/teacher/${auth.teacherId()}/tests`).then(r => {
         if (r.status === 200) {
-          console.log(r.data)
           this.tests = r.data
         } else {
           this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro na obtenção das provas!'})
         }
       })
+    },
+    changeSelect (value) {
+      this.search = value
     },
     getClasses () {
       baseService.get(`/teacher/${auth.teacherId()}/classes/`).then(r => {
@@ -198,6 +264,11 @@ export default {
     change () {
       this.$router.push('/prova')
     }
+  },
+  computed: {
+    pages () {
+      return this.pagination.rowsPerPage ? Math.ceil(this.testsLength / this.pagination.rowsPerPage) : 0
+    }
   }
 }
 </script>
@@ -207,8 +278,14 @@ export default {
   color: #006;
 }
 
+.mytests-buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
 .my-tests {
-  overflow-y: hidden;
+  overflow-y: scroll;
   overflow-x: hidden;
+  height: 102%;
 }
 </style>
