@@ -18,18 +18,24 @@
                    </v-list>
                 </v-menu>
               </v-flex>
-              <v-flex d-flex xs5 class="mr-5">
+              <v-flex d-flex xs3 class="mr-5">
                 <v-text-field disabled label="Aluno"></v-text-field>
               </v-flex>
               <v-flex d-flex xs1 class="mt-2">
-                <v-btn color="indigo" dark>
+                <v-btn class="indigo darken-4" dark>
                   <v-icon right dark>keyboard_arrow_left</v-icon>
                 </v-btn>
               </v-flex>
               <v-flex d-flex xs1 class="mt-2">
-                <v-btn color="indigo" dark>
+                <v-btn class="indigo darken-4" dark>
                   <v-icon right dark>keyboard_arrow_right</v-icon>
                 </v-btn>
+              </v-flex>
+              <v-flex d-flex xs2 class="ml-2 mt-3 mb-2">
+                <p>Alunos Restantes: 3 / 10</p>
+              </v-flex>
+              <v-flex d-flex xs3 class="mt-2 mr-3 mb-2">
+                <v-progress-linear v-model="valueDeterminate" color="pink lighten-1" background-color="pink lighten-3"></v-progress-linear>
               </v-flex>
             </v-layout>
           </v-card>
@@ -51,15 +57,27 @@
                 </v-layout>
               </v-flex>
               <v-flex xs5 class="ml-5">
-                <v-layout column class="ml-3">
-                  <v-flex xs12>
+                <v-layout row wrap class="ml-3">
+                  <v-flex xs6>
                     <v-card class="green darken-1 white--text mt-3 text-xs-center">
                       <v-card-title primary-title>
-                        <v-flex xs12>
+                        <v-flex xs6>
                           <div class="headline">{{questionGrade}}%</div>
                         </v-flex>
-                        <v-flex xs12>
-                          <div class="">Porcentagem de Acerto</div>
+                        <v-flex xs6>
+                          <div class="">Nota Estimada</div>
+                        </v-flex>
+                      </v-card-title>
+                    </v-card>
+                  </v-flex>
+                  <v-flex xs6 v-if="changeGrade">
+                    <v-card class="orange darken-1 white--text mt-3 text-xs-center">
+                      <v-card-title primary-title>
+                        <v-flex xs6>
+                          <div class="headline">{{questionGrade}}%</div>
+                        </v-flex>
+                        <v-flex xs6>
+                          <div class="">Nota Real</div>
                         </v-flex>
                       </v-card-title>
                     </v-card>
@@ -104,6 +122,7 @@ export default {
   data () {
     return {
       number: 0,
+      valueDeterminate: 30,
       dialog: false,
       hidden: false,
       showAnswer: false,
