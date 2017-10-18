@@ -41,6 +41,23 @@
                 </v-card>
             </v-flex>
 
+             <v-menu  offset-y >
+                    <v-btn  
+                        
+                        absolute                        
+                        primary 
+                        class="mr-5" 
+                        dark 
+                        right
+                        slot="activator"> Provas
+                        </v-btn>
+                        <v-list>
+                             <v-list-tile v-for="item in items" :key="item.title" @click="">
+                                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                            </v-list-tile>
+                        </v-list>
+              </v-menu> 
+
             <v-flex xs0 md12 class="mr-5 ml-5 pa-1">
                   <v-btn
 
@@ -54,6 +71,7 @@
                   >
                     <v-icon>add</v-icon>
             </v-btn>
+
             <v-card class="pb-3 mb-4">
                 <v-card-title>
                 <v-select
@@ -68,6 +86,7 @@
                 ></v-select>
                 <v-spacer></v-spacer>
                 </v-card-title>
+
                 <v-data-table
                     :headers="headers"
                     :items="tests"
@@ -145,6 +164,13 @@ export default {
       search: '',
       items: [
         {
+          title: 'Corrigidas'
+        },
+        {
+          title: 'Não corrigidas'
+        },
+        {
+          title: 'Não aplicadas ',
           text: 'Não Aplicada',
           value: 1
         },
