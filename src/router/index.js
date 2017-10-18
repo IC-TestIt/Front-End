@@ -101,7 +101,7 @@ export default new Router({
     beforeEnter: onlyTeacher
   },
   {
-    path: '/corrigirprova',
+    path: '/corrigir',
     name: 'CorrectTests',
     component: CorrectTest,
     beforeEnter: onlyTeacher
