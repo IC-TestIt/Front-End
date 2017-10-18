@@ -18,23 +18,23 @@
                    </v-list>
                 </v-menu>
               </v-flex>
-              <v-flex d-flex xs3 class="mr-5">
+              <v-flex xs1 class="mt-2">
+                <v-btn flat icon class="indigo darken-4"dark>
+                  <v-icon center dark>keyboard_arrow_left</v-icon>
+                </v-btn>
+              </v-flex>
+              <v-flex d-flex xs4 class="">
                 <v-text-field disabled label="Aluno"></v-text-field>
               </v-flex>
-              <v-flex d-flex xs1 class="mt-2">
-                <v-btn class="indigo darken-4" dark>
-                  <v-icon right dark>keyboard_arrow_left</v-icon>
+              <v-flex xs1 class="mt-2">
+                <v-btn flat icon class="indigo darken-4" dark>
+                  <v-icon center dark>keyboard_arrow_right</v-icon>
                 </v-btn>
               </v-flex>
-              <v-flex d-flex xs1 class="mt-2">
-                <v-btn class="indigo darken-4" dark>
-                  <v-icon right dark>keyboard_arrow_right</v-icon>
-                </v-btn>
-              </v-flex>
-              <v-flex d-flex xs2 class="ml-2 mt-3 mb-2">
+              <v-flex d-flex xs2 class="ml-2 mt-4 mb-3">
                 <p>Alunos Restantes: 3 / 10</p>
               </v-flex>
-              <v-flex d-flex xs3 class="mt-2 mr-3 mb-2">
+              <v-flex d-flex xs3 class="mt-3 mr-3 mb-2">
                 <v-progress-linear v-model="valueDeterminate" color="pink lighten-1" background-color="pink lighten-3"></v-progress-linear>
               </v-flex>
             </v-layout>
@@ -45,6 +45,9 @@
             <v-layout row>
               <v-flex xs6>
                 <v-layout column class="ml-3">
+                  <v-flex xs12>
+                    <v-text-field box multi-line disabled label="Enunciado da Questão"></v-text-field>
+                  </v-flex>
                   <v-flex xs12>
                     <v-text-field box multi-line disabled label="Resposta do Aluno"></v-text-field>
                   </v-flex>
@@ -62,10 +65,10 @@
                     <v-card class="green darken-1 white--text mt-3 text-xs-center">
                       <v-card-title primary-title>
                         <v-flex xs6>
-                          <div class="headline">{{questionGrade}}%</div>
+                          <div class="headline bold">{{questionGrade}}%</div>
                         </v-flex>
                         <v-flex xs6>
-                          <div class="">Nota Estimada</div>
+                          <div class="bold">Nota Estimada</div>
                         </v-flex>
                       </v-card-title>
                     </v-card>
@@ -74,10 +77,10 @@
                     <v-card class="orange darken-1 white--text mt-3 text-xs-center">
                       <v-card-title primary-title>
                         <v-flex xs6>
-                          <div class="headline">{{questionGrade}}%</div>
+                          <div class="headline bold">{{questionGrade}}%</div>
                         </v-flex>
                         <v-flex xs6>
-                          <div class="">Nota Real</div>
+                          <div class="bold">Nota Real</div>
                         </v-flex>
                       </v-card-title>
                     </v-card>
@@ -145,6 +148,14 @@ export default {
 .correct-tests{
   min-height: 100%;
   min-width: 100%;
+}
+
+.arrow-button {
+  width: 10%;
+}
+
+.bold {
+  font-weight: bold;
 }
 
 .menu {
