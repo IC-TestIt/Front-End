@@ -52,7 +52,7 @@
                         slot="activator"> Provas
                         </v-btn>
                         <v-list>
-                             <v-list-tile v-for="item in items" :key="item.title" @click="">
+                             <v-list-tile v-for="item in items" :key="item.title">
                                 <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                             </v-list-tile>
                         </v-list>
@@ -152,7 +152,7 @@
                                     <v-divider></v-divider>
                                     <v-card-actions>
                                         <v-btn class="blue--text darken-1" flat @click.native="dialog2 = false">Fechar</v-btn>
-                                        <v-btn class="blue--text darken-1" flat @click.native="" :loading="loading">Corrigir</v-btn>
+                                        <v-btn class="blue--text darken-1" flat :loading="loading">Corrigir</v-btn>
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
