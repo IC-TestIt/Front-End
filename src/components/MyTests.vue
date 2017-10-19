@@ -42,19 +42,7 @@
             </v-flex>
 
             <v-flex xs0 md12 class="mr-5 ml-5 pa-1">
-                  <!--<v-btn
-
-                    fab
-                    small
-                    class="red mr-3"
-                    right
-                    absolute
-                    dark
-                    @click="change(items.link)"
-                  >
-                    <v-icon>add</v-icon>
-            </v-btn>-->
-
+                 
             <v-card class="pb-3 mb-4">
                 <v-card-title>
                 <v-select
@@ -134,7 +122,7 @@
                                     <v-divider></v-divider>
                                     <v-card-actions>
                                         <v-btn class="blue--text darken-1" flat @click.native="dialog2 = false">Fechar</v-btn>
-                                        <v-btn class="blue--text darken-1" flat @click.native="" :loading="loading">Corrigir</v-btn>
+                                        <v-btn class="blue--text darken-1" flat :loading="loading">Corrigir</v-btn>
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
