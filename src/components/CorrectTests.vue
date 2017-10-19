@@ -12,7 +12,7 @@
                 <v-menu offset-y absolute class="ml-2 mt-1">
                    <v-btn class="indigo darken-4" dark slot="activator">QUESTÕES</v-btn>
                    <v-list>
-                   <v-list-tile v-for="item in items" :key="item.title" @click="">
+                   <v-list-tile v-for="item in items" :key="item.title">
                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                    </v-list-tile>
                    </v-list>
@@ -62,10 +62,10 @@
               <v-flex xs5 class="ml-5">
                 <v-layout row wrap class="ml-3">
                   <v-flex xs6>
-                    <v-card class="green darken-1 white--text mt-3 text-xs-center">
+                    <v-card :class="classObj(estimatedGrade)">
                       <v-card-title primary-title>
                         <v-flex xs6>
-                          <div class="headline bold">{{questionGrade}}%</div>
+                          <div class="headline bold">{{estimatedGrade}}%</div>
                         </v-flex>
                         <v-flex xs6>
                           <div class="bold">Nota Estimada</div>
@@ -74,10 +74,10 @@
                     </v-card>
                   </v-flex>
                   <v-flex xs6 v-if="changeGrade">
-                    <v-card class="orange darken-1 white--text mt-3 text-xs-center">
+                    <v-card :class="classObj(realGrade)">
                       <v-card-title primary-title>
                         <v-flex xs6>
-                          <div class="headline bold">{{questionGrade}}%</div>
+                          <div class="headline bold">{{realGrade}}%</div>
                         </v-flex>
                         <v-flex xs6>
                           <div class="bold">Nota Real</div>
@@ -101,10 +101,10 @@
                   <v-flex xs12 v-if="changeGrade">
                     <v-layout row>
                       <v-flex xs9>
-                        <v-slider label="%" :max="100" v-model="questionGrade"></v-slider>
+                        <v-slider label="%" :max="100" v-model="realGrade"></v-slider>
                       </v-flex>
                       <v-flex xs2>
-                        <v-text-field v-model="questionGrade" type="number"></v-text-field>
+                        <v-text-field v-model="realGrade" type="number"></v-text-field>
                       </v-flex>
                     </v-layout>
                   </v-flex>
@@ -131,14 +131,25 @@ export default {
       showAnswer: false,
       comments: false,
       changeGrade: false,
-      questionGrade: 0,
+      realGrade: 0,
+      estimatedGrade: 30,
       toggle_multiple: [0, 1, 2],
       items: [
         { title: 'Questão 1' },
         { title: 'Questão 2' },
         { title: 'Questão 3' },
         { title: 'Questão 4' }
-      ]
+      ],
+      classObj: (grade) => {
+        let cssClass = 'white--text mt-3 text-xs-center'
+        if (grade <= 40) {
+          return `red ${cssClass}`
+        } else if (grade <= 60) {
+          return `orange ${cssClass}`
+        } else {
+          return `green darken-1 ${cssClass}`
+        }
+      }
     }
   }
 }
