@@ -223,14 +223,9 @@ export default {
       this.classTestsFiltered = this.tests.filter((item) => item.testId === id)
     },
     filterStatus (items, search, filter) {
-      console.log(search)
       search = search.toString().toLowerCase()
       let itemsFiltered = items.filter(row => {
-        // if (search.length > 1) {
-        return search.includes(row['status'])
-        // } else {
-        //   return true
-        // }
+        return search === '' ? true : search.includes(row['status'])
       })
       this.testsLength = itemsFiltered.length
       return itemsFiltered
