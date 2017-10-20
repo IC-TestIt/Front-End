@@ -42,7 +42,7 @@
             </v-flex>
 
             <v-flex xs0 md12 class="mr-5 ml-5 pa-1">
-                 
+
             <v-card class="pb-3 mb-4">
                 <v-card-title>
                 <v-select
@@ -96,7 +96,7 @@
                                     <v-divider></v-divider>
                                     <v-card-actions>
                                         <v-btn class="blue--text darken-1" flat @click.native="dialog = false">Fechar</v-btn>
-                                        <v-btn class="blue--text darken-1" flat @click.native="save(props.item.id)" :loading="loading">Salvar</v-btn>
+                                        <v-btn class="blue--text darken-1" flat @click.native="save(props.item.testId)" :loading="loading">Salvar</v-btn>
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
@@ -122,7 +122,7 @@
                                     <v-divider></v-divider>
                                     <v-card-actions>
                                         <v-btn class="blue--text darken-1" flat @click.native="dialog2 = false">Fechar</v-btn>
-                                        <v-btn class="blue--text darken-1" flat :loading="loading">Corrigir</v-btn>
+                                        <v-btn class="blue--text darken-1" flat :loading="loading" @click.native="correctExams()">Corrigir</v-btn>
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
@@ -186,6 +186,7 @@ export default {
         beginDate: null,
         endDate: null
       },
+      testId: 0,
       menuBegin: false,
       menuEnd: false,
       classes: [],
@@ -204,10 +205,19 @@ export default {
     this.testsLength = this.tests.length
   },
   methods: {
+    correctExams () {
+      baseService.post(`/exam/correction/${this.testId}`, {ids: this.classTestsCorrection}).then(r => {
+        if (r.status === 200) {
+          localStorage.setItem('exams', r.data.correctedExams)
+        }
+        this.$router.push('/corrigir')
+      })
+    },
     findStatus (status) {
       return this.items[status - 1].text
     },
     filterClassTests (id) {
+      this.testId = id
       this.classTestsFiltered = this.tests.filter((item) => item.testId === id)
     },
     filterStatus (items, search, filter) {
