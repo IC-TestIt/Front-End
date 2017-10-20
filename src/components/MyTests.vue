@@ -194,7 +194,7 @@ export default {
         {text: 'Título', value: 'title', align: 'center'},
         {text: 'Turma', value: 'class', align: 'center'},
         {text: 'Data Final', value: 'endDate', align: 'center'},
-        {text: 'Situação', value: 'status', align: 'center'},
+        {text: 'Status', value: 'status', align: 'center'},
         {text: 'Ações', value: '', align: 'center'}
       ]
     }
@@ -208,7 +208,7 @@ export default {
     correctExams () {
       baseService.post(`/exam/correction/${this.testId}`, {ids: this.classTestsCorrection}).then(r => {
         if (r.status === 200) {
-          localStorage.setItem('exams', r.data.correctedExams)
+          sessionStorage.setItem('exams', r.data.correctedExams)
         }
         this.$router.push('/corrigir')
       })
