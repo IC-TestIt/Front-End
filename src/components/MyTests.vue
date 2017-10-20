@@ -144,7 +144,7 @@
 <script>
 import baseService from '../services/baseService'
 import auth from '../auth'
-import storageModule from '../utils/storageModule'
+import examService from '../services/examService'
 import { convertDate } from '../utils/index'
 
 export default {
@@ -209,7 +209,7 @@ export default {
     correctExams () {
       baseService.post(`/exam/correction/${this.testId}`, {ids: this.classTestsCorrection}).then(r => {
         if (r.status === 200) {
-          storageModule.saveExams(r.data.correctedExams)
+          examService.saveExams(r.data.correctedExams)
         }
         this.$router.push('/corrigir')
       })
