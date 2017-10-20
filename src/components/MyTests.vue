@@ -41,37 +41,8 @@
                 </v-card>
             </v-flex>
 
-             <v-menu  offset-y >
-                    <v-btn  
-                        
-                        absolute                        
-                        primary 
-                        class="mr-5" 
-                        dark 
-                        right
-                        slot="activator"> Provas
-                        </v-btn>
-                        <v-list>
-                             <v-list-tile v-for="item in items" :key="item.title">
-                                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                            </v-list-tile>
-                        </v-list>
-              </v-menu> 
-
             <v-flex xs0 md12 class="mr-5 ml-5 pa-1">
-                  <v-btn
-
-                    fab
-                    small
-                    class="red mr-3"
-                    right
-                    absolute
-                    dark
-                    @click="change(items.link)"
-                  >
-                    <v-icon>add</v-icon>
-            </v-btn>
-
+                 
             <v-card class="pb-3 mb-4">
                 <v-card-title>
                 <v-select
@@ -82,7 +53,6 @@
                     item-value="value"
                     multiple
                     chips
-
                 ></v-select>
                 <v-spacer></v-spacer>
                 </v-card-title>
@@ -189,13 +159,6 @@ export default {
       search: '',
       items: [
         {
-          title: 'Corrigidas'
-        },
-        {
-          title: 'Não corrigidas'
-        },
-        {
-          title: 'Não aplicadas ',
           text: 'Não Aplicada',
           value: 1
         },
@@ -249,7 +212,9 @@ export default {
     },
     filterStatus (items, search, filter) {
       search = search.toString().toLowerCase()
-      let itemsFiltered = items.filter(row => filter(row['status'], search))
+      let itemsFiltered = items.filter(row => {
+        return search === '' ? true : search.includes(row['status'])
+      })
       this.testsLength = itemsFiltered.length
       return itemsFiltered
     },
