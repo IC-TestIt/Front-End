@@ -1,8 +1,21 @@
 export default {
-  saveExams (exams) {
-    sessionStorage.setItem('exams', exams)
+  session: {
+    setItem (item, data) {
+      sessionStorage.setItem(item, data)
+    },
+    getItem (item) {
+      sessionStorage.getItem(item)
+    }
   },
-  getExams () {
-    return sessionStorage.getItem('exams')
+  local: {
+    setItem (item, data) {
+      localStorage.setItem(item, data)
+    },
+    getItem (item) {
+      localStorage.getItem(item)
+    },
+    clear () {
+      localStorage.clear()
+    }
   }
 }
