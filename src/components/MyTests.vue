@@ -73,7 +73,10 @@
                         <td class="text-xs-center">{{ convertDate(props.item.endDate) }}</td>
                         <td class="text-xs-center">{{ findStatus(props.item.status) }}</td>
                         <td class="text-xs-center mytests-buttons" >
-                            <v-btn id="aplic" center dark title="Aplicar" @click="dialog = true" :disabled="props.item.status !== 1"><v-icon>timer</v-icon></v-btn>
+                            <v-btn id="aplic"  center  title="Aplicar" @click="dialog = true" :disabled="props.item.status !== 1">
+                              <v-icon :class="[{'white--text': props.item.status === 1 }]">timer</v-icon>
+                            </v-btn>
+                            
                             <v-dialog v-model="dialog" persistent hide-overlay>
 
                                 <v-card>
@@ -100,9 +103,15 @@
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
-                            <v-btn id="edit" dark title="Editar" :disabled="props.item.status !== 1"><v-icon>mode_edit</v-icon></v-btn>
-                            <v-btn id="export" dark title="Exportar" :disabled="props.item.status !== 1"><v-icon>file_download</v-icon></v-btn>
-                            <v-btn id="correct" title="Corrigir" :disabled="props.item.status !== 3" @click="dialog2 = true, filterClassTests(props.item.testId)"><v-icon>check</v-icon></v-btn>
+                            <v-btn id="edit" title="Editar" :disabled="props.item.status !== 1">
+                              <v-icon :class="[{'white--text': props.item.status === 1 }]">mode_edit</v-icon>
+                            </v-btn>
+                            <v-btn id="export" title="Exportar" :disabled="props.item.status !== 1">
+                              <v-icon :class="[{'white--text': props.item.status === 1 }]">file_download</v-icon>
+                            </v-btn>
+                            <v-btn id="correct" title="Corrigir" :disabled="props.item.status !== 3" @click="dialog2 = true, filterClassTests(props.item.testId)">
+                              <v-icon :class="[{'white--text': props.item.status === 3 }]">check</v-icon>
+                            </v-btn>
                             <v-dialog v-model="dialog2" persistent hide-overlay>
                                 <v-card>
                                     <v-card-title>Selecione a Turma</v-card-title>
@@ -131,10 +140,13 @@
                                 </v-card>
                             </v-dialog>
                            
-                              <v-btn id="grade" dark title="Notas" :disabled="props.item.status !== 4"><v-icon>grid_on</v-icon></v-btn>
-                            
-                              <v-btn id="delete" dark title="Deletar" :disabled="props.item.status !== 1" slot="activator"><v-icon>delete_forever</v-icon></v-btn>
-                            
+                            <v-btn id="grade" title="Notas" :disabled="props.item.status !== 4">
+                              <v-icon :class="[{'white--text': props.item.status === 4 }]">grid_on</v-icon>
+                            </v-btn>
+                          
+                            <v-btn id="delete" title="Deletar" :disabled="props.item.status !== 1" slot="activator">
+                              <v-icon :class="[{'white--text': props.item.status === 1 }]">delete_forever</v-icon>
+                            </v-btn>
                         </td>
                     </template>
                 </v-data-table>
