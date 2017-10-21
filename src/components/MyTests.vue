@@ -96,7 +96,7 @@
                                     <v-divider></v-divider>
                                     <v-card-actions>
                                         <v-btn class="blue--text darken-1" flat @click.native="dialog = false">Fechar</v-btn>
-                                        <v-btn class="blue--text darken-1" flat @click.native="save(props.item.id)" :loading="loading">Salvar</v-btn>
+                                        <v-btn class="blue--text darken-1" flat @click.native="save(props.item.testId)" :loading="loading">Salvar</v-btn>
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
@@ -123,7 +123,7 @@
                                     <v-card-actions>
                                         <v-btn class="blue--text darken-1" flat @click.native="dialog2 = false">Fechar</v-btn>
 
-                                        <v-btn class="blue--text darken-1" flat @click.native="" :loading="loading">Corrigir</v-btn>
+                                        <v-btn class="blue--text darken-1" flat :loading="loading">Corrigir</v-btn>
 
                                         <v-btn class="blue--text darken-1" flat :loading="loading">Corrigir</v-btn>
 
@@ -150,6 +150,7 @@
 <script>
 import baseService from '../services/baseService'
 import auth from '../auth'
+import examService from '../services/examService'
 import { convertDate } from '../utils/index'
 
 export default {
@@ -192,6 +193,7 @@ export default {
         beginDate: null,
         endDate: null
       },
+      testId: 0,
       menuBegin: false,
       menuEnd: false,
       classes: [],
@@ -199,7 +201,7 @@ export default {
         {text: 'Título', value: 'title', align: 'center'},
         {text: 'Turma', value: 'class', align: 'center'},
         {text: 'Data Final', value: 'endDate', align: 'center'},
-        {text: 'Situação', value: 'status', align: 'center'},
+        {text: 'Status', value: 'status', align: 'center'},
         {text: 'Ações', value: '', align: 'center'}
       ]
     }
@@ -210,10 +212,19 @@ export default {
     this.testsLength = this.tests.length
   },
   methods: {
+    correctExams () {
+      baseService.post(`/exam/correction/${this.testId}`, {ids: this.classTestsCorrection}).then(r => {
+        if (r.status === 200) {
+          examService.saveExams(r.data.correctedExams)
+        }
+        this.$router.push('/corrigir')
+      })
+    },
     findStatus (status) {
       return this.items[status - 1].text
     },
     filterClassTests (id) {
+      this.testId = id
       this.classTestsFiltered = this.tests.filter((item) => item.testId === id)
     },
     filterStatus (items, search, filter) {
