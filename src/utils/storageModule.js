@@ -1,17 +1,25 @@
 export default {
   session: {
-    setItem (item, data) {
+    set (item, data) {
+      if (typeof data === 'object') {
+        data = JSON.stringify(data)
+      }
       sessionStorage.setItem(item, data)
     },
-    getItem (item) {
-      sessionStorage.getItem(item)
+    get (item) {
+      const value = sessionStorage.getItem(item)
+      try {
+        return JSON.parse(value)
+      } catch (e) {
+        return value
+      }
     }
   },
   local: {
-    setItem (item, data) {
+    set (item, data) {
       localStorage.setItem(item, data)
     },
-    getItem (item) {
+    get (item) {
       localStorage.getItem(item)
     },
     clear () {
