@@ -145,6 +145,7 @@
 import baseService from '../services/baseService'
 import auth from '../auth'
 import examService from '../services/examService'
+import testService from '../services/testService'
 import { convertDate } from '../utils/index'
 
 export default {
@@ -207,9 +208,11 @@ export default {
   },
   methods: {
     correctExams () {
+      this.classTestsCorrection = this.classTestsCorrection.map((r) => r.classTestId)
       baseService.post(`/exam/correction/${this.testId}`, {ids: this.classTestsCorrection}).then(r => {
         if (r.status === 200) {
           examService.saveExams(r.data.correctedExams)
+          testService.saveTest(r.data.test)
         }
         this.$router.push('/corrigir')
       })
