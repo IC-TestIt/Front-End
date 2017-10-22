@@ -42,7 +42,7 @@
             </v-flex>
 
             <v-flex xs0 md12 class="mr-5 ml-5 pa-1">
-
+                 
             <v-card class="pb-3 mb-4">
                 <v-card-title>
                 <v-select
@@ -73,7 +73,10 @@
                         <td class="text-xs-center">{{ convertDate(props.item.endDate) }}</td>
                         <td class="text-xs-center">{{ findStatus(props.item.status) }}</td>
                         <td class="text-xs-center mytests-buttons" >
-                            <v-btn primary dark @click="dialog = true" v-if="props.item.status === 1">Aplicar</v-btn>
+                            <v-btn id="aplic"  center  title="Aplicar" @click="dialog = true" :disabled="props.item.status !== 1">
+                              <v-icon :class="[{'white--text': props.item.status === 1 }]">timer</v-icon>
+                            </v-btn>
+                            
                             <v-dialog v-model="dialog" persistent hide-overlay>
 
                                 <v-card>
@@ -100,9 +103,15 @@
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
-                            <v-btn primary v-if="props.item.status === 1">Editar</v-btn>
-                            <v-btn primary v-if="props.item.status === 1">Exportar</v-btn>
-                            <v-btn primary v-if="props.item.status === 3" @click="dialog2 = true, filterClassTests(props.item.testId)">Corrigir</v-btn>
+                            <v-btn id="edit" title="Editar" :disabled="props.item.status !== 1">
+                              <v-icon :class="[{'white--text': props.item.status === 1 }]">mode_edit</v-icon>
+                            </v-btn>
+                            <v-btn id="export" title="Exportar" :disabled="props.item.status !== 1">
+                              <v-icon :class="[{'white--text': props.item.status === 1 }]">file_download</v-icon>
+                            </v-btn>
+                            <v-btn id="correct" title="Corrigir" :disabled="props.item.status !== 3" @click="dialog2 = true, filterClassTests(props.item.testId)">
+                              <v-icon :class="[{'white--text': props.item.status === 3 }]">check</v-icon>
+                            </v-btn>
                             <v-dialog v-model="dialog2" persistent hide-overlay>
                                 <v-card>
                                     <v-card-title>Selecione a Turma</v-card-title>
@@ -122,13 +131,22 @@
                                     <v-divider></v-divider>
                                     <v-card-actions>
                                         <v-btn class="blue--text darken-1" flat @click.native="dialog2 = false">Fechar</v-btn>
-                                        <v-btn class="blue--text darken-1" flat :loading="loading" @click.native="correctExams()">Corrigir</v-btn>
+
+                                        <v-btn class="blue--text darken-1" flat :loading="loading">Corrigir</v-btn>
+
+                                        <v-btn class="blue--text darken-1" flat :loading="loading">Corrigir</v-btn>
+
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
-
-                            <v-btn primary v-if="props.item.status === 4">Notas</v-btn>
-                            <v-btn primary v-if="props.item.status === 1">Excluir</v-btn>
+                           
+                            <v-btn id="grade" title="Notas" :disabled="props.item.status !== 4">
+                              <v-icon :class="[{'white--text': props.item.status === 4 }]">grid_on</v-icon>
+                            </v-btn>
+                          
+                            <v-btn id="delete" title="Deletar" :disabled="props.item.status !== 1" slot="activator">
+                              <v-icon :class="[{'white--text': props.item.status === 1 }]">delete_forever</v-icon>
+                            </v-btn>
                         </td>
                     </template>
                 </v-data-table>
@@ -297,5 +315,25 @@ export default {
   overflow-y: scroll;
   overflow-x: hidden;
   height: 102%;
+}
+
+#edit{
+  background-color: #eca400;
+}
+
+#export{
+   background-color:#ddd78d;
+}
+
+#grade{
+   background-color: #679437;
+}
+
+#aplic{
+   background-color: #1a237e;
+}
+
+#delete{
+   background-color: #a20021;
 }
 </style>
