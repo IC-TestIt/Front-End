@@ -172,8 +172,11 @@ export default {
           })
         }
       })
-      baseService.put(`exam/correction`, this.exams).then((r) => {
+      this.exams.forEach((r) => {
         console.log(r)
+        baseService.put(`exam/${r.id}/correction`, r).then((res) => {
+          console.log(res)
+        })
       })
     },
     getTest () {
