@@ -42,7 +42,7 @@
             </v-flex>
 
             <v-flex xs0 md12 class="mr-5 ml-5 pa-1">
-                 
+
             <v-card class="pb-3 mb-4">
                 <v-card-title>
                 <v-select
@@ -76,7 +76,7 @@
                             <v-btn id="aplic"  center  title="Aplicar" @click="dialog = true" :disabled="props.item.status !== 1">
                               <v-icon :class="[{'white--text': props.item.status === 1 }]">timer</v-icon>
                             </v-btn>
-                            
+
                             <v-dialog v-model="dialog" persistent hide-overlay>
 
                                 <v-card>
@@ -132,18 +132,16 @@
                                     <v-card-actions>
                                         <v-btn class="blue--text darken-1" flat @click.native="dialog2 = false">Fechar</v-btn>
 
-                                        <v-btn class="blue--text darken-1" flat :loading="loading">Corrigir</v-btn>
-
-                                        <v-btn class="blue--text darken-1" flat :loading="loading">Corrigir</v-btn>
+                                        <v-btn class="blue--text darken-1" flat :loading="loading" @click="correctExams()">Corrigir</v-btn>
 
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
-                           
+
                             <v-btn id="grade" title="Notas" :disabled="props.item.status !== 4">
                               <v-icon :class="[{'white--text': props.item.status === 4 }]">grid_on</v-icon>
                             </v-btn>
-                          
+
                             <v-btn id="delete" title="Deletar" :disabled="props.item.status !== 1" slot="activator">
                               <v-icon :class="[{'white--text': props.item.status === 1 }]">delete_forever</v-icon>
                             </v-btn>
@@ -240,7 +238,7 @@ export default {
     },
     filterClassTests (id) {
       this.testId = id
-      this.classTestsFiltered = this.tests.filter((item) => item.testId === id)
+      this.classTestsFiltered = this.tests.filter((item) => item.testId === id && item.status === 3)
     },
     filterStatus (items, search, filter) {
       search = search.toString().toLowerCase()
