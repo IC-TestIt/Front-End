@@ -70,7 +70,7 @@
                       </v-card-title>
                     </v-card>
                   </v-flex>
-                  <v-flex xs6 v-if="currentAnsweredQuestion.changeGrade">
+                  <v-flex xs6 v-if="changeGrade">
                     <v-card :class="classObj(currentAnsweredQuestion.realGrade)">
                       <v-card-title primary-title>
                         <v-flex xs6>
@@ -88,11 +88,11 @@
                         <v-checkbox v-bind:label="`Mostrar Reposta`" v-model="showAnswer" light></v-checkbox>
                       </v-flex>
                       <v-flex xs5>
-                        <v-checkbox v-bind:label="`Alterar Nota`" v-model="currentAnsweredQuestion.changeGrade" light></v-checkbox>
+                        <v-checkbox class="" v-bind:label="`Alterar Nota`" v-model="changeGrade" light></v-checkbox>
                       </v-flex>
                     </v-layout>
                   </v-flex>
-                  <v-flex xs12 v-if="currentAnsweredQuestion.changeGrade">
+                  <v-flex xs12 v-if="changeGrade">
                     <v-layout row>
                       <v-flex xs9>
                         <v-slider label="%" :max="100" v-model="currentAnsweredQuestion.realGrade"></v-slider>
@@ -122,6 +122,8 @@ export default {
   data () {
     return {
       indexStudent: 0,
+      id: 1,
+      changeGrade: false,
       exams: [],
       test: {},
       currentQuestion: {},
@@ -158,25 +160,25 @@ export default {
       this.exams = this.exams.map((r) => {
         return {
           id: r.examId,
-          answeredQuestions: r.answeredQuestions.map((r) => {
-            let g = 0
-            if (r.changeGrade) {
-              g = r.realGrade / 100
-            } else {
-              g = r.percentCorrect
-            }
-            return {
-              id: r.id,
-              grade: g
-            }
-          })
+          answeredQuestions: r.answeredQuestions
         }
       })
       this.exams.forEach((r) => {
-        console.log(r)
-        baseService.put(`exam/${r.id}/correction`, r).then((res) => {
-          console.log(res)
+        r.answeredQuestions = r.answeredQuestions.map((a) => {
+          let g = 0.0
+          if (a.changeGrade) {
+            g = a.realGrade / 100.0
+          } else {
+            g = a.percentCorrect
+          }
+          return {
+            id: a.id,
+            grade: g
+          }
         })
+      })
+      baseService.put(`exam/${this.id}/correction`, this.exams).then((res) => {
+        console.log(res)
       })
     },
     getTest () {
@@ -185,6 +187,8 @@ export default {
     },
     changeQuestion (question) {
       this.currentQuestion = question
+      this.currentAnsweredQuestion.changeGrade = this.changeGrade
+      this.changeGrade = false
       this.currentAnsweredQuestion = this.currentExam.answeredQuestions.find((r) => r.questionId === this.currentQuestion.id)
     },
     nextStudent () {
@@ -221,6 +225,7 @@ export default {
         r.changeGrade = false
       })
       this.answeredQuestions = answered
+      this.currentExam = this.exams[0]
     }
   }
 }
