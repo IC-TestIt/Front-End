@@ -132,9 +132,7 @@
                                     <v-card-actions>
                                         <v-btn class="blue--text darken-1" flat @click.native="dialog2 = false">Fechar</v-btn>
 
-                                        <v-btn class="blue--text darken-1" flat :loading="loading">Corrigir</v-btn>
-
-                                        <v-btn class="blue--text darken-1" flat :loading="loading">Corrigir</v-btn>
+                                        <v-btn class="blue--text darken-1" flat :loading="loading" :click="correctExams()">Corrigir</v-btn>
 
                                     </v-card-actions>
                                 </v-card>
@@ -179,7 +177,7 @@ export default {
       search: '',
       items: [
         {
-          text: 'Não Aplicada',
+          text: 'Não Aplicadas',
           value: 1
         },
         {
@@ -187,11 +185,11 @@ export default {
           value: 2
         },
         {
-          text: 'Não Corrigida',
+          text: 'Não Corrigidas',
           value: 3
         },
         {
-          text: 'Corrigida',
+          text: 'Corrigidas',
           value: 4
         }
       ],
@@ -240,7 +238,9 @@ export default {
     },
     filterClassTests (id) {
       this.testId = id
-      this.classTestsFiltered = this.tests.filter((item) => item.testId === id)
+      this.classTestsFiltered = this.tests.filter((item) => {
+        return item.testId === id && item.className !== null
+      })
     },
     filterStatus (items, search, filter) {
       search = search.toString().toLowerCase()
@@ -326,7 +326,11 @@ export default {
 }
 
 #grade{
-   background-color: #679437;
+   background-color: #1a237e;
+}
+
+#correct{
+  background-color: #679437;
 }
 
 #aplic{
