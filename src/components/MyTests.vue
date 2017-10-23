@@ -132,7 +132,7 @@
                                     <v-card-actions>
                                         <v-btn class="blue--text darken-1" flat @click.native="dialog2 = false">Fechar</v-btn>
 
-                                        <v-btn class="blue--text darken-1" flat :loading="loading" :click="correctExams()">Corrigir</v-btn>
+                                        <v-btn class="blue--text darken-1" flat :loading="loading" @click="correctExams()">Corrigir</v-btn>
 
                                     </v-card-actions>
                                 </v-card>
