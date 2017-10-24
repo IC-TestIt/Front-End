@@ -1,10 +1,10 @@
 import storage from '../utils/storageModule'
 
 export default {
-  saveExams (exams) {
-    storage.session.setItem('exams', exams)
+  saveExams (exam) {
+    storage.session.set('exams', exam)
   },
   getExams () {
-    storage.session.getItem('exams')
+    return storage.session.get('exams')
   }
 }

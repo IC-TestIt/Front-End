@@ -12,30 +12,30 @@
                 <v-menu offset-y absolute class="ml-2 mt-1">
                    <v-btn class="indigo darken-4" dark slot="activator">QUESTÕES</v-btn>
                    <v-list>
-                   <v-list-tile v-for="item in items" :key="item.title">
-                   <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                   <v-list-tile v-for="item in questions" :key="item.title">
+                   <v-list-tile-title @click="changeQuestion(item)">{{ item.description }}</v-list-tile-title>
                    </v-list-tile>
                    </v-list>
                 </v-menu>
               </v-flex>
               <v-flex xs1 class="mt-2">
-                <v-btn flat icon class="indigo darken-4"dark>
+                <v-btn flat icon class="indigo darken-4"dark @click="previousStudent()">
                   <v-icon center dark>keyboard_arrow_left</v-icon>
                 </v-btn>
               </v-flex>
               <v-flex d-flex xs4 class="">
-                <v-text-field disabled label="Aluno"></v-text-field>
+                <v-text-field disabled label="Aluno" :value="currentStudent.name"></v-text-field>
               </v-flex>
               <v-flex xs1 class="mt-2">
-                <v-btn flat icon class="indigo darken-4" dark>
+                <v-btn flat icon class="indigo darken-4" dark @click="nextStudent()">
                   <v-icon center dark>keyboard_arrow_right</v-icon>
                 </v-btn>
               </v-flex>
               <v-flex d-flex xs2 class="ml-2 mt-4 mb-3">
-                <p>Alunos Restantes: 3 / 10</p>
+                <p>Alunos Restantes: {{indexStudent + 1}} / {{students.length}}</p>
               </v-flex>
-              <v-flex d-flex xs3 class="mt-3 mr-3 mb-2">
-                <v-progress-linear v-model="valueDeterminate" color="pink lighten-1" background-color="pink lighten-3"></v-progress-linear>
+              <v-flex d-flex xs3 class="mt-2 mr-3 mb-2">
+                <v-btn class="indigo darken-4" dark @click="correctExams()">Corrigir</v-btn>
               </v-flex>
             </v-layout>
           </v-card>
@@ -46,26 +46,23 @@
               <v-flex xs6>
                 <v-layout column class="ml-3">
                   <v-flex xs12>
-                    <v-text-field box multi-line disabled label="Enunciado da Questão"></v-text-field>
+                    <v-text-field box multi-line disabled label="Enunciado da Questão" :value="currentQuestion.description"></v-text-field>
                   </v-flex>
                   <v-flex xs12>
-                    <v-text-field box multi-line disabled label="Resposta do Aluno"></v-text-field>
+                    <v-text-field box multi-line disabled label="Resposta do Aluno" :value="currentAnsweredQuestion.studentAnswer"></v-text-field>
                   </v-flex>
                   <v-flex xs12 v-if="showAnswer">
-                    <v-text-field box multi-line disabled label="Resposta do Professor"></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 v-if="comments">
-                    <v-text-field box multi-line disabled label="Comentarios do Professor"></v-text-field>
+                    <v-text-field box multi-line disabled label="Resposta do Professor" :value="currentQuestion.answer"></v-text-field>
                   </v-flex>
                 </v-layout>
               </v-flex>
               <v-flex xs5 class="ml-5">
                 <v-layout row wrap class="ml-3">
                   <v-flex xs6>
-                    <v-card :class="classObj(estimatedGrade)">
+                    <v-card :class="classObj(currentAnsweredQuestion.percentCorrect)">
                       <v-card-title primary-title>
                         <v-flex xs6>
-                          <div class="headline bold">{{estimatedGrade}}%</div>
+                          <div class="headline bold">{{ currentAnsweredQuestion.percentCorrect * 100 }}%</div>
                         </v-flex>
                         <v-flex xs6>
                           <div class="bold">Nota Estimada</div>
@@ -74,10 +71,10 @@
                     </v-card>
                   </v-flex>
                   <v-flex xs6 v-if="changeGrade">
-                    <v-card :class="classObj(realGrade)">
+                    <v-card :class="classObj(currentAnsweredQuestion.realGrade)">
                       <v-card-title primary-title>
                         <v-flex xs6>
-                          <div class="headline bold">{{realGrade}}%</div>
+                          <div class="headline bold">{{currentAnsweredQuestion.realGrade}}%</div>
                         </v-flex>
                         <v-flex xs6>
                           <div class="bold">Nota Real</div>
@@ -90,21 +87,18 @@
                       <v-flex xs5>
                         <v-checkbox v-bind:label="`Mostrar Reposta`" v-model="showAnswer" light></v-checkbox>
                       </v-flex>
-                      <v-flex xs6>
-                        <v-checkbox v-bind:label="`Adicionar Comentario`" v-model="comments" light></v-checkbox>
-                      </v-flex>
                       <v-flex xs5>
-                        <v-checkbox v-bind:label="`Alterar Nota`" v-model="changeGrade" light></v-checkbox>
+                        <v-checkbox class="" v-bind:label="`Alterar Nota`" v-model="changeGrade" light></v-checkbox>
                       </v-flex>
                     </v-layout>
                   </v-flex>
                   <v-flex xs12 v-if="changeGrade">
                     <v-layout row>
                       <v-flex xs9>
-                        <v-slider label="%" :max="100" v-model="realGrade"></v-slider>
+                        <v-slider label="%" :max="100" v-model="currentAnsweredQuestion.realGrade"></v-slider>
                       </v-flex>
                       <v-flex xs2>
-                        <v-text-field v-model="realGrade" type="number"></v-text-field>
+                        <v-text-field v-model="currentAnsweredQuestion.realGrade" type="number"></v-text-field>
                       </v-flex>
                     </v-layout>
                   </v-flex>
@@ -119,27 +113,29 @@
 </template>
 
 <script>
+import examService from '../services/examService'
+import testService from '../services/testService'
+import baseService from '../services/baseService'
 
 export default {
   name: 'CorrectTests',
   data () {
     return {
-      number: 0,
-      valueDeterminate: 30,
+      indexStudent: 0,
+      id: 1,
+      changeGrade: false,
+      exams: [],
+      test: {},
+      currentQuestion: {},
+      currentAnsweredQuestion: {},
+      currentStudent: {},
+      currentExam: {},
+      students: [],
+      answeredQuestions: [],
       dialog: false,
       hidden: false,
       showAnswer: false,
-      comments: false,
-      changeGrade: false,
-      realGrade: 0,
-      estimatedGrade: 30,
-      toggle_multiple: [0, 1, 2],
-      items: [
-        { title: 'Questão 1' },
-        { title: 'Questão 2' },
-        { title: 'Questão 3' },
-        { title: 'Questão 4' }
-      ],
+      questions: [],
       classObj: (grade) => {
         let cssClass = 'white--text mt-3 text-xs-center'
         if (grade <= 40) {
@@ -150,6 +146,86 @@ export default {
           return `green darken-1 ${cssClass}`
         }
       }
+    }
+  },
+  mounted () {
+    this.getExams()
+    this.getTest()
+    this.currentStudent = this.students[0]
+    this.currentQuestion = this.questions[0]
+    this.currentAnsweredQuestion = this.answeredQuestions[0]
+  },
+  methods: {
+    correctExams () {
+      this.exams = this.exams.map((r) => {
+        return {
+          id: r.examId,
+          answeredQuestions: r.answeredQuestions
+        }
+      })
+      this.exams.forEach((r) => {
+        r.answeredQuestions = r.answeredQuestions.map((a) => {
+          let g = 0.0
+          if (a.changeGrade) {
+            g = a.realGrade / 100.0
+          } else {
+            g = a.percentCorrect
+          }
+          return {
+            id: a.id,
+            grade: g
+          }
+        })
+      })
+      baseService.put(`exam/${this.id}/correction`, this.exams).then((res) => {
+        console.log(res)
+      })
+    },
+    getTest () {
+      this.test = testService.getTest()
+      this.questions = this.test.questions
+    },
+    changeQuestion (question) {
+      this.currentQuestion = question
+      this.currentAnsweredQuestion.changeGrade = this.changeGrade
+      this.changeGrade = false
+      this.currentAnsweredQuestion = this.currentExam.answeredQuestions.find((r) => r.questionId === this.currentQuestion.id)
+    },
+    nextStudent () {
+      if (this.indexStudent < (this.students.length - 1)) {
+        this.indexStudent++
+      }
+      this.currentStudent = this.students[this.indexStudent]
+      this.currentExam = this.exams.find((r) => r.studentId === this.currentStudent.id)
+      this.currentAnsweredQuestion = this.currentExam.answeredQuestions.find((r) => r.questionId === this.currentQuestion.id)
+    },
+    previousStudent () {
+      if (this.indexStudent > 0) {
+        this.indexStudent--
+      }
+      this.currentStudent = this.students[this.indexStudent]
+      this.currentExam = this.exams.find((r) => r.studentId === this.currentStudent.id)
+      this.currentAnsweredQuestion = this.currentExam.answeredQuestions.find((r) => r.questionId === this.currentQuestion.id)
+    },
+    getExams () {
+      let answered = []
+      this.exams = examService.getExams()
+      this.students = this.exams.map((r) => {
+        return {
+          name: r.studentName,
+          id: r.studentId
+        }
+      })
+      this.exams.forEach((r) => {
+        answered = answered.concat(r.answeredQuestions)
+      })
+      console.log(answered)
+      answered.forEach((r) => {
+        r.realGrade = 0
+        r.changeGrade = false
+      })
+      this.answeredQuestions = answered
+      this.currentExam = this.exams[0]
     }
   }
 }
