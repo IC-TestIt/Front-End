@@ -42,7 +42,6 @@
             </v-flex>
 
             <v-flex xs0 md12 class="mr-5 ml-5 pa-1">
-                 
             <v-card class="pb-3 mb-4">
                 <v-card-title>
                 <v-select
@@ -73,7 +72,10 @@
                         <td class="text-xs-center">{{ convertDate(props.item.endDate) }}</td>
                         <td class="text-xs-center">{{ findStatus(props.item.status) }}</td>
                         <td class="text-xs-center mytests-buttons" >
-                            <v-btn id="aplic" center dark title="Aplicar" @click="dialog = true" :disabled="props.item.status !== 1"><v-icon>timer</v-icon></v-btn>
+                            <v-btn id="aplic"  center  title="Aplicar" @click="dialog = true" :disabled="props.item.status !== 1">
+                              <v-icon :class="[{'white--text': props.item.status === 1 }]">timer</v-icon>
+                            </v-btn>
+
                             <v-dialog v-model="dialog" persistent hide-overlay>
 
                                 <v-card>
@@ -96,13 +98,19 @@
                                     <v-divider></v-divider>
                                     <v-card-actions>
                                         <v-btn class="blue--text darken-1" flat @click.native="dialog = false">Fechar</v-btn>
-                                        <v-btn class="blue--text darken-1" flat @click.native="save(props.item.id)" :loading="loading">Salvar</v-btn>
+                                        <v-btn class="blue--text darken-1" flat @click.native="save(props.item.testId)" :loading="loading">Salvar</v-btn>
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
-                            <v-btn id="edit" dark title="Editar" :disabled="props.item.status !== 1"><v-icon>mode_edit</v-icon></v-btn>
-                            <v-btn id="export" dark title="Exportar" :disabled="props.item.status !== 1"><v-icon>file_download</v-icon></v-btn>
-                            <v-btn id="correct" title="Corrigir" :disabled="props.item.status !== 3" @click="dialog2 = true, filterClassTests(props.item.testId)"><v-icon>check</v-icon></v-btn>
+                            <v-btn id="edit" title="Editar" :disabled="props.item.status !== 1">
+                              <v-icon :class="[{'white--text': props.item.status === 1 }]">mode_edit</v-icon>
+                            </v-btn>
+                            <v-btn id="export" title="Exportar" :disabled="props.item.status !== 1">
+                              <v-icon :class="[{'white--text': props.item.status === 1 }]">file_download</v-icon>
+                            </v-btn>
+                            <v-btn id="correct" title="Corrigir" :disabled="props.item.status !== 3" @click="dialog2 = true, filterClassTests(props.item.testId)">
+                              <v-icon :class="[{'white--text': props.item.status === 3 }]">check</v-icon>
+                            </v-btn>
                             <v-dialog v-model="dialog2" persistent hide-overlay>
                                 <v-card>
                                     <v-card-title>Selecione a Turma</v-card-title>
@@ -123,18 +131,19 @@
                                     <v-card-actions>
                                         <v-btn class="blue--text darken-1" flat @click.native="dialog2 = false">Fechar</v-btn>
 
-                                        <v-btn class="blue--text darken-1" flat @click.native="" :loading="loading">Corrigir</v-btn>
-
-                                        <v-btn class="blue--text darken-1" flat :loading="loading">Corrigir</v-btn>
+                                        <v-btn class="blue--text darken-1" flat :loading="loading" @click="correctExams()">Corrigir</v-btn>
 
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
-                           
-                              <v-btn id="grade" dark title="Notas" :disabled="props.item.status !== 4"><v-icon>grid_on</v-icon></v-btn>
-                            
-                              <v-btn id="delete" dark title="Deletar" :disabled="props.item.status !== 1" slot="activator"><v-icon>delete_forever</v-icon></v-btn>
-                            
+
+                            <v-btn id="grade" title="Notas" :disabled="props.item.status !== 4">
+                              <v-icon :class="[{'white--text': props.item.status === 4 }]">grid_on</v-icon>
+                            </v-btn>
+
+                            <v-btn id="delete" title="Deletar" :disabled="props.item.status !== 1" slot="activator">
+                              <v-icon :class="[{'white--text': props.item.status === 1 }]">delete_forever</v-icon>
+                            </v-btn>
                         </td>
                     </template>
                 </v-data-table>
@@ -150,6 +159,8 @@
 <script>
 import baseService from '../services/baseService'
 import auth from '../auth'
+import examService from '../services/examService'
+import testService from '../services/testService'
 import { convertDate } from '../utils/index'
 
 export default {
@@ -165,7 +176,7 @@ export default {
       search: '',
       items: [
         {
-          text: 'Não Aplicada',
+          text: 'Não Aplicadas',
           value: 1
         },
         {
@@ -173,11 +184,11 @@ export default {
           value: 2
         },
         {
-          text: 'Não Corrigida',
+          text: 'Não Corrigidas',
           value: 3
         },
         {
-          text: 'Corrigida',
+          text: 'Corrigidas',
           value: 4
         }
       ],
@@ -192,6 +203,7 @@ export default {
         beginDate: null,
         endDate: null
       },
+      testId: 0,
       menuBegin: false,
       menuEnd: false,
       classes: [],
@@ -199,7 +211,7 @@ export default {
         {text: 'Título', value: 'title', align: 'center'},
         {text: 'Turma', value: 'class', align: 'center'},
         {text: 'Data Final', value: 'endDate', align: 'center'},
-        {text: 'Situação', value: 'status', align: 'center'},
+        {text: 'Status', value: 'status', align: 'center'},
         {text: 'Ações', value: '', align: 'center'}
       ]
     }
@@ -210,11 +222,22 @@ export default {
     this.testsLength = this.tests.length
   },
   methods: {
+    correctExams () {
+      this.classTestsCorrection = this.classTestsCorrection.map((r) => r.classTestId)
+      baseService.post(`/exam/correction/${this.testId}`, {ids: this.classTestsCorrection}).then(r => {
+        if (r.status === 200) {
+          examService.saveExams(r.data.correctedExams)
+          testService.saveTest(r.data.test)
+        }
+        this.$router.push('/corrigir')
+      })
+    },
     findStatus (status) {
       return this.items[status - 1].text
     },
     filterClassTests (id) {
-      this.classTestsFiltered = this.tests.filter((item) => item.testId === id)
+      this.testId = id
+      this.classTestsFiltered = this.tests.filter((item) => item.testId === id && item.status === 3)
     },
     filterStatus (items, search, filter) {
       search = search.toString().toLowerCase()
@@ -300,7 +323,11 @@ export default {
 }
 
 #grade{
-   background-color: #679437;
+   background-color: #1a237e;
+}
+
+#correct{
+  background-color: #679437;
 }
 
 #aplic{
