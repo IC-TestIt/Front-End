@@ -51,10 +51,6 @@ export default {
       items: [
         {
           action: 'create',
-          title: 'INICIO'
-        },
-        {
-          action: 'create',
           title: 'AVALIAÇÕES',
           items: [
             { title: 'Minhas Avaliações', link: '/#/avaliacoes' }
