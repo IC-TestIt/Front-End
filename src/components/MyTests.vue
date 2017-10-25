@@ -42,7 +42,6 @@
             </v-flex>
 
             <v-flex xs0 md12 class="mr-5 ml-5 pa-1">
-
             <v-card class="pb-3 mb-4">
                 <v-card-title>
                 <v-select

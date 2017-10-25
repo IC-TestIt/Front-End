@@ -1,17 +1,19 @@
 <template>
   <div class="menuBar">
-       <v-toolbar flat class="transparent">
-           <v-list class="pa-0">
-             <v-list-tile avatar tag="div" class="indigo darken-4 py-3">
-               <v-list-tile-content>
-                 <v-list-tile-title  class="white--text headline" v-model="name">{{ name }}</v-list-tile-title>
-               </v-list-tile-content>
-             </v-list-tile>
-           </v-list>
-         </v-toolbar>
+      <v-toolbar flat dark class="transparent indigo darken-4 py-3">
+          <v-toolbar-side-icon></v-toolbar-side-icon>
+          <v-toolbar-title v-model="name">{{ name }}</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn 
+          icon
+          fab
+          v-on:click="GoHome ()">
+              inicio            
+          </v-btn>
+      </v-toolbar>
          <v-list class="white my-4">
            <v-list-group v-for="item in items" :value="item.active" v-bind:key="item.title">
-             <v-list-tile slot="item">
+             <v-list-tile slot="item">                
                <v-list-tile-action>
                  <v-icon class="world">{{ item.action }}</v-icon>
                </v-list-tile-action>
@@ -71,6 +73,9 @@ export default {
           this.name = response.data.name
         }
       })
+    },
+    GoHome () {
+      this.$router.push('/home')
     }
   },
   mounted () {
