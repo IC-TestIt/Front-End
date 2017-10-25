@@ -35,7 +35,7 @@
                 <p>Alunos Restantes: {{indexStudent + 1}} / {{students.length}}</p>
               </v-flex>
               <v-flex d-flex xs3 class="mt-2 mr-3 mb-2">
-                <v-btn class="indigo darken-4" dark @click="correctExams()">Corrigir</v-btn>
+                <v-btn class="green darken-1" dark @click="correctExams()">Finalizar Correção</v-btn>
               </v-flex>
             </v-layout>
           </v-card>
@@ -44,15 +44,15 @@
           <v-card class="ml-5 card" height="350px">
             <v-layout row>
               <v-flex xs6>
-                <v-layout column class="ml-3">
+                <v-layout column class="ml-3">                
                   <v-flex xs12>
-                    <v-text-field box multi-line disabled label="Enunciado da Questão" :value="currentQuestion.description"></v-text-field>
-                  </v-flex>
+                    <v-text-field class="px-2" box multi-line disabled label="Enunciado da Questão" :value="currentQuestion.description"></v-text-field>
+                  </v-flex>                               
                   <v-flex xs12>
-                    <v-text-field box multi-line disabled label="Resposta do Aluno" :value="currentAnsweredQuestion.studentAnswer"></v-text-field>
+                    <v-text-field  class="px-2" box multi-line disabled label="Resposta do Aluno" :value="currentAnsweredQuestion.studentAnswer"></v-text-field>
                   </v-flex>
                   <v-flex xs12 v-if="showAnswer">
-                    <v-text-field box multi-line disabled label="Resposta do Professor" :value="currentQuestion.answer"></v-text-field>
+                    <v-text-field  class="px-2" box multi-line disabled label="Resposta do Professor" :value="currentQuestion.answer"></v-text-field>
                   </v-flex>
                 </v-layout>
               </v-flex>
