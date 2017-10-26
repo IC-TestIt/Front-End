@@ -62,7 +62,7 @@
                     <PercentCard :value="currentAnsweredQuestion.percentCorrect" title="Nota Estimada"></PercentCard>
                   </v-flex>
                   <v-flex xs6 v-if="changeGrade">
-                    <PercentCard :value="currentAnsweredQuestion.realGrade" title="Nota Real"></PercentCard>
+                    <PercentCard :value="realGrade" title="Nota Real"></PercentCard>
                   </v-flex>
                   <v-flex xs12 class="mt-2 py-2">
                     <v-layout row wrap>
@@ -77,10 +77,10 @@
                   <v-flex xs12 v-if="changeGrade">
                     <v-layout row>
                       <v-flex xs9>
-                        <v-slider label="%" :max="100" v-model="currentAnsweredQuestion.realGrade"></v-slider>
+                        <v-slider label="%" :max="100" v-model="realGrade"></v-slider>
                       </v-flex>
                       <v-flex xs2>
-                        <v-text-field v-model="currentAnsweredQuestion.realGrade" type="number"></v-text-field>
+                        <v-text-field v-model="realGrade" type="number"></v-text-field>
                       </v-flex>
                     </v-layout>
                   </v-flex>
@@ -110,6 +110,7 @@ export default {
       indexStudent: 0,
       id: 1,
       changeGrade: false,
+      realGrade: 0,
       exams: [],
       test: {},
       currentQuestion: {},
@@ -174,8 +175,9 @@ export default {
     changeQuestion (question) {
       this.currentQuestion = question
       this.currentAnsweredQuestion.changeGrade = this.changeGrade
-      this.changeGrade = false
+      this.currentAnsweredQuestion.realGrade = this.realGrade
       this.currentAnsweredQuestion = this.currentExam.answeredQuestions.find((r) => r.questionId === this.currentQuestion.id)
+      this.updateGradeState()
     },
     nextStudent () {
       if (this.indexStudent < (this.students.length - 1)) {
@@ -184,6 +186,7 @@ export default {
       this.currentStudent = this.students[this.indexStudent]
       this.currentExam = this.exams.find((r) => r.studentId === this.currentStudent.id)
       this.currentAnsweredQuestion = this.currentExam.answeredQuestions.find((r) => r.questionId === this.currentQuestion.id)
+      this.updateGradeState()
     },
     previousStudent () {
       if (this.indexStudent > 0) {
@@ -192,6 +195,7 @@ export default {
       this.currentStudent = this.students[this.indexStudent]
       this.currentExam = this.exams.find((r) => r.studentId === this.currentStudent.id)
       this.currentAnsweredQuestion = this.currentExam.answeredQuestions.find((r) => r.questionId === this.currentQuestion.id)
+      this.updateGradeState()
     },
     getExams () {
       let answered = []
@@ -212,6 +216,10 @@ export default {
       })
       this.answeredQuestions = answered
       this.currentExam = this.exams[0]
+    },
+    updateGradeState () {
+      this.realGrade = this.currentAnsweredQuestion.realGrade
+      this.changeGrade = this.currentAnsweredQuestion.changeGrade
     }
   }
 }
