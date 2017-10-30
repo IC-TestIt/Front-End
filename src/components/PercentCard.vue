@@ -1,9 +1,9 @@
 <template>
   <div class="percent-card">
-    <v-card :class="classObj(data)">
+    <v-card :class="classObj(value)">
       <v-card-title primary-title>
         <v-flex xs6>
-          <div class="headline bold">{{data}}%</div>
+          <div class="headline bold">{{value}}%</div>
         </v-flex>
         <v-flex xs6>
           <div class="bold">{{title}}</div>
@@ -16,9 +16,6 @@
 export default {
   name: 'percent-card',
   props: ['value', 'title'],
-  mounted () {
-    this.data = this.value
-  },
   data () {
     return {
       data: 0,
