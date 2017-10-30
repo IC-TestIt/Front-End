@@ -33,11 +33,6 @@ export default {
         }
       }
     }
-  },
-  watch: {
-    value: function valueWatcher (newVal) {
-      this.data = newVal
-    }
   }
 }
 </script>
