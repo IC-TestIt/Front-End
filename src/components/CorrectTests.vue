@@ -13,7 +13,7 @@
                    <v-btn class="indigo darken-4" dark slot="activator">QUESTÕES</v-btn>
                    <v-list>
                    <v-list-tile v-for="item in questions" :key="item.title">
-                   <v-list-tile-title @click="changeQuestion(item)">{{ item.description }}</v-list-tile-title>
+                   <v-list-tile-title @click="changeQuestion(item)" :class="statusQuestion(item)">{{ item.description }}</v-list-tile-title>
                    </v-list-tile>
                    </v-list>
                 </v-menu>
@@ -67,10 +67,13 @@
                   <v-flex xs12 class="mt-2 py-2">
                     <v-layout row wrap>
                       <v-flex xs5>
-                        <v-checkbox v-bind:label="`Mostrar Reposta`" v-model="showAnswer" light></v-checkbox>
+                        <v-checkbox color="indigo darken-4" v-bind:label="`Mostrar Reposta`" v-model="showAnswer" light></v-checkbox>
                       </v-flex>
                       <v-flex xs5>
-                        <v-checkbox class="" v-bind:label="`Alterar Nota`" v-model="changeGrade" light></v-checkbox>
+                        <v-checkbox color="indigo darken-4" class="" v-bind:label="`Alterar Nota`" v-model="changeGrade" light></v-checkbox>
+                      </v-flex>
+                      <v-flex xs3>
+                        <v-switch label="Corrigida" v-model="corrected" color="indigo darken-4" hide-details></v-switch>
                       </v-flex>
                     </v-layout>
                   </v-flex>
@@ -122,6 +125,7 @@ export default {
       dialog: false,
       hidden: false,
       showAnswer: false,
+      corrected: false,
       questions: [],
       classObj: (grade) => {
         let cssClass = 'white--text mt-3 text-xs-center'
@@ -160,7 +164,8 @@ export default {
           }
           return {
             id: a.id,
-            grade: g
+            grade: g,
+            corrected: a.corrected
           }
         })
       })
@@ -172,30 +177,38 @@ export default {
       this.test = testService.getTest()
       this.questions = this.test.questions
     },
+    isQuestionCorrected (item) {
+      let answered = []
+      this.exams.forEach((elem) => {
+        answered.push(elem.answeredQuestions.find((r) => r.questionId === item.id))
+      })
+      return answered.every((r) => r.corrected)
+    },
+    statusQuestion (item) {
+      console.log(this.isQuestionCorrected(item))
+      if (this.isQuestionCorrected(item)) {
+        return `question-corrected`
+      } else {
+        return ``
+      }
+    },
     changeQuestion (question) {
       this.currentQuestion = question
-      this.currentAnsweredQuestion.changeGrade = this.changeGrade
-      this.currentAnsweredQuestion.realGrade = this.realGrade
-      this.currentAnsweredQuestion = this.currentExam.answeredQuestions.find((r) => r.questionId === this.currentQuestion.id)
-      this.updateGradeState()
+      this.updateState()
     },
     nextStudent () {
       if (this.indexStudent < (this.students.length - 1)) {
         this.indexStudent++
       }
       this.currentStudent = this.students[this.indexStudent]
-      this.currentExam = this.exams.find((r) => r.studentId === this.currentStudent.id)
-      this.currentAnsweredQuestion = this.currentExam.answeredQuestions.find((r) => r.questionId === this.currentQuestion.id)
-      this.updateGradeState()
+      this.updateState()
     },
     previousStudent () {
       if (this.indexStudent > 0) {
         this.indexStudent--
       }
       this.currentStudent = this.students[this.indexStudent]
-      this.currentExam = this.exams.find((r) => r.studentId === this.currentStudent.id)
-      this.currentAnsweredQuestion = this.currentExam.answeredQuestions.find((r) => r.questionId === this.currentQuestion.id)
-      this.updateGradeState()
+      this.updateState()
     },
     getExams () {
       let answered = []
@@ -209,7 +222,6 @@ export default {
       this.exams.forEach((r) => {
         answered = answered.concat(r.answeredQuestions)
       })
-      console.log(answered)
       answered.forEach((r) => {
         r.realGrade = 0
         r.changeGrade = false
@@ -217,9 +229,15 @@ export default {
       this.answeredQuestions = answered
       this.currentExam = this.exams[0]
     },
-    updateGradeState () {
-      this.realGrade = this.currentAnsweredQuestion.realGrade
+    updateState () {
+      this.currentAnsweredQuestion.corrected = this.corrected
+      this.currentAnsweredQuestion.changeGrade = this.changeGrade
+      this.currentAnsweredQuestion.realGrade = this.realGrade
+      this.currentExam = this.exams.find((r) => r.studentId === this.currentStudent.id)
+      this.currentAnsweredQuestion = this.currentExam.answeredQuestions.find((r) => r.questionId === this.currentQuestion.id)
+      this.corrected = this.currentAnsweredQuestion.corrected
       this.changeGrade = this.currentAnsweredQuestion.changeGrade
+      this.realGrade = this.currentAnsweredQuestion.realGrade
     }
   }
 }
@@ -259,6 +277,10 @@ export default {
 #btn__hide{
   background-color: #a20021;
   margin-left: 533px;
+}
+
+.question-corrected {
+  text-decoration: line-through;
 }
 
 
