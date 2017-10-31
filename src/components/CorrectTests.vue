@@ -169,7 +169,7 @@ export default {
           }
         })
       })
-      baseService.put(`exam/${this.id}/correction`, this.exams).then((res) => {
+      baseService.put(`exam/correction`, this.exams).then((res) => {
         console.log(res)
       })
     },
@@ -185,7 +185,6 @@ export default {
       return answered.every((r) => r.corrected)
     },
     statusQuestion (item) {
-      console.log(this.isQuestionCorrected(item))
       if (this.isQuestionCorrected(item)) {
         return `question-corrected`
       } else {
