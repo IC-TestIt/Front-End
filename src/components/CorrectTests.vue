@@ -177,7 +177,8 @@ export default {
           }
           return {
             id: a.id,
-            grade: g
+            grade: g,
+            corrected: a.corrected
           }
         })
       })
