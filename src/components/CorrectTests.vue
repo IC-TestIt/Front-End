@@ -206,31 +206,21 @@ export default {
     },
     changeQuestion (question) {
       this.currentQuestion = question
-      this.currentAnsweredQuestion.changeGrade = this.changeGrade
-      this.changeGrade = false
-      this.currentAnsweredQuestion.corrected = this.corrected
-      this.currentAnsweredQuestion = this.currentExam.answeredQuestions.find((r) => r.questionId === this.currentQuestion.id)
-      this.corrected = this.currentAnsweredQuestion.corrected
+      this.updateState()
     },
     nextStudent () {
       if (this.indexStudent < (this.students.length - 1)) {
         this.indexStudent++
       }
       this.currentStudent = this.students[this.indexStudent]
-      this.currentAnsweredQuestion.corrected = this.corrected
-      this.currentExam = this.exams.find((r) => r.studentId === this.currentStudent.id)
-      this.currentAnsweredQuestion = this.currentExam.answeredQuestions.find((r) => r.questionId === this.currentQuestion.id)
-      this.corrected = this.currentAnsweredQuestion.corrected
+      this.updateState()
     },
     previousStudent () {
       if (this.indexStudent > 0) {
         this.indexStudent--
       }
       this.currentStudent = this.students[this.indexStudent]
-      this.currentAnsweredQuestion.corrected = this.corrected
-      this.currentExam = this.exams.find((r) => r.studentId === this.currentStudent.id)
-      this.currentAnsweredQuestion = this.currentExam.answeredQuestions.find((r) => r.questionId === this.currentQuestion.id)
-      this.corrected = this.currentAnsweredQuestion.corrected
+      this.updateState()
     },
     getExams () {
       let answered = []
@@ -244,13 +234,22 @@ export default {
       this.exams.forEach((r) => {
         answered = answered.concat(r.answeredQuestions)
       })
-      console.log(answered)
       answered.forEach((r) => {
         r.realGrade = 0
         r.changeGrade = false
       })
       this.answeredQuestions = answered
       this.currentExam = this.exams[0]
+    },
+    updateState () {
+      this.currentAnsweredQuestion.corrected = this.corrected
+      this.currentAnsweredQuestion.changeGrade = this.changeGrade
+      this.currentAnsweredQuestion.realGrade = this.realGrade
+      this.currentExam = this.exams.find((r) => r.studentId === this.currentStudent.id)
+      this.currentAnsweredQuestion = this.currentExam.answeredQuestions.find((r) => r.questionId === this.currentQuestion.id)
+      this.corrected = this.currentAnsweredQuestion.corrected
+      this.changeGrade = this.currentAnsweredQuestion.changeGrade
+      this.realGrade = this.currentAnsweredQuestion.realGrade
     }
   }
 }
