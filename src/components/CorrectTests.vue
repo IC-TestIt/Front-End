@@ -85,13 +85,13 @@
                   <v-flex xs12 class="mt-2 py-2">
                     <v-layout row wrap>
                       <v-flex xs5>
-                        <v-checkbox v-bind:label="`Mostrar Reposta`" v-model="showAnswer" light></v-checkbox>
+                        <v-checkbox color="indigo darken-4" v-bind:label="`Mostrar Reposta`" v-model="showAnswer" light></v-checkbox>
                       </v-flex>
                       <v-flex xs5>
-                        <v-checkbox class="" v-bind:label="`Alterar Nota`" v-model="changeGrade" light></v-checkbox>
+                        <v-checkbox color="indigo darken-4" class="" v-bind:label="`Alterar Nota`" v-model="changeGrade" light></v-checkbox>
                       </v-flex>
-                      <v-flex xs5>
-                        <v-checkbox class="" v-bind:label="`Corrigida`" v-model="corrected" light></v-checkbox>
+                      <v-flex xs3>
+                        <v-switch label="Corrigida" v-model="corrected" color="indigo darken-4" hide-details></v-switch>
                       </v-flex>
                     </v-layout>
                   </v-flex>
