@@ -224,7 +224,7 @@ export default {
   methods: {
     correctExams () {
       this.classTestsCorrection = this.classTestsCorrection.map((r) => r.classTestId)
-      baseService.post(`/exam/correction/${this.testId}`, {ids: this.classTestsCorrection}).then(r => {
+      baseService.post(`/test/${this.testId}/correction`, {ids: this.classTestsCorrection}).then(r => {
         if (r.status === 200) {
           examService.saveExams(r.data.correctedExams)
           testService.saveTest(r.data.test)
