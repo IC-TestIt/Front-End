@@ -47,37 +47,21 @@
                 <v-layout column class="ml-3">                
                   <v-flex xs12>
                     <div class="my-3 px-2 title" height="165px">Enunciado da Questão
-                        <p class="px-3 py-2 body-1 primary--text" box multi-line disabled label="" :value="currentQuestion.description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, 
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                         Excepteur sint occaecat cupidatat non proident, 
-                        sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <p class="px-3 py-2 body-1 primary--text" box multi-line disabled label="" :value="currentQuestion.description"></p>
                     </div>
                   </v-flex>                               
                   <v-flex xs12>
                    <div height="165px"class="title px-2 my-3">
                      Resposta do Aluno
                      <p class="px-3 py-2 body-1 red--text" box multi-line disabled :value="currentAnsweredQuestion.studentAnswer">
-                     Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, 
-                     totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
-                     Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, 
-                     sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est,
-                      qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, 
-                     sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+                     </p>
                     
                    </div>
                   </v-flex>
                   <v-flex xs12 v-if="showAnswer">
                     <div height="200px" class="title px-2 my-4" >
                         Resposta do Professor
-                      <p  class="px-3 py-2 body-1" box multi-line disabled :value="currentQuestion.answer">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, 
-                     totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
-                     Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, 
-                     sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est,
-                      qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, 
-                     sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+                      <p  class="px-3 py-2 body-1" box multi-line disabled :value="currentQuestion.answer"></p>
                      
                     </div>
                   </v-flex>
