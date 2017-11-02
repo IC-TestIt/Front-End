@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="my-classes">
         <v-layout row wrap>
            <v-flex md12>
                 <h3 class="accent--text my-tests-title text-xs-center ma-1 pt-4">Minhas Turmas</h3>
@@ -91,7 +91,7 @@ export default {
   data () {
     return {
       pagination: {
-        rowsPerPage: 3
+        rowsPerPage: 5
       },
       headers: [
         {text: 'Descrição', value: 'description', align: 'center'},
@@ -146,5 +146,11 @@ export default {
 <style>
 .application--light .pagination__item--active {
   background: #1a237e;
+}
+
+.my-classes {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 102%;
 }
 </style>
