@@ -137,7 +137,7 @@
                                 </v-card>
                             </v-dialog>
 
-                            <v-btn id="grade" title="Notas" :disabled="props.item.status !== 4">
+                            <v-btn id="grade" title="Dashboard" :disabled="props.item.status !== 4">
                               <v-icon :class="[{'primary white--text': props.item.status === 4 }]">grid_on</v-icon>
                             </v-btn>
 
