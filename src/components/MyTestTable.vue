@@ -2,7 +2,7 @@
   <div class="my-test-table">
     <v-card height="35vh">
       <v-card-title>
-        <div>Tabela de Alunos</div>
+        <div>Turma - {{room}}</div>
       </v-card-title>
       <v-data-table :headers="headers" :items="students" hide-actions class="elevation-1">
         <template slot="items" scope="props">
@@ -17,7 +17,7 @@
 <script>
 export default {
   name: 'my-test-table',
-  props: ['students'],
+  props: ['students', 'room'],
   data: () => ({
     headers: [
       {text: 'ID', value: 'id', align: 'center'},
