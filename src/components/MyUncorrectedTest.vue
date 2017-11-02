@@ -1,7 +1,7 @@
 <template>
   <div class="my-uncorrected-test">
     <v-container grid-list-md fluid>
-      <my-test-header :test="test"></my-test-header>
+      <my-test-header :test="test" class="mb-3"></my-test-header>
       <v-layout row>
         <v-flex xs12>
           <students-status-table></students-status-table>
@@ -12,10 +12,12 @@
           <percent-card title="Conclusão"></percent-card>
         </v-flex>
       </v-layout>
-      <v-layout row>
-        <v-flex offset-xs9 xs3>
-          <v-btn class="primary mr-5" dark>Voltar</v-btn>
-          <v-btn class="success ml-5" dark>Corrigir</v-btn>
+      <v-layout row justify-end>
+        <v-flex xs1>
+          <v-btn class="primary" dark>Voltar</v-btn>
+        </v-flex>
+        <v-flex xs1>
+          <v-btn class="success" dark>Corrigir</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -46,5 +48,8 @@ export default {
 .my-uncorrected-test
   width 95vw
   max-width 95vw
+
+.button-back
+  margin-left 104px
 
 </style>
