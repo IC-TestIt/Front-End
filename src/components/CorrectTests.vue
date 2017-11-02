@@ -73,7 +73,7 @@
                         <v-checkbox color="indigo darken-4" class="" v-bind:label="`Alterar Nota`" v-model="changeGrade" light></v-checkbox>
                       </v-flex>
                       <v-flex xs3>
-                        <v-switch label="Corrigida" v-model="corrected" color="indigo darken-4" hide-details></v-switch>
+                        <v-switch @change="updateState()" label="Corrigida" v-model="corrected" color="indigo darken-4" hide-details></v-switch>
                       </v-flex>
                     </v-layout>
                   </v-flex>
