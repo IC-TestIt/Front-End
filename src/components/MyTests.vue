@@ -261,7 +261,7 @@ export default {
     },
     getClasses () {
       baseService.get(`/teacher/${auth.teacherId()}/classes/`).then(r => {
-        this.classes = r.data.map(c => {
+        this.classes = r.data.classes.map(c => {
           return {
             description: c.description,
             id: c.id

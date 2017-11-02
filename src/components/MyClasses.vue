@@ -2,40 +2,40 @@
     <div>
         <v-layout row wrap>
            <v-flex md12>
-                <h3 class="title my-tests-title text-xs-center ma-1 pt-4">Minhas Turmas</h3>
+                <h3 class="accent--text my-tests-title text-xs-center ma-1 pt-4">Minhas Turmas</h3>
             </v-flex>
             <v-flex  md4>
-                <v-card class="green darken-1 white--text ma-5 text-xs-center">
+                <v-card class="success white--text ma-5 text-xs-center">
                     <v-card-title primary-title>
                         <v-flex xs12>
-                            <div class="headline">0</div>
+                            <div class="headline">{{bestClass}}</div>
                         </v-flex>
                         <v-flex xs12>
-                            <div class="pt-3">Provas Aplicadas</div>
+                            <div class="pt-3">Melhor Turma</div>
                         </v-flex>
                     </v-card-title>
                 </v-card>
             </v-flex>
             <v-flex  md4>
-                <v-card class="indigo lighten-1 white--text ma-5 text-xs-center">
+                <v-card class="primary white--text ma-5 text-xs-center">
                     <v-card-title primary-title>
                         <v-flex xs12>
-                            <div class="headline">0</div>
+                            <div class="headline">{{ classes.length }}</div>
                         </v-flex>
                         <v-flex xs12>
-                            <div class="pt-3">Provas Aplicadas</div>
+                            <div class="pt-3">Total de Turmas</div>
                         </v-flex>
                     </v-card-title>
                 </v-card>
             </v-flex>
             <v-flex  md4>
-                <v-card class="orange darken-1 white--text ma-5 text-xs-center">
+                <v-card class="error darken-1 white--text ma-5 text-xs-center">
                     <v-card-title primary-title>
                         <v-flex xs12>
-                            <div class="headline">0</div>
+                            <div class="headline">{{worstClass}}</div>
                         </v-flex>
                         <v-flex xs12>
-                            <div class="pt-3">Provas Aplicadas</div>
+                            <div class="pt-3">Pior Turma</div>
                         </v-flex>
                     </v-card-title>
                 </v-card>
@@ -50,7 +50,7 @@
                         small
                         top
                         right
-                        class="pink"
+                        class="success"
                         v-on:click="linkes"
                       >
               <v-icon>add</v-icon>
@@ -68,8 +68,9 @@
                     <template slot="items" scope="props">
                         <td class="text-xs-center">{{ props.item.description }}</td>
                         <td class="text-xs-center">{{ props.item.size }}</td>
+                        <td class="text-xs-center">{{ props.item.average }}</td>
                         <td class="text-xs-center">
-                          <v-btn class="red white--text darken-1" v-on:click="deleteClass(props.item.id)">Apagar</v-btn>
+                          <v-btn class="error white--text darken-1" v-on:click="deleteClass(props.item.id)">Apagar</v-btn>
                         </td>
                     </template>
                 </v-data-table>
@@ -95,9 +96,12 @@ export default {
       headers: [
         {text: 'Descrição', value: 'description', align: 'center'},
         {text: 'Quantidade de alunos', value: 'size', align: 'center'},
+        {text: 'Média Geral', value: 'average', align: 'center'},
         {text: 'Ações', value: '', align: 'center'}
       ],
-      classes: []
+      classes: [],
+      bestClass: '',
+      worstClass: ''
     }
   },
   mounted () {
@@ -107,10 +111,13 @@ export default {
     getClasses () {
       baseService.get(`/teacher/${auth.teacherId()}/classes`).then(r => {
         if (r.status === 200) {
-          this.classes = r.data.map(item => {
+          this.bestClass = r.data.classes[0].description
+          this.worstClass = r.data.classes[ r.data.classes.length - 1 ].description
+          this.classes = r.data.classes.map(item => {
             return {
               description: item.description,
               id: item.id,
+              average: item.average,
               size: item.size
             }
           })
@@ -137,9 +144,7 @@ export default {
 </script>
 
 <style>
-
-.title {
-  color: #006;
+.application--light .pagination__item--active {
+  background: #1a237e;
 }
-
 </style>
