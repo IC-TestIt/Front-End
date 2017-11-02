@@ -72,7 +72,7 @@
                         <td class="text-xs-center">{{ convertDate(props.item.endDate) }}</td>
                         <td class="text-xs-center">{{ findStatus(props.item.status) }}</td>
                         <td class="text-xs-center mytests-buttons" >
-                            <v-btn id="aplic"  center  title="Aplicar" @click="dialog = true" :disabled="props.item.status !== 1">
+                            <v-btn id="aplic"  center  title="Aplicar" @click="applyTest(props.item.testId)" :disabled="props.item.status !== 1">
                               <v-icon :class="[{'white--text': props.item.status === 1 }]">timer</v-icon>
                             </v-btn>
 
@@ -98,7 +98,7 @@
                                     <v-divider></v-divider>
                                     <v-card-actions>
                                         <v-btn class="blue--text darken-1" flat @click.native="dialog = false">Fechar</v-btn>
-                                        <v-btn class="blue--text darken-1" flat @click.native="save(props.item.testId)" :loading="loading">Salvar</v-btn>
+                                        <v-btn class="blue--text darken-1" flat @click.native="save(currentTestId)" :loading="loading">Salvar</v-btn>
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
@@ -204,6 +204,7 @@ export default {
         endDate: null
       },
       testId: 0,
+      currentTestId: 0,
       menuBegin: false,
       menuEnd: false,
       classes: [],
@@ -288,6 +289,10 @@ export default {
     },
     change () {
       this.$router.push('/prova')
+    },
+    applyTest (id) {
+      this.currentTestId = id
+      this.dialog = true
     }
   },
   computed: {
