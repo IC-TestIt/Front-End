@@ -7,10 +7,10 @@
             <h2 class='realizeExam-exam-title'>{{ exam.title + ' - ' + exam.description}}</h2>
           </v-flex>
           <v-flex xs3 v-if="!timeOut && exam.status !== 2">
-            <v-btn class="indigo darken-4" dark v-on:click="saveExam()">Salvar Prova</v-btn>
+            <v-btn class="primary" dark v-on:click="saveExam()">Salvar Prova</v-btn>
           </v-flex>
           <v-flex xs1 v-if="!timeOut && exam.status !== 2">
-            <v-btn class="green" dark v-on:click="endExam()">Finalizar Prova</v-btn>
+            <v-btn class="success" dark v-on:click="endExam()">Finalizar Prova</v-btn>
           </v-flex>
         </v-layout>
         <v-layout row-wrap>
@@ -117,10 +117,10 @@ export default {
     saveExam () {
       let id = this.$route.params.id
       let exam = {answeredQuestions: this.realizedQuestions}
-      baseService.put(`/exam/save/${id}`, exam).then(r => {
+      baseService.put(`/exam/${id}/saved`, exam).then(r => {
         console.log(r.data)
         if (r.status === 200) {
-          this.$toastr('info', {position: 'toast-top-right', msg: 'Prova salva com sucesso'})
+          this.$toastr('success', {position: 'toast-top-right', msg: 'Prova salva com sucesso'})
         }
       }).catch(e => {
         this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro ao salvar a prova'})
@@ -130,7 +130,15 @@ export default {
       let id = this.$route.params.id
       let exam = {answeredQuestions: this.realizedQuestions}
       baseService.put(`/exam/${id}`, exam).then(r => {
-        console.log(r.data)
+        if (r.status === 200 && r.data !== 0) {
+          this.$toastr('success', {position: 'toast-top-right', msg: 'Prova entregue com sucesso'})
+          baseService.post(`exam/${id}/correct`).then(r => console.log(r.status))
+          .catch(e => {
+            this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro ao entregar a prova'})
+          })
+        }
+      }).catch(e => {
+        this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro ao entregar a prova'})
       })
     },
     getIndex (index) {

@@ -59,7 +59,7 @@
               <v-flex xs5 class="ml-5">
                 <v-layout row wrap class="ml-3">
                   <v-flex xs6>
-                    <PercentCard :value="currentAnsweredQuestion.percentCorrect" title="Nota Estimada"></PercentCard>
+                    <PercentCard :value="currentAnsweredQuestion.percentCorrect * 100" title="Nota Estimada"></PercentCard>
                   </v-flex>
                   <v-flex xs6 v-if="changeGrade">
                     <PercentCard :value="realGrade" title="Nota Real"></PercentCard>
@@ -73,7 +73,7 @@
                         <v-checkbox color="indigo darken-4" class="" v-bind:label="`Alterar Nota`" v-model="changeGrade" light></v-checkbox>
                       </v-flex>
                       <v-flex xs3>
-                        <v-switch label="Corrigida" v-model="corrected" color="indigo darken-4" hide-details></v-switch>
+                        <v-switch @change="updateState()" label="Corrigida" v-model="corrected" color="indigo darken-4" hide-details></v-switch>
                       </v-flex>
                     </v-layout>
                   </v-flex>
@@ -169,7 +169,10 @@ export default {
           }
         })
       })
-      baseService.put(`exam/correction`, this.exams).then((res) => {
+      let correction = {
+        corrections: this.exams
+      }
+      baseService.put(`exam/correction`, correction).then((res) => {
         console.log(res)
       })
     },
