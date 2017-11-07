@@ -8,7 +8,7 @@
               <div>Data Inicio: </div>
             </v-flex>
             <v-flex xs6>
-              <div>20/10/2017</div>
+              <div>{{formatedDate(test.beginDate)}}</div>
             </v-flex>
           </v-card-title>
         </v-card>
@@ -20,7 +20,7 @@
               <div>Data Final: </div>
             </v-flex>
             <v-flex xs6>
-              <div>30/10/2017</div>
+              <div>{{formatedDate(test.endDate)}}</div>
             </v-flex>
           </v-card-title>
         </v-card>
@@ -32,7 +32,7 @@
               <div>Titulo/Turma: </div>
             </v-flex>
             <v-flex xs6>
-              <div>ALOG - ADS</div>
+              <div>{{test.title}} - {{test.className}}</div>
             </v-flex>
           </v-card-title>
         </v-card>
@@ -46,7 +46,12 @@ export default {
   props: ['test'],
   data: () => ({
 
-  })
+  }),
+  methods: {
+    formatedDate (date) {
+      return new Date(date).toLocaleDateString('pt-br')
+    }
+  }
 }
 </script>
 <style lang="stylus" scoped>
