@@ -8,7 +8,7 @@
               <div>Data Inicio: </div>
             </v-flex>
             <v-flex xs6>
-              <div>{{formatedDate(test.beginDate)}}</div>
+              <div>{{formateDate(test.beginDate)}}</div>
             </v-flex>
           </v-card-title>
         </v-card>
@@ -20,7 +20,7 @@
               <div>Data Final: </div>
             </v-flex>
             <v-flex xs6>
-              <div>{{formatedDate(test.endDate)}}</div>
+              <div>{{formateDate(test.endDate)}}</div>
             </v-flex>
           </v-card-title>
         </v-card>
@@ -41,17 +41,13 @@
   </div>
 </template>
 <script>
+import { formateDate } from '../utils/date'
 export default {
   name: 'my-test-header',
   props: ['test'],
   data: () => ({
-
-  }),
-  methods: {
-    formatedDate (date) {
-      return new Date(date).toLocaleDateString('pt-br')
-    }
-  }
+    formateDate: formateDate
+  })
 }
 </script>
 <style lang="stylus" scoped>
