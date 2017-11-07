@@ -16,10 +16,12 @@
   },
   "dependencies": {
     "@deveodk/vue-toastr": "^1.0.4",
+    "chart.js": "^2.7.1",
     "js-base64": "^2.1.9",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
     "vue": "~2.3.3",
+    "vue-chartjs": "^3.0.0",
     "vue-resource": "^1.3.4",
     "vue-router": "^2.3.1",
     "vue2-simplert": "^0.5.3",

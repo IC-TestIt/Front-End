@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Main from '@/components/Main'
 import MyTests from '@/components/MyTests'
+import MyTest from '@/components/MyTest'
 import CreateTest from '@/components/CreateTest'
 import CreateClass from '@/components/CreateClass'
 import FinishSignUp from '@/components/FinishSignUp'
@@ -87,6 +88,12 @@ export default new Router({
     name: 'MyExams',
     component: MyExams,
     beforeEnter: onlyStudent
+  },
+  {
+    path: '/minhaprova',
+    name: 'MyTest',
+    component: MyTest,
+    beforeEnter: onlyTeacher
   },
   {
     path: '/realizar/:id',
