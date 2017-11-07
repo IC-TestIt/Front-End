@@ -41,18 +41,29 @@
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 class="ml-1">
-          <v-card class="ml-5 card" height="350px">
+          <v-card class="ml-5 card" height="360px">
             <v-layout row>
               <v-flex xs6>
-                <v-layout column class="ml-3">
+                <v-layout column class="ml-3">                
                   <v-flex xs12>
-                    <v-text-field class="px-2" box multi-line disabled label="Enunciado da Questão" :value="currentQuestion.description"></v-text-field>
-                  </v-flex>
+
+                    <div class="my-3 px-2 title" height="165px">Enunciado da Questão
+                        <p class="px-3 py-2 body-1 primary--text" box multi-line disabled label="" :value="currentQuestion.description"></p>
+                    </div>
+                  </v-flex>                               
                   <v-flex xs12>
-                    <v-text-field  class="px-2" box multi-line disabled label="Resposta do Aluno" :value="currentAnsweredQuestion.studentAnswer"></v-text-field>
+                   <div height="165px"class="title px-2 my-3">
+                     Resposta do Aluno
+                     <p class="px-3 py-2 body-1 red--text" box multi-line disabled :value="currentAnsweredQuestion.studentAnswer">
+                     </p>
+                    
+                   </div>
                   </v-flex>
                   <v-flex xs12 v-if="showAnswer">
-                    <v-text-field  class="px-2" box multi-line disabled label="Resposta do Professor" :value="currentQuestion.answer"></v-text-field>
+                    <div height="200px" class="title px-2 my-4" >
+                        Resposta do Professor
+                      <p  class="px-3 py-2 body-1" box multi-line disabled :value="currentQuestion.answer"></p>                     
+                    </div>                   
                   </v-flex>
                 </v-layout>
               </v-flex>
@@ -281,9 +292,18 @@ export default {
   margin-left: 533px;
 }
 
+
+p{
+  height: 90px;
+  font-style: sans-serif;
+  text-align: justify;
+
+}
+
 .question-corrected {
   text-decoration: line-through;
 }
+
 
 
 </style>
