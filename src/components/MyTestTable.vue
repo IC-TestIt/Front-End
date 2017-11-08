@@ -6,9 +6,9 @@
       </v-card-title>
       <v-data-table :headers="headers" :items="students" hide-actions class="elevation-1">
         <template slot="items" scope="props">
-          <td>{{ props.item.id }}</td>
-          <td class="text-xs-right">{{ props.item.name }}</td>
-          <td class="text-xs-right">{{ props.item.status }}</td>
+          <td class="text-xs-center">{{ props.item.studentIdentifier }}</td>
+          <td class="text-xs-center">{{ props.item.studentName }}</td>
+          <td class="text-xs-center">{{ props.item.status }}</td>
         </template>
       </v-data-table>
     </v-card>
@@ -28,4 +28,7 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
+.my-test-table
+  overflow-y scroll
+
 </style>
