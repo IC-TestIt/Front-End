@@ -137,7 +137,7 @@
                                 </v-card>
                             </v-dialog>
 
-                            <v-btn id="grade" title="Dashboard" :disabled="props.item.status !== 4">
+                            <v-btn id="grade" title="Dashboard" :disabled="props.item.status !== 4" @click="getClassTest(props.item.classTestId)">
                               <v-icon :class="[{'primary white--text': props.item.status === 4 }]">grid_on</v-icon>
                             </v-btn>
 
@@ -161,6 +161,7 @@ import baseService from '../services/baseService'
 import auth from '../auth'
 import examService from '../services/examService'
 import testService from '../services/testService'
+import classTestService from '../services/classTestService'
 import { convertDate } from '../utils/index'
 
 export default {
@@ -225,6 +226,14 @@ export default {
     this.testsLength = this.tests.length
   },
   methods: {
+    getClassTest (id) {
+      baseService.get(`/classtests/${id}/correction`).then((r) => {
+        if (r.status === 200) {
+          classTestService.saveClassTest(r.data)
+        }
+        this.$router.push('/minhaprova')
+      })
+    },
     correctExams () {
       this.classTestsCorrection = this.classTestsCorrection.map((r) => r.classTestId)
       baseService.post(`/test/${this.testId}/correction`, {ids: this.classTestsCorrection}).then(r => {
