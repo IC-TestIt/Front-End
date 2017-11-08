@@ -12,7 +12,7 @@
     <VMenuTeacher v-if="auth.isTeacher()"></VMenuTeacher>
 
     </v-navigation-drawer>
-    <v-toolbar class="indigo darken-4" dark>
+    <v-toolbar class="primary" dark>
       <v-toolbar-side-icon @click.native.stop="hide" v-show="auth.loggedIn()"></v-toolbar-side-icon>
       <v-toolbar-title>Test It</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -27,7 +27,7 @@
         <router-view></router-view>
       </v-container>
     </main>
-    <v-footer>
+    <v-footer class="primary">
       <span class="white--text">© 2017</span>
     </v-footer>
   </v-app>
