@@ -2,7 +2,7 @@
   <div class="my-test-header">
     <v-layout row wrap>
       <v-flex xs3>
-        <v-card>
+        <v-card class="primary white--text text-xs-center">
           <v-card-title primary-title>
             <v-flex xs6>
               <div>Data Inicio: </div>
@@ -14,7 +14,7 @@
         </v-card>
       </v-flex>
       <v-flex xs3>
-        <v-card>
+        <v-card class="success white--text text-xs-center">
           <v-card-title primary-title>
             <v-flex xs6>
               <div>Data Final: </div>
@@ -26,7 +26,7 @@
         </v-card>
       </v-flex>
       <v-flex xs6>
-        <v-card>
+        <v-card class="warning white--text text-xs-center">
           <v-card-title primary-title>
             <v-flex xs6>
               <div>Titulo/Turma: </div>
