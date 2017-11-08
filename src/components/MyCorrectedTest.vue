@@ -1,6 +1,11 @@
 <template>
   <div class="my-corrected-test">
     <v-container grid-list-md fluid>
+      <v-layout row>
+        <v-flex xs12>
+          <div class="primary--text text-xs-center my-test-title">Minha Prova Corrigida</div>
+        </v-flex>
+      </v-layout>
       <MyTestHeader :test="test"></MyTestHeader>
       <v-layout row>
         <v-flex xs12>
@@ -74,5 +79,9 @@ export default {
 .graphic-card
   overflow-y hidden
   overflow-x scroll
+
+.my-test-title
+  font-size 20px
+  margin-top -10px
 
 </style>
