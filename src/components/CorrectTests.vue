@@ -41,25 +41,36 @@
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 class="ml-1">
-          <v-card class="ml-5 card" height="350px">
+          <v-card class="ml-5 card" height="360px">
             <v-layout row>
               <v-flex xs6>
-                <v-layout column class="ml-3">
+                <v-layout column class="ml-3">                
                   <v-flex xs12>
-                    <v-text-field class="px-2" box multi-line disabled label="Enunciado da Questão" :value="currentQuestion.description"></v-text-field>
-                  </v-flex>
+
+                    <div class="my-3 px-2 title" height="165px">Enunciado da Questão
+                        <p class="px-3 py-2 body-1 primary--text" box multi-line disabled label="" :value="currentQuestion.description"></p>
+                    </div>
+                  </v-flex>                               
                   <v-flex xs12>
-                    <v-text-field  class="px-2" box multi-line disabled label="Resposta do Aluno" :value="currentAnsweredQuestion.studentAnswer"></v-text-field>
+                   <div height="165px"class="title px-2 my-3">
+                     Resposta do Aluno
+                     <p class="px-3 py-2 body-1 red--text" box multi-line disabled :value="currentAnsweredQuestion.studentAnswer">
+                     </p>
+                    
+                   </div>
                   </v-flex>
                   <v-flex xs12 v-if="showAnswer">
-                    <v-text-field  class="px-2" box multi-line disabled label="Resposta do Professor" :value="currentQuestion.answer"></v-text-field>
+                    <div height="200px" class="title px-2 my-4" >
+                        Resposta do Professor
+                      <p  class="px-3 py-2 body-1" box multi-line disabled :value="currentQuestion.answer"></p>                     
+                    </div>                   
                   </v-flex>
                 </v-layout>
               </v-flex>
               <v-flex xs5 class="ml-5">
                 <v-layout row wrap class="ml-3">
                   <v-flex xs6>
-                    <PercentCard :value="currentAnsweredQuestion.percentCorrect" title="Nota Estimada"></PercentCard>
+                    <PercentCard :value="currentAnsweredQuestion.percentCorrect * 100" title="Nota Estimada"></PercentCard>
                   </v-flex>
                   <v-flex xs6 v-if="changeGrade">
                     <PercentCard :value="realGrade" title="Nota Real"></PercentCard>
@@ -73,7 +84,7 @@
                         <v-checkbox color="indigo darken-4" class="" v-bind:label="`Alterar Nota`" v-model="changeGrade" light></v-checkbox>
                       </v-flex>
                       <v-flex xs3>
-                        <v-switch label="Corrigida" v-model="corrected" color="indigo darken-4" hide-details></v-switch>
+                        <v-switch @change="updateState()" label="Corrigida" v-model="corrected" color="indigo darken-4" hide-details></v-switch>
                       </v-flex>
                     </v-layout>
                   </v-flex>
@@ -169,7 +180,10 @@ export default {
           }
         })
       })
-      baseService.put(`exam/correction`, this.exams).then((res) => {
+      let correction = {
+        corrections: this.exams
+      }
+      baseService.put(`exam/correction`, correction).then((res) => {
         console.log(res)
       })
     },
@@ -278,9 +292,18 @@ export default {
   margin-left: 533px;
 }
 
+
+p{
+  height: 90px;
+  font-style: sans-serif;
+  text-align: justify;
+
+}
+
 .question-corrected {
   text-decoration: line-through;
 }
+
 
 
 </style>

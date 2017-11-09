@@ -5,37 +5,37 @@
                 <h3 class="my-tests-title text-xs-center ma-1">Minhas Provas</h3>
             </v-flex>
             <v-flex xs12 md4>
-                <v-card class="green darken-1 white--text ma-5 text-xs-center">
+                <v-card class="success white--text ma-5 text-xs-center">
+                    <v-card-title primary-title>
+                        <v-flex xs12>
+                            <div class="headline">{{appliedTests}}</div>
+                        </v-flex>
+                        <v-flex xs12>
+                            <div class="pt-3 ">Provas Em Andamento</div>
+                        </v-flex>
+                    </v-card-title>
+                </v-card>
+            </v-flex>
+            <v-flex xs12 md4>
+                <v-card class="primary white--text ma-5 text-xs-center">
                     <v-card-title primary-title>
                         <v-flex xs12>
                             <div class="headline">{{this.tests.length}}</div>
                         </v-flex>
                         <v-flex xs12>
-                            <div class="pt-3 ">Total de Provas</div>
+                            <div class="pt-3">Total de Provas</div>
                         </v-flex>
                     </v-card-title>
                 </v-card>
             </v-flex>
             <v-flex xs12 md4>
-                <v-card class="indigo lighten-1 white--text ma-5 text-xs-center">
+                <v-card class="warning white--text ma-5 text-xs-center">
                     <v-card-title primary-title>
                         <v-flex xs12>
-                            <div class="headline">0</div>
+                            <div class="headline">{{uncorrectedTests}}</div>
                         </v-flex>
                         <v-flex xs12>
-                            <div class="pt-3">Provas Aplicadas</div>
-                        </v-flex>
-                    </v-card-title>
-                </v-card>
-            </v-flex>
-            <v-flex xs12 md4>
-                <v-card class="orange darken-1 white--text ma-5 text-xs-center">
-                    <v-card-title primary-title>
-                        <v-flex xs12>
-                            <div class="headline">0</div>
-                        </v-flex>
-                        <v-flex xs12>
-                            <div class="pt-3">Provas Pendentes</div>
+                            <div class="pt-3">Provas Não Corrigidas</div>
                         </v-flex>
                     </v-card-title>
                 </v-card>
@@ -137,8 +137,8 @@
                                 </v-card>
                             </v-dialog>
 
-                            <v-btn id="grade" title="Notas" :disabled="props.item.status !== 4">
-                              <v-icon :class="[{'white--text': props.item.status === 4 }]">grid_on</v-icon>
+                            <v-btn id="grade" title="Dashboard" :disabled="props.item.status !== 4" @click="getClassTest(props.item.classTestId)">
+                              <v-icon :class="[{'primary white--text': props.item.status === 4 }]">grid_on</v-icon>
                             </v-btn>
 
                             <v-btn id="delete" title="Deletar" :disabled="props.item.status !== 1" slot="activator">
@@ -161,6 +161,7 @@ import baseService from '../services/baseService'
 import auth from '../auth'
 import examService from '../services/examService'
 import testService from '../services/testService'
+import classTestService from '../services/classTestService'
 import { convertDate } from '../utils/index'
 
 export default {
@@ -169,6 +170,8 @@ export default {
     return {
       convertDate: convertDate,
       testsLength: 0,
+      appliedTests: 0,
+      uncorrectedTests: 0,
       classTestsFiltered: [],
       pagination: {
         rowsPerPage: 5
@@ -223,6 +226,14 @@ export default {
     this.testsLength = this.tests.length
   },
   methods: {
+    getClassTest (id) {
+      baseService.get(`/classtests/${id}/correction`).then((r) => {
+        if (r.status === 200) {
+          classTestService.saveClassTest(r.data)
+        }
+        this.$router.push('/minhaprova')
+      })
+    },
     correctExams () {
       this.classTestsCorrection = this.classTestsCorrection.map((r) => r.classTestId)
       baseService.post(`/test/${this.testId}/correction`, {ids: this.classTestsCorrection}).then(r => {
@@ -252,6 +263,8 @@ export default {
       baseService.get(`/teacher/${auth.teacherId()}/tests`).then(r => {
         if (r.status === 200) {
           this.tests = r.data
+          this.appliedTests = r.data.filter(x => x.status === 2).length
+          this.uncorrectedTests = r.data.filter(x => x.status === 3).length
         } else {
           this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro na obtenção das provas!'})
         }
