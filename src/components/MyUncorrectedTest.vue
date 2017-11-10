@@ -4,20 +4,20 @@
       <my-test-header :test="test" class="mb-3"></my-test-header>
       <v-layout row>
         <v-flex xs12>
-          <students-status-table></students-status-table>
+          <my-test-table :students="test.students" :room="test.className"></my-test-table>
         </v-flex>
       </v-layout>
       <v-layout row>
         <v-flex xs3 offset-xs9>
-          <percent-card title="Conclusão"></percent-card>
+          <conclusion-card title="Total de Alunos Corrigidos" :value="test.students.length - test.uncorrectedExams" :total="test.students.length"></conclusion-card>
         </v-flex>
       </v-layout>
       <v-layout row justify-end>
         <v-flex xs1>
-          <v-btn class="primary" dark>Voltar</v-btn>
+          <v-btn class="primary" dark @click="back()">Voltar</v-btn>
         </v-flex>
         <v-flex xs1>
-          <v-btn class="success" dark>Corrigir</v-btn>
+          <v-btn class="success" dark @click="correctExams()">Corrigir</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -25,21 +25,35 @@
 </template>
 <script>
 import MyTestHeader from './MyTestHeader'
-import PercentCard from './PercentCard'
-import StudentsStatusTable from './StudentsStatusTable'
+import ConclusionCard from './MyTestConclusionCard'
+import MyTestTable from './MyTestTable'
+import examService from '../services/examService'
+import testService from '../services/testService'
+import baseService from '../services/baseService'
 
 export default {
   name: 'my-uncorrected-test',
   props: ['test'],
   components: {
     MyTestHeader,
-    PercentCard,
-    StudentsStatusTable
+    ConclusionCard,
+    MyTestTable
   },
-  data: () => ({
-
-  }),
   methods: {
+    back () {
+      this.$router.push('/provas')
+    },
+    correctExams () {
+      let ids = []
+      ids.push(this.test.classTestId)
+      baseService.post(`/test/${this.testId}/correction`, {ids: ids}).then(r => {
+        if (r.status === 200) {
+          examService.saveExams(r.data.correctedExams)
+          testService.saveTest(r.data.test)
+        }
+        this.$router.push('/corrigir')
+      })
+    }
   }
 }
 </script>
