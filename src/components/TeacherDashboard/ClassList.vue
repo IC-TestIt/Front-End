@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import classCard from './classCard.vue'
+import classCard from './ClassCard.vue'
 import baseService from '../../services/baseService'
 import auth from '../../auth'
 
