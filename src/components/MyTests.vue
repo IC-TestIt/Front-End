@@ -137,7 +137,7 @@
                                 </v-card>
                             </v-dialog>
 
-                            <v-btn id="grade" title="Dashboard" :disabled="props.item.status !== 4" @click="getClassTest(props.item.classTestId)">
+                            <v-btn id="grade" title="Dashboard" :disabled="props.item.status === 1" @click="getClassTest(props.item.classTestId, props.item.status)" dark>
                               <v-icon :class="[{'primary white--text': props.item.status === 4 }]">grid_on</v-icon>
                             </v-btn>
 
@@ -226,13 +226,32 @@ export default {
     this.testsLength = this.tests.length
   },
   methods: {
-    getClassTest (id) {
-      baseService.get(`/classtests/${id}/correction`).then((r) => {
-        if (r.status === 200) {
-          classTestService.saveClassTest(r.data)
-        }
-        this.$router.push('/minhaprova')
-      })
+    getClassTest (id, status) {
+      if (status === 4) {
+        baseService.get(`/classtests/${id}/correction`).then((r) => {
+          if (r.status === 200) {
+            classTestService.saveClassTest(r.data)
+            classTestService.saveClassTestStatus(status)
+          }
+          this.$router.push('/minhaprova')
+        })
+      } else if (status === 3) {
+        baseService.get(`/classtests/${id}`).then((r) => {
+          if (r.status === 200) {
+            classTestService.saveClassTest(r.data)
+            classTestService.saveClassTestStatus(status)
+          }
+          this.$router.push('/minhaprova')
+        })
+      } else if (status === 2) {
+        baseService.get(`/classtests/${id}`).then((r) => {
+          if (r.status === 200) {
+            classTestService.saveClassTest(r.data)
+            classTestService.saveClassTestStatus(status)
+          }
+          this.$router.push('/minhaprova')
+        })
+      }
     },
     correctExams () {
       this.classTestsCorrection = this.classTestsCorrection.map((r) => r.classTestId)
