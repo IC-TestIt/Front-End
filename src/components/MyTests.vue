@@ -226,30 +226,25 @@ export default {
     this.testsLength = this.tests.length
   },
   methods: {
+    saveClassTest (r, status) {
+      if (r.status === 200) {
+        classTestService.saveClassTest(r.data)
+        classTestService.saveClassTestStatus(status)
+      }
+      this.$router.push('/minhaprova')
+    },
     getClassTest (id, status) {
       if (status === 4) {
         baseService.get(`/classtests/${id}/correction`).then((r) => {
-          if (r.status === 200) {
-            classTestService.saveClassTest(r.data)
-            classTestService.saveClassTestStatus(status)
-          }
-          this.$router.push('/minhaprova')
+          this.saveClassTest(r, status)
         })
       } else if (status === 3) {
         baseService.get(`/classtests/${id}`).then((r) => {
-          if (r.status === 200) {
-            classTestService.saveClassTest(r.data)
-            classTestService.saveClassTestStatus(status)
-          }
-          this.$router.push('/minhaprova')
+          this.saveClassTest(r, status)
         })
       } else if (status === 2) {
         baseService.get(`/classtests/${id}`).then((r) => {
-          if (r.status === 200) {
-            classTestService.saveClassTest(r.data)
-            classTestService.saveClassTestStatus(status)
-          }
-          this.$router.push('/minhaprova')
+          this.saveClassTest(r, status)
         })
       }
     },
