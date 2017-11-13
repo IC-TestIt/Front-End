@@ -1,5 +1,5 @@
 <template>
-  <v-app toolbar footer>
+  <v-app toolbar footer class="flex-app">
     <v-navigation-drawer
       temporary
       v-model="drawer"
@@ -23,7 +23,7 @@
       </div>
     </v-toolbar>
     <main>
-      <v-container fluid id="app-container" class="home">
+      <v-container fluid grid-list-md id="app-container" class="home">
         <router-view></router-view>
       </v-container>
     </main>
@@ -72,6 +72,10 @@ export default {
 
   .logout i
     font-size: 5vh
+
+  .flex-app
+    display flex
+    flex-direction column
 
   .fa-sign-out:before
     color: white;
