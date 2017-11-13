@@ -1,8 +1,8 @@
 <template>
   <div id="my-test">
-    <MyCorrectedTest v-if="classTest.status === 4" :test="classTest"></MyCorrectedTest>
-    <MyUncorrectedTest v-if="classTest.status === 3" :test="classTest"></MyUncorrectedTest>
-    <MyAppliedTest v-if="classTest.status === 2" :test="classTest"></MyAppliedTest>
+    <MyCorrectedTest v-if="status === 4" :test="classTest"></MyCorrectedTest>
+    <MyUncorrectedTest v-if="status === 3" :test="classTest"></MyUncorrectedTest>
+    <MyAppliedTest v-if="status === 2" :test="classTest"></MyAppliedTest>
   </div>
 </template>
 <script>
@@ -19,7 +19,8 @@ export default {
     MyAppliedTest
   },
   data: () => ({
-    classTest: {}
+    classTest: {},
+    status: 0
   }),
   mounted () {
     this.getClassTest()
@@ -27,6 +28,7 @@ export default {
   methods: {
     getClassTest () {
       this.classTest = ClassTestService.getClassTest()
+      this.status = ClassTestService.getClassTestStatus()
     }
   }
 }

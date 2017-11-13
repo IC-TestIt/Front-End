@@ -6,5 +6,11 @@ export default {
   },
   getClassTest () {
     return storage.session.get('classTest')
+  },
+  saveClassTestStatus (status) {
+    storage.session.set('classTestStatus', status)
+  },
+  getClassTestStatus () {
+    return storage.session.get('classTestStatus')
   }
 }
