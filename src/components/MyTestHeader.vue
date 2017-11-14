@@ -8,7 +8,7 @@
               <div>Data Inicio: </div>
             </v-flex>
             <v-flex xs6>
-              <div>{{formateDate(test.beginDate)}}</div>
+              <div>{{formatDate(test.beginDate)}}</div>
             </v-flex>
           </v-card-title>
         </v-card>
@@ -20,7 +20,7 @@
               <div>Data Final: </div>
             </v-flex>
             <v-flex xs6>
-              <div>{{formateDate(test.endDate)}}</div>
+              <div>{{formatDate(test.endDate)}}</div>
             </v-flex>
           </v-card-title>
         </v-card>
@@ -41,12 +41,12 @@
   </div>
 </template>
 <script>
-import { formateDate } from '../utils/date'
+import { formatDate } from '../utils/date'
 export default {
   name: 'my-test-header',
   props: ['test'],
   data: () => ({
-    formateDate: formateDate
+    formatDate: formatDate
   })
 }
 </script>
