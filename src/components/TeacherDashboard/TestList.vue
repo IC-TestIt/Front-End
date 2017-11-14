@@ -11,11 +11,11 @@
 </template>
 
 <script>
+import auth from '../../auth'
 import testGroup from './TestGroup.vue'
 import baseService from '../../services/baseService'
-import moment from 'moment'
-import auth from '../../auth'
-import {isToday, isYesterday, isWithinAWeek, isTwoWeeksOrMore} from '../../utils/date'
+import {FluentFilterService} from '../../utils/filter'
+import {isToday, isYesterday, isWithinAWeek, isTwoWeeksOrMore, momentDate} from '../../utils/date'
 
 export default {
   name: 'testList',
@@ -33,18 +33,12 @@ export default {
   methods: {
     get () {
       baseService.get(`/teacher/${auth.teacherId()}/dashboard/`).then(r => {
-        this.todayTests = this.todayTests.concat(r.data.recentTests.filter((item) => {
-          return isToday(moment(new Date(item.endDate)))
-        }))
-        this.yesterdayTests = this.yesterdayTests.concat(r.data.recentTests.filter(item => {
-          return isYesterday(moment(new Date(item.endDate)))
-        }))
-        this.thisWeekTests = this.thisWeekTests.concat(r.data.recentTests.filter(item => {
-          return isWithinAWeek(moment(new Date(item.endDate)))
-        }))
-        this.olderTests = this.olderTests.concat(r.data.recentTests.filter(item => {
-          return isTwoWeeksOrMore(moment(new Date(item.endDate)))
-        }))
+        new FluentFilterService(this, r.data.recentTests, momentDate, 'endDate')
+          .addFilter('todayTests', isToday)
+          .addFilter('yesterdayTests', isYesterday)
+          .addFilter('thisWeekTests', isWithinAWeek)
+          .addFilter('olderTests', isTwoWeeksOrMore)
+          .filter()
       })
     }
   },

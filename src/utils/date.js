@@ -24,3 +24,7 @@ export function isWithinAWeek (momentDate) {
 export function isTwoWeeksOrMore (momentDate) {
   return !isWithinAWeek(momentDate)
 }
+
+export function momentDate (dateTime) {
+  return moment(new Date(dateTime))
+}
