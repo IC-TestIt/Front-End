@@ -1,6 +1,6 @@
 <template>
   <div class="my-test-table">
-    <v-card height="35vh">
+    <v-card :height="height" class="table-test">
       <v-card-title>
         <div class="text-xs-center">Lista de Alunos da Turma</div>
       </v-card-title>
@@ -18,7 +18,7 @@
 import { statusStudent } from '../utils/constants'
 export default {
   name: 'my-test-table',
-  props: ['students', 'room'],
+  props: ['students', 'room', 'height'],
   data: () => ({
     statusStudent: statusStudent,
     headers: [
@@ -26,11 +26,21 @@ export default {
       {text: 'Nome', value: 'name', align: 'center'},
       {text: 'Status', value: '', align: 'center'}
     ]
-  })
+  }),
+  mounted () {
+    this.getHeight()
+  },
+  methods: {
+    getHeight () {
+      if (this.height === undefined) {
+        this.height = '35vh'
+      }
+    }
+  }
 }
 </script>
 <style lang="stylus" scoped>
-.my-test-table
+.table-test
   overflow-y scroll
 
 </style>
