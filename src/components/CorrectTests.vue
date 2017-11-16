@@ -273,12 +273,8 @@ export default {
       this.realGrade = this.currentAnsweredQuestion.realGrade
     },
     allCorrect () {
-      let answered = []
-      if (answered.every((item) => item.isQuestionCorrected)) {
-        return true
-      } else {
-        return false
-      }
+      let answered = this.answeredQuestions
+      return answered.every((item) => item.isQuestionCorrected)
     }
   }
 }
