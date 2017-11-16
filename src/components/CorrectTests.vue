@@ -35,8 +35,27 @@
                 <p>Alunos Restantes: {{indexStudent + 1}} / {{students.length}}</p>
               </v-flex>
               <v-flex d-flex xs3 class="mt-2 mr-3 mb-2">
-                <v-btn class="green darken-1" dark @click="correctExams()">Finalizar Correção</v-btn>
-              </v-flex>
+               <v-layout row justify-center>
+                <v-btn class="green darken-1" dark @click.stop="dialog2 = true">Finalizar Correção</v-btn>
+                <v-dialog v-model="dialog2" persistent max-width="290">
+                    
+                 <v-card>
+                  <v-card-title class="headline red--text">Atenção</v-card-title>
+                  <v-card-text class="subheading" >Você ainda não corrigiu a prova inteira! </v-card-text>
+                  <v-card-actions v-if="allCorrect()">
+                   <v-spacer></v-spacer>
+                    <v-btn class="green--text" center flat @click="dialog2 = false">Cancelar</v-btn>
+                  </v-card-actions>
+                  
+                  <v-card-actions v-else>
+                    <v-spacer></v-spacer>
+                      <v-btn class="green--text" flat @click.native="dialog2 = false">Não</v-btn>
+                      <v-btn class="green--text" flat @click="correctExams()">Sim</v-btn>
+                  </v-card-actions>
+                 </v-card>
+                </v-dialog>
+               </v-layout>
+              </v-flex>             
             </v-layout>
           </v-card>
         </v-flex>
@@ -121,6 +140,7 @@ export default {
   },
   data () {
     return {
+      dialog2: false,
       indexStudent: 0,
       id: 1,
       changeGrade: false,
@@ -251,6 +271,10 @@ export default {
       this.corrected = this.currentAnsweredQuestion.corrected
       this.changeGrade = this.currentAnsweredQuestion.changeGrade
       this.realGrade = this.currentAnsweredQuestion.realGrade
+    },
+    allCorrect () {
+      let answered = this.answeredQuestions
+      return answered.every((item) => item.isQuestionCorrected)
     }
   }
 }
