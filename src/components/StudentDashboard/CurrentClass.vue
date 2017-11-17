@@ -36,7 +36,7 @@
 <script>
 import { cardColor } from '../../utils/constants'
 export default {
-  name: 'classCard',
+  name: 'currentClass',
   props: ['room'],
   data () {
     return {
