@@ -5,9 +5,14 @@
         Minhas Turmas
       </v-flex>
       <v-flex xs12>
-        <div v-for="c in classes" :key="c.id">
+        <div v-for="c in classes" :key="c.id" v-if="classes.length > 0">
           <v-flex xs12 class="mb-3">
             <class-card :room="c"></class-card>
+          </v-flex>
+        </div>
+        <div v-if="classes.length === 0">
+          <v-flex xs12 class="mb-3">
+            <p class="pl-1 pb-4 item-title white--text">Nenhuma turma associada</p>
           </v-flex>
         </div>
       </v-flex>
@@ -22,11 +27,6 @@ export default {
   props: ['classes'],
   components: {
     ClassCard
-  },
-  data () {
-    return {
-
-    }
   }
 }
 </script>
@@ -36,5 +36,8 @@ export default {
 .grades-list
   overflow-y auto
   height 70vh
+
+.item-title
+  font-size 18px
 
 </style>
