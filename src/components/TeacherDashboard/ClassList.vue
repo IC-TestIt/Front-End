@@ -8,9 +8,14 @@
       Minhas Turmas
     </v-flex>
     <v-flex xs12>
-      <div class="class-list" v-for="c in classes" :key="c.id">
+      <div class="class-list" v-if="classes.length > 0" v-for="c in classes" :key="c.id">
         <v-flex xs12 class="mb-3">
           <class-card :name="c.description" :grade="c.average"></class-card>
+        </v-flex>
+      </div>
+      <div v-if="classes.length === 0">
+        <v-flex xs12 class="mb-3">
+          <p class="pl-1 pb-4 item-title white--text">Nenhuma turma cadastrada</p>
         </v-flex>
       </div>
     </v-flex>
@@ -69,5 +74,9 @@ export default {
 
 .add-button {
   left: 6vw;
+}
+
+.item-title {
+  font-size: 18px;
 }
 </style>
