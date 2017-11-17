@@ -22,7 +22,7 @@
               <div v-if="room.correctedStudentTests.length > 0" v-for="test in room.correctedStudentTests" :key="test">
                 <p class="pl-1 pb-4 item-card">Prova: {{ test.description }} - Nota: {{test.grade}}</p>
               </div>
-              <div else>
+              <div v-if="room.correctedStudentTests.length === 0">
                 <p class="pl-1 pb-4 item-title">Nenhuma prova realizada</p>
               </div>
             </v-card-text>
