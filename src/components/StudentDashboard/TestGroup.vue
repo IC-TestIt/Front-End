@@ -10,6 +10,7 @@
               <v-btn class="success mt-3" :loading="loading">Visualizar</v-btn>
             </v-list-tile-content>
           </v-list-tile>
+          <p class="pl-1 pb-4 ml-3 item-title" v-if="item.description === undefined">Nenhuma prova neste período</p>
           <v-divider v-if="!item.header || list.lenght > index"></v-divider>
         </template>
       </div>
@@ -26,8 +27,6 @@ export default {
     return {
       loading: false
     }
-  },
-  methods: {
   }
 }
 </script>
@@ -41,4 +40,9 @@ export default {
 .bold {
   font-weight: bold;
 }
+
+.item-title {
+  font-size: 18px;
+}
+
 </style>
