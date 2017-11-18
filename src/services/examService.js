@@ -6,5 +6,11 @@ export default {
   },
   getExams () {
     return storage.session.get('exams')
+  },
+  saveExamId (id) {
+    storage.session.set('examId', id)
+  },
+  getExamId () {
+    return storage.session.get('examId')
   }
 }
