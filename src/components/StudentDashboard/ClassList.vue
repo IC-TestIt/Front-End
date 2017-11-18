@@ -7,7 +7,7 @@
       <v-flex xs12>
         <div v-for="c in classes" :key="c.id" v-if="classes.length > 0">
           <v-flex xs12 class="mb-3">
-            <current-class :room="c"></current-class>
+            <class-card :currentClass="c"></class-card>
           </v-flex>
         </div>
         <div v-if="classes.length === 0">
@@ -21,12 +21,12 @@
 </template>
 
 <script>
-import CurrentClass from './CurrentClass'
+import ClassCard from './ClassCard'
 export default {
   name: 'classList',
   props: ['classes'],
   components: {
-    CurrentClass
+    ClassCard
   }
 }
 </script>
