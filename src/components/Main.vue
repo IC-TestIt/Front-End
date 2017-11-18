@@ -1,15 +1,13 @@
-<template>      
-        
-        <v-container>         
-           <VInfoStudent v-if="auth.isStudent()"></VInfoStudent>
-           <VInfoTeacher v-else></VInfoTeacher>
-        </v-container>
-      
+<template>
+  <v-container fluid>
+     <VInfoStudent v-if="auth.isStudent()"></VInfoStudent>
+     <VInfoTeacher v-else></VInfoTeacher>
+  </v-container>
 </template>
 
 <script>
-import VInfoStudent from './InfoStudent.vue'
-import VInfoTeacher from './InfoTeacher.vue'
+import VInfoStudent from './StudentDashboard/Main'
+import VInfoTeacher from './TeacherDashboard/Main'
 import auth from '../auth'
 
 export default {
@@ -36,4 +34,3 @@ export default {
     text-align: center;
   }
 </style>
-
