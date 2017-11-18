@@ -20,3 +20,7 @@ export class FluentFilterService {
     })
   }
 }
+
+export function formatDouble (num) {
+  return num.toFixed(2)
+}
