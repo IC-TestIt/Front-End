@@ -33,22 +33,11 @@ export default {
   },
   methods: {
     get () {
-      this.getClasses()
-      this.getTests()
-    },
-    getTests () {
       let id = auth.studentId()
-      baseService.get(`/student/${id}/tests`).then((r) => {
+      baseService.get(`/student/${id}/dashboard`).then((r) => {
         if (r.status === 200) {
-          this.tests = r.data
-        }
-      })
-    },
-    getClasses () {
-      let id = auth.studentId()
-      baseService.get(`/student/${id}/classes`).then((r) => {
-        if (r.status === 200) {
-          this.classes = r.data
+          this.classes = r.data.classes
+          this.tests = r.data.tests
           this.classes.forEach((c) => {
             if (c.correctedStudentTests.length > 0) {
               c.average = c.correctedStudentTests.map((t) => t.grade)
