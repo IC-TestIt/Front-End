@@ -11,7 +11,7 @@
           </v-btn>
         </v-flex>
         <v-flex xs5 class="text-xs-center">
-          <p class="display-1 pt-0">{{currentClass.correctedStudentTests.length > 0 ? currentClass.average : 0}}</p>
+          <p class="display-1 pt-0">{{currentClass.correctedStudentTests.length > 0 ? formatDouble(currentClass.average) : 0}}</p>
           <p class="pl-1 pt-2">Media de Notas</p>
         </v-flex>
         <v-flex xs12>
@@ -20,7 +20,7 @@
               <p class="item-title">Lista de Provas dessa Turma</p>
               <v-divider class="mb-4"></v-divider>
               <div v-if="currentClass.correctedStudentTests.length > 0" v-for="test in currentClass.correctedStudentTests" :key="test">
-                <p class="pl-1 pb-4 item-card">Prova: {{ test.description }} - Nota: {{test.grade}}</p>
+                <p class="pl-1 pb-4 item-card">Prova: {{ test.description }} - Nota: {{formatDouble(test.grade)}}</p>
               </div>
               <div v-if="currentClass.correctedStudentTests.length === 0">
                 <p class="pl-1 pb-4 item-title">Nenhuma prova realizada</p>
@@ -35,13 +35,16 @@
 
 <script>
 import { cardColor } from '../../utils/constants'
+import {formatDouble} from '../../utils/filter'
+
 export default {
   name: 'classCard',
   props: ['currentClass'],
   data () {
     return {
       cardColor: cardColor,
-      show: false
+      show: false,
+      formatDouble: formatDouble
     }
   }
 }
