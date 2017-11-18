@@ -10,7 +10,7 @@ const NEXT_WEEK = REFERENCE.clone().add(7, 'days').startOf('day')
 export function formatDate (date) {
   let formatedDate = new Date(date).toLocaleDateString('pt-br')
   if (formatedDate === '31/12/1') {
-    return 'Data inválida'
+    return 'Indefinida'
   }
   return formatedDate
 }
