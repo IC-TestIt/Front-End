@@ -11,7 +11,7 @@
           </v-btn>
         </v-flex>
         <v-flex xs5 class="text-xs-center">
-          <p class="display-1 pt-0">{{grade}}</p>
+          <p class="display-1 pt-0">{{formatDouble(grade)}}</p>
           <p class="pl-1 pt-2">Média (%)</p>
         </v-flex>
       </v-layout>
@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import {formatDouble} from '../../utils/filter'
+
 export default {
   name: 'classCard',
   props: ['name', 'grade'],
@@ -34,7 +36,8 @@ export default {
         } else {
           return `green darken-1 ${cssClass}`
         }
-      }
+      },
+      formatDouble: formatDouble
     }
   }
 }
