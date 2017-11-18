@@ -144,9 +144,7 @@ export default {
 </script>
 
 <style>
-.application--light .pagination__item--active {
-  background: #1a237e;
-}
+
 
 .my-classes {
   overflow-y: scroll;
