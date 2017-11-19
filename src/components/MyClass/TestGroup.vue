@@ -38,11 +38,7 @@ export default {
         baseService.get(`/classtests/${id}/correction`).then((r) => {
           this.saveClassTest(r, status)
         })
-      } else if (status === 3) {
-        baseService.get(`/classtests/${id}`).then((r) => {
-          this.saveClassTest(r, status)
-        })
-      } else if (status === 2) {
+      } else if (status === 3 || status === 2) {
         baseService.get(`/classtests/${id}`).then((r) => {
           this.saveClassTest(r, status)
         })
