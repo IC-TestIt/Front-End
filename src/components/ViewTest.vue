@@ -53,9 +53,10 @@ export default {
 
 <style>
 .viewTest {
-  height: 100vh;
+  /*height: 100vh;*/
   width: 100vw;
   background-color: #ECECEC;
+  overflow-y: auto;
 }
 
 .viewTest-header {
