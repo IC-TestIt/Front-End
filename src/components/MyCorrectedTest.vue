@@ -34,8 +34,18 @@
             </v-card-title>
           </v-card>
         </v-flex>
-        <v-flex xs6>
+        <v-flex xs5>
           <MyTestTable :students="test.students" :room="test.className"></MyTestTable>
+        </v-flex>
+        <v-flex xs1>
+          <v-layout column>
+            <v-flex xs6>
+              <v-btn class="primary" v-on:click="back()">Voltar</v-btn>
+            </v-flex>
+            <v-flex xs6>
+              <v-btn class="success" v-on:click="publish()" :loading="loading">Divulgar</v-btn>
+            </v-flex>
+          </v-layout>
         </v-flex>
       </v-layout>
     </v-container>
@@ -47,6 +57,7 @@ import MyTestTable from './MyTestTable'
 import StudentsGradeGraphic from './StudentsGradeGraphic'
 import AverageQuestionsGraphic from './AverageQuestionsGraphic'
 import ClassTestService from '../services/classTestService'
+import baseService from '../services/baseService'
 
 export default {
   name: 'my-corrected-test',
@@ -57,7 +68,8 @@ export default {
     AverageQuestionsGraphic
   },
   data: () => ({
-    test: null
+    test: null,
+    loading: false
   }),
   mounted () {
     this.getClassTest()
@@ -67,6 +79,22 @@ export default {
   methods: {
     getClassTest () {
       this.test = ClassTestService.getClassTest()
+    },
+    back () {
+      this.$router.push('/provas')
+    },
+    publish () {
+      this.loading = true
+      baseService.post(`/ClassTests/${ClassTestService.getClassTestId()}/publish`).then(r => {
+        if (r.status === 200 && r.data !== 0) {
+          this.$toastr('success', {position: 'toast-top-right', msg: 'Nota(s) divulgada(s) com sucesso'})
+          this.loading = false
+          this.$router.push('/provas')
+        } else {
+          this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro ao divulgar a(s) nota(s)'})
+          this.loading = false
+        }
+      })
     }
   }
 }
