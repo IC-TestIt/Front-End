@@ -1,12 +1,12 @@
 <template>
   <div class="grade-card">
-    <v-card :class="cardColor(value * 10)">
+    <v-card :class="cardColor(value * 10)" :height="height">
       <v-card-title primary-title>
-        <v-flex xs6>
-          <div class="headline bold">{{value}}</div>
+        <v-flex xs9>
+          <div :class="titleSize">{{title}}:</div>
         </v-flex>
-        <v-flex xs6>
-          <div class="bold">{{title}}</div>
+        <v-flex xs2 class="mr-1">
+          <div :class="valueSize">{{value}}</div>
         </v-flex>
       </v-card-title>
     </v-card>
@@ -16,7 +16,7 @@
 import {cardColor} from '../../utils/constants'
 export default {
   name: 'grade-card',
-  props: ['value', 'title'],
+  props: ['value', 'title', 'height', 'titleSize', 'valueSize'],
   data () {
     return {
       cardColor: cardColor
@@ -25,4 +25,6 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
+.value
+  font-size 60px
 </style>
