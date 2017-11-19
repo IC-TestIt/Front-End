@@ -138,7 +138,7 @@
                             </v-dialog>
 
                             <v-btn id="grade" title="Dashboard" :disabled="props.item.status === 1" @click="getClassTest(props.item.classTestId, props.item.status)" >
-                              <v-icon :class="[{'primary white--text': props.item.status === 4 }]">grid_on</v-icon>
+                              <v-icon :class="[{'primary white--text': props.item.status !== 1 }]">grid_on</v-icon>
                             </v-btn>
 
                             <v-btn id="delete" title="Deletar" :disabled="props.item.status !== 1" slot="activator">
