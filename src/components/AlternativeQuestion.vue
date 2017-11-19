@@ -16,10 +16,3 @@ export default {
   }
 }
 </script>
-<style lang="css" scoped>
-
-.alternativeQuestion-alternative {
-  margin-bottom: -40px;
-}
-
-</style>
