@@ -6,7 +6,7 @@
           <div class="headline pl-1 pb-4">
             {{ name }}
           </div>
-          <v-btn class="white white--text" small outline flat>
+          <v-btn class="white white--text" small outline flat @click="saveClass(currentClass.id)">
             Mais
           </v-btn>
         </v-flex>
@@ -21,10 +21,11 @@
 
 <script>
 import {formatDouble} from '../../utils/filter'
+import classService from '../../services/classService'
 
 export default {
   name: 'classCard',
-  props: ['name', 'grade'],
+  props: ['name', 'grade', 'currentClass'],
   data () {
     return {
       classObj: (grade) => {
@@ -38,6 +39,12 @@ export default {
         }
       },
       formatDouble: formatDouble
+    }
+  },
+  methods: {
+    saveClass (c) {
+      classService.saveClass(c)
+      this.$router.push('/minhaturma')
     }
   }
 }
