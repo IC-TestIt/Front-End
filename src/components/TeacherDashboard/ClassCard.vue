@@ -6,7 +6,7 @@
           <div class="headline pl-1 pb-4">
             {{ name }}
           </div>
-          <v-btn class="white white--text" small outline flat @click="saveClass(currentClass.id)">
+          <v-btn class="white white--text" small outline flat @click="saveClass(currentClass)">
             Mais
           </v-btn>
         </v-flex>
@@ -30,9 +30,9 @@ export default {
     return {
       classObj: (grade) => {
         let cssClass = 'white--text'
-        if (grade <= 40) {
+        if (grade * 100 <= 40) {
           return `red ${cssClass}`
-        } else if (grade <= 60) {
+        } else if (grade * 100 <= 60) {
           return `orange ${cssClass}`
         } else {
           return `green darken-1 ${cssClass}`
