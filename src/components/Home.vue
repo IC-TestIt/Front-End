@@ -64,6 +64,7 @@ export default {
         name: '',
         email: '',
         password: '',
+        rpassword: '',
         phone: '',
         birthday: '',
         type: 1,
@@ -83,6 +84,17 @@ export default {
           this.$toastr('error', {position: 'toast-top-right', msg: 'Erro ao cadastrar!'})
         }
         this.loading = false
+        this.user = {
+          name: '',
+          email: '',
+          password: '',
+          rpassword: '',
+          phone: '',
+          birthday: '',
+          type: 1,
+          organizationid: 1,
+          identifier: 'Professor'
+        }
       }).catch(() => {
         this.loading = false
         this.$toastr('error', {position: 'toast-top-right', msg: 'Erro ao cadastrar!'})
