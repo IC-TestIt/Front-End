@@ -69,7 +69,7 @@
                     <template slot="items" scope="props">
                         <td class="text-xs-center" >{{ props.item.testTitle }}</td>
                         <td class="text-xs-center">{{ props.item.className }}</td>
-                        <td class="text-xs-center">{{ convertDate(props.item.endDate) }}</td>
+                        <td class="text-xs-center">{{ formatDate(props.item.endDate) }}</td>
                         <td class="text-xs-center">{{ findStatus(props.item.status) }}</td>
                         <td class="text-xs-center mytests-buttons" >
                             <v-btn id="aplic"  center  title="Aplicar" @click="applyTest(props.item.testId)" :disabled="props.item.status !== 1">
@@ -137,8 +137,8 @@
                                 </v-card>
                             </v-dialog>
 
-                            <v-btn id="grade" title="Dashboard" :disabled="props.item.status === 1" @click="getClassTest(props.item.classTestId, props.item.status)" dark>
-                              <v-icon :class="[{'primary white--text': props.item.status === 4 }]">grid_on</v-icon>
+                            <v-btn id="grade" title="Dashboard" :disabled="props.item.status === 1" @click="getClassTest(props.item.classTestId, props.item.status)" >
+                              <v-icon :class="[{'primary white--text': props.item.status !== 1 }]">grid_on</v-icon>
                             </v-btn>
 
                             <v-btn id="delete" title="Deletar" :disabled="props.item.status !== 1" slot="activator">
@@ -162,13 +162,13 @@ import auth from '../auth'
 import examService from '../services/examService'
 import testService from '../services/testService'
 import classTestService from '../services/classTestService'
-import { convertDate } from '../utils/index'
+import { formatDate } from '../utils/date'
 
 export default {
   name: 'CreateTest',
   data () {
     return {
-      convertDate: convertDate,
+      formatDate: formatDate,
       testsLength: 0,
       appliedTests: 0,
       uncorrectedTests: 0,
