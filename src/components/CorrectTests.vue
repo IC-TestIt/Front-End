@@ -67,21 +67,21 @@
                   <v-flex xs12>
 
                     <div class="my-3 px-2 title" height="165px">Enunciado da Questão
-                        <p class="px-3 py-2 body-1 primary--text" box multi-line disabled label="" :value="currentQuestion.description"></p>
+                        <p class="px-3 py-2 body-1 primary--text" box multi-line disabled label="" >{{currentQuestion.description}}</p>
                     </div>
                   </v-flex>                               
                   <v-flex xs12>
                    <div height="165px"class="title px-2 my-3">
                      Resposta do Aluno
-                     <p class="px-3 py-2 body-1 red--text" box multi-line disabled :value="currentAnsweredQuestion.studentAnswer">
+                     <p class="px-3 py-2 body-1 red--text" box multi-line disabled>
+                     {{currentAnsweredQuestion.studentAnswer}}
                      </p>
-                    
                    </div>
                   </v-flex>
                   <v-flex xs12 v-if="showAnswer">
                     <div height="200px" class="title px-2 my-4" >
                         Resposta do Professor
-                      <p  class="px-3 py-2 body-1" box multi-line disabled :value="currentQuestion.answer"></p>                     
+                      <p  class="px-3 py-2 body-1" box multi-line disabled >{{currentQuestion.answer}}</p>                     
                     </div>                   
                   </v-flex>
                 </v-layout>
