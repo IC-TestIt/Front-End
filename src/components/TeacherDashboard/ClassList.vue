@@ -10,7 +10,7 @@
     <v-flex xs12>
       <div class="class-list" v-if="classes.length > 0" v-for="c in classes" :key="c.id">
         <v-flex xs12 class="mb-3">
-          <class-card :name="c.description" :grade="c.average"></class-card>
+          <class-card :name="c.description" :grade="c.average" :current-class="c.id"></class-card>
         </v-flex>
       </div>
       <div v-if="classes.length === 0">
@@ -35,23 +35,7 @@ export default {
   },
   data () {
     return {
-      classes: [
-        {
-          id: 1,
-          name: 'Turma 1',
-          grade: 100
-        },
-        {
-          id: 2,
-          name: 'Turma 2',
-          grade: 50
-        },
-        {
-          id: 3,
-          name: 'Turma 3',
-          grade: 10
-        }
-      ]
+      classes: []
     }
   },
   methods: {
