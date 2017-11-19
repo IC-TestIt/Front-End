@@ -5,6 +5,7 @@ import Home from '@/components/Home'
 import Main from '@/components/Main'
 import MyTests from '@/components/MyTests'
 import MyTest from '@/components/MyTest'
+import MyClass from '@/components/MyClass/Main'
 import CreateTest from '@/components/CreateTest'
 import CreateClass from '@/components/CreateClass'
 import FinishSignUp from '@/components/FinishSignUp'
@@ -100,6 +101,12 @@ export default new Router({
     path: '/minhaprova',
     name: 'MyTest',
     component: MyTest,
+    beforeEnter: onlyTeacher
+  },
+  {
+    path: '/minhaturma',
+    name: 'MyClass',
+    component: MyClass,
     beforeEnter: onlyTeacher
   },
   {
