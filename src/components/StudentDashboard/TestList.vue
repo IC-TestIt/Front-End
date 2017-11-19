@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     get () {
-      new FluentFilterService(this, this.tests, momentDate, 'endDate')
+      new FluentFilterService(this, this.tests, momentDate, 'beginDate')
         .addFilter('todayTests', isToday)
         .addFilter('tomorrowTests', isTomorrow)
         .addFilter('thisWeekTests', isInThisWeek)
