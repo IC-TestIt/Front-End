@@ -29,7 +29,7 @@
 
 <script>
 import baseService from '../../services/baseService'
-// import examService from '../../services/examService'
+import examService from '../../services/examService'
 import GradeCard from './GradeCard'
 import TestHeader from './Header'
 import Answers from './Answers'
@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     get () {
-      // this.examId = examService.getExamId()
+      this.examId = examService.getExamId()
       baseService.get(`exam/${this.examId}/correction`).then((r) => {
         if (r.status === 200) {
           this.exam = r.data
