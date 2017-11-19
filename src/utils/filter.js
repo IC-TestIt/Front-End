@@ -24,3 +24,15 @@ export class FluentFilterService {
 export function formatDouble (num) {
   return num.toFixed(2)
 }
+
+export function compareString (a, b) {
+  let nameA = a.toUpperCase()
+  let nameB = b.toUpperCase()
+  if (nameA < nameB) {
+    return -1
+  } else if (nameA > nameB) {
+    return 1
+  } else {
+    return 0
+  }
+}
