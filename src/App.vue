@@ -8,12 +8,11 @@
       overflow
       v-if="auth.loggedIn()"
     >
-    <VMenuStudent v-if="auth.isStudent()"></VMenuStudent>
     <VMenuTeacher v-if="auth.isTeacher()"></VMenuTeacher>
 
     </v-navigation-drawer>
     <v-toolbar class="primary" dark>
-      <v-toolbar-side-icon @click.native.stop="hide" v-show="auth.loggedIn()"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click.native.stop="hide" v-show="auth.loggedIn() && auth.isTeacher()"></v-toolbar-side-icon>
       <v-toolbar-title>Test It</v-toolbar-title>
       <v-spacer></v-spacer>
       <div v-if="auth.loggedIn()" class="logout">
