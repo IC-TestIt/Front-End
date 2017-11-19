@@ -41,16 +41,16 @@
                     
                  <v-card>
                   <v-card-title class="headline red--text">Atenção</v-card-title>
-                  <v-card-text class="subheading" >Você ainda não corrigiu a prova inteira! </v-card-text>
-                  <v-card-actions v-if="allCorrect()">
+                  <v-card-text v-show="!allCorrect()" class="subheading" >Você ainda não corrigiu a prova inteira! </v-card-text>
+                  <v-card-text v-show="allCorrect()" class="subheading" >Você tem certeza que deseja finaliza a correção? </v-card-text>
+                  <v-card-actions v-show="!allCorrect()">
                    <v-spacer></v-spacer>
                     <v-btn class="green--text" center flat @click="dialog2 = false">Cancelar</v-btn>
                   </v-card-actions>
-                  
-                  <v-card-actions v-else>
+                  <v-card-actions v-show="allCorrect()">
                     <v-spacer></v-spacer>
                       <v-btn class="green--text" flat @click.native="dialog2 = false">Não</v-btn>
-                      <v-btn class="green--text" flat @click="correctExams()">Sim</v-btn>
+                      <v-btn class="green--text" flat @click="correctExams()" :loading="finalizeLoading">Sim</v-btn>
                   </v-card-actions>
                  </v-card>
                 </v-dialog>
@@ -147,6 +147,7 @@ export default {
       realGrade: 0,
       exams: [],
       test: {},
+      finalizeLoading: false,
       currentQuestion: {},
       currentAnsweredQuestion: {},
       currentStudent: {},
@@ -179,6 +180,7 @@ export default {
   },
   methods: {
     correctExams () {
+      this.finalizeLoading = true
       this.exams = this.exams.map((r) => {
         return {
           id: r.examId,
@@ -204,7 +206,12 @@ export default {
         corrections: this.exams
       }
       baseService.put(`exam/correction`, correction).then((res) => {
-        console.log(res)
+        if (res.status === 200 && res.data !== 0) {
+          this.$toastr('success', {position: 'toast-top-right', msg: 'Correção finalizada com sucesso'})
+        } else {
+          this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro ao finalizar a correção'})
+        }
+        this.finalizeLoading = false
       })
     },
     getTest () {
@@ -273,8 +280,9 @@ export default {
       this.realGrade = this.currentAnsweredQuestion.realGrade
     },
     allCorrect () {
-      let answered = this.answeredQuestions
-      return answered.every((item) => item.isQuestionCorrected)
+      return this.exams.every((exam) => {
+        return exam.answeredQuestions.every((item) => item.corrected)
+      })
     }
   }
 }
