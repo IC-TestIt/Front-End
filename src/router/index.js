@@ -13,6 +13,7 @@ import MyExams from '@/components/MyExams'
 import RealizeExam from '@/components/RealizeExam'
 import MyClasses from '@/components/MyClasses'
 import CorrectTest from '@/components/CorrectTests'
+import TestCorrection from '@/components/TestCorrection/Main'
 
 Vue.use(Router)
 
@@ -87,6 +88,12 @@ export default new Router({
     path: '/avaliacoes',
     name: 'MyExams',
     component: MyExams,
+    beforeEnter: onlyStudent
+  },
+  {
+    path: '/correcao',
+    name: 'TestCorrection',
+    component: TestCorrection,
     beforeEnter: onlyStudent
   },
   {
