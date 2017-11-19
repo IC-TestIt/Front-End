@@ -10,10 +10,10 @@
               <v-btn class="success mt-3" :loading="loading" v-on:click="correctExams(item.classTestId, item.testId)">Corrigir</v-btn>
             </v-list-tile-content>
           </v-list-tile>
-          <p class="pl-1 pb-4 ml-3 item-title" v-if="item.testTitle === undefined">Nenhuma prova neste período</p>
           <v-divider v-if="!item.header || list.lenght > index"></v-divider>
         </template>
       </div>
+      <p class="pl-1 pb-4 ml-3 item-title" v-if="list.length <= 1">Nenhuma prova neste período</p>
     </v-list>
   </v-card>
 </template>

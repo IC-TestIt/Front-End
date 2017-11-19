@@ -11,19 +11,21 @@
 </template>
 
 <script>
+import baseService from '../../services/baseService'
+import auth from '../../auth'
 import testGroup from './TestGroup.vue'
 import {FluentFilterService} from '../../utils/filter'
-import {isToday, isTomorrow, isInThisWeek, isInNextWeeks, momentDate} from '../../utils/date'
+import {isTodayOrBefore, isTomorrow, isInThisWeek, isInNextWeeks, momentDate} from '../../utils/date'
 
 export default {
   name: 'testList',
-  props: ['tests'],
   components: {
     testGroup
   },
   data () {
     return {
-      todayTests: [{header: 'Hoje'}],
+      tests: [],
+      todayTests: [{header: 'Em Andamento'}],
       thisWeekTests: [{header: 'Esta Semana'}],
       tomorrowTests: [{header: 'Amanhã'}],
       nextTests: [{header: 'Próximas Semanas'}]
@@ -31,12 +33,16 @@ export default {
   },
   methods: {
     get () {
-      new FluentFilterService(this, this.tests, momentDate, 'endDate')
-        .addFilter('todayTests', isToday)
-        .addFilter('tomorrowTests', isTomorrow)
-        .addFilter('thisWeekTests', isInThisWeek)
-        .addFilter('nextTests', isInNextWeeks)
-        .filter()
+      let id = auth.studentId()
+      baseService.get(`/student/${id}/dashboard`).then((r) => {
+        this.tests = r.data.tests
+        new FluentFilterService(this, this.tests, momentDate, 'beginDate')
+          .addFilter('todayTests', isTodayOrBefore)
+          .addFilter('tomorrowTests', isTomorrow)
+          .addFilter('thisWeekTests', isInThisWeek)
+          .addFilter('nextTests', isInNextWeeks)
+          .filter()
+      })
     }
   },
   mounted () {

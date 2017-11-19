@@ -1,5 +1,4 @@
 import moment from 'moment'
-
 const REFERENCE = moment()
 const TODAY = REFERENCE.clone().startOf('day')
 const YESTERDAY = REFERENCE.clone().subtract(1, 'days').startOf('day')
@@ -19,6 +18,10 @@ export function isToday (momentDate) {
   return momentDate.isSame(TODAY, 'd')
 }
 
+export function isTodayOrBefore (momentDate) {
+  return momentDate.isSameOrBefore(TODAY)
+}
+
 export function isYesterday (momentDate) {
   return momentDate.isSame(YESTERDAY, 'd')
 }
@@ -31,8 +34,8 @@ export function isTwoWeeksOrMore (momentDate) {
   return !isWithinAWeek(momentDate)
 }
 
-export function isInThisWeek (mommentDate) {
-  return momentDate.isBefore(NEXT_WEEK)
+export function isInThisWeek (momentDate) {
+  return momentDate.isSameOrBefore(NEXT_WEEK) && momentDate.isAfter(TOMORROW)
 }
 
 export function isTomorrow (momentDate) {
@@ -40,7 +43,7 @@ export function isTomorrow (momentDate) {
 }
 
 export function isInNextWeeks (momentDate) {
-  return !isInThisWeek(momentDate)
+  return momentDate.isAfter(NEXT_WEEK)
 }
 
 export function momentDate (dateTime) {
