@@ -70,6 +70,7 @@
                         <td class="text-xs-center">{{ props.item.size }}</td>
                         <td class="text-xs-center">{{ props.item.average }}</td>
                         <td class="text-xs-center">
+                          <v-btn class="primary" v-on:click="myClass(props.item.id)">Detalhes</v-btn>
                           <v-btn class="error white--text darken-1" v-on:click="deleteClass(props.item.id)">Apagar</v-btn>
                         </td>
                     </template>
@@ -84,6 +85,7 @@
 
 <script>
 import baseService from '../services/baseService'
+import classService from '../services/classService'
 import auth from '../auth'
 
 export default {
@@ -130,6 +132,10 @@ export default {
       baseService.del(`/class/${id}`).then(r => {
         this.getClasses()
       })
+    },
+    myClass (c) {
+      classService.saveClass(c)
+      this.$router.push('/minhaturma')
     },
     linkes () {
       this.$router.push('/turma')
