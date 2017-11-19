@@ -5,7 +5,7 @@
         <class-list :classes='classes'></class-list>
       </v-flex>
       <v-flex xs6>
-        <test-list :tests='tests'></test-list>
+        <test-list></test-list>
       </v-flex>
     </v-layout>
   </v-container>

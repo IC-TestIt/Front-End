@@ -247,6 +247,7 @@ export default {
           this.saveClassTest(r, status)
         })
       }
+      classTestService.saveClassTestId(id)
     },
     correctExams () {
       this.classTestsCorrection = this.classTestsCorrection.map((r) => r.classTestId)
