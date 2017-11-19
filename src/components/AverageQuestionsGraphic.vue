@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     getAverageQuestions () {
-      this.averageQuestions.labels = this.questions.map(r => r.questionOrder)
+      this.averageQuestions.labels = this.questions.sort((a, b) => a.questionOrder - b.questionOrder).map(r => r.questionOrder + 1)
       this.averageQuestions.datasets.push({
         label: 'Nota',
         backgroundColor: '#000066',
