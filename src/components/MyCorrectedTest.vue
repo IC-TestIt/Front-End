@@ -35,7 +35,7 @@
           </v-card>
         </v-flex>
         <v-flex xs5>
-          <MyTestTable :students="test.students" :room="test.className"></MyTestTable>
+          <MyTestTable :students="test.students" :room="test.className" :height="'35vh'"></MyTestTable>
         </v-flex>
         <v-flex xs1>
           <v-layout column>
