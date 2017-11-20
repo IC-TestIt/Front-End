@@ -39,7 +39,7 @@ export default {
       let exam = {classTestsId: id, studentId: auth.studentId()}
       baseService.post(`/exam`, exam).then(r => {
         this.$router.push('/realizar/' + r.data.examId)
-      })
+      }).catch(() => this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro, por favor tente mais tarde'}))
     }
   }
 }
