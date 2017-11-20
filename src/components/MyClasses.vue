@@ -11,7 +11,7 @@
                             <div class="headline">{{bestClass}}</div>
                         </v-flex>
                         <v-flex xs12>
-                            <div class="pt-3">Melhor Turma</div>
+                            <div class="pt-3">Turma com a melhor média</div>
                         </v-flex>
                     </v-card-title>
                 </v-card>
@@ -23,7 +23,7 @@
                             <div class="headline">{{ classes.length }}</div>
                         </v-flex>
                         <v-flex xs12>
-                            <div class="pt-3">Total de Turmas</div>
+                            <div class="pt-3">Turma com a pior média</div>
                         </v-flex>
                     </v-card-title>
                 </v-card>
@@ -113,8 +113,14 @@ export default {
     getClasses () {
       baseService.get(`/teacher/${auth.teacherId()}/classes`).then(r => {
         if (r.status === 200) {
-          this.bestClass = r.data.classes[0].description
-          this.worstClass = r.data.classes[ r.data.classes.length - 1 ].description
+          let filteredTests = r.data.classes.filter(item => Boolean(item.hasTests))
+          if (filteredTests.length === 0) {
+            this.bestClass = 'Ainda não é possível calcular'
+            this.worstClass = 'Ainda não é possível calcular'
+          } else {
+            this.bestClass = filteredTests[0].description
+            this.worstClass = filteredTests[ filteredTests.length - 1 ].description
+          }
           this.classes = r.data.classes.map(item => {
             return {
               description: item.description,
