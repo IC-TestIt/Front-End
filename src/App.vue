@@ -8,8 +8,9 @@
       overflow
       v-if="auth.loggedIn()"
     >
-    <VMenuStudent v-if="auth.isStudent()"></VMenuStudent>
-    <VMenuTeacher v-if="auth.isTeacher()"></VMenuTeacher>
+    
+    <v-menu-student v-if="auth.isStudent()"></v-menu-student>
+    <v-menu-teacher v-if="auth.isTeacher()"></v-menu-teacher>
 
     </v-navigation-drawer>
     <v-toolbar class="primary" dark>
