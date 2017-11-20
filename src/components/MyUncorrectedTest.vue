@@ -33,7 +33,7 @@ import baseService from '../services/baseService'
 
 export default {
   name: 'my-uncorrected-test',
-  props: ['test'],
+  props: ['test', 'testId'],
   components: {
     MyTestHeader,
     ConclusionCard,
@@ -47,11 +47,13 @@ export default {
       let ids = []
       ids.push(this.test.classTestId)
       baseService.post(`/test/${this.testId}/correction`, {ids: ids}).then(r => {
-        if (r.status === 200) {
+        if (r.status === 200 && r.data !== 0) {
           examService.saveExams(r.data.correctedExams)
           testService.saveTest(r.data.test)
+          this.$router.push('/corrigir')
+        } else {
+          this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro, por favor tente mais tarde'})
         }
-        this.$router.push('/corrigir')
       })
     }
   }
