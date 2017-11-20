@@ -19,7 +19,7 @@
                 </v-menu>
               </v-flex>
               <v-flex xs1 class="mt-2">
-                <v-btn flat icon class="indigo darken-4"dark @click="previousStudent()">
+                <v-btn flat icon class="indigo darken-4"dark @click="previousStudent()" :disabled="indexStudent == 0">
                   <v-icon center dark>keyboard_arrow_left</v-icon>
                 </v-btn>
               </v-flex>
@@ -27,7 +27,7 @@
                 <v-text-field disabled label="Aluno" :value="currentStudent.name"></v-text-field>
               </v-flex>
               <v-flex xs1 class="mt-2">
-                <v-btn flat icon class="indigo darken-4" dark @click="nextStudent()">
+                <v-btn flat icon class="indigo darken-4" dark @click="nextStudent()" :disabled="indexStudent == students.length - 1">
                   <v-icon center dark>keyboard_arrow_right</v-icon>
                 </v-btn>
               </v-flex>
@@ -174,9 +174,6 @@ export default {
   mounted () {
     this.getExams()
     this.getTest()
-    this.currentStudent = this.students[0]
-    this.currentQuestion = this.questions[0]
-    this.currentAnsweredQuestion = this.answeredQuestions[0]
   },
   methods: {
     correctExams () {
@@ -208,6 +205,7 @@ export default {
       baseService.put(`exam/correction`, correction).then((res) => {
         if (res.status === 200 && res.data !== 0) {
           this.$toastr('success', {position: 'toast-top-right', msg: 'Correção finalizada com sucesso'})
+          this.$router.push('/provas')
         } else {
           this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro ao finalizar a correção'})
         }
@@ -217,6 +215,7 @@ export default {
     getTest () {
       this.test = testService.getTest()
       this.questions = this.test.questions
+      this.currentQuestion = this.questions[0]
     },
     isQuestionCorrected (item) {
       let answered = []
@@ -259,6 +258,7 @@ export default {
           id: r.studentId
         }
       })
+      this.currentStudent = this.students[0]
       this.exams.forEach((r) => {
         answered = answered.concat(r.answeredQuestions)
       })
@@ -267,6 +267,7 @@ export default {
         r.changeGrade = false
       })
       this.answeredQuestions = answered
+      this.currentAnsweredQuestion = this.answeredQuestions[0]
       this.currentExam = this.exams[0]
     },
     updateState () {
