@@ -137,7 +137,7 @@
                                 </v-card>
                             </v-dialog>
 
-                            <v-btn id="grade" title="Dashboard" :disabled="props.item.status === 1" @click="getClassTest(props.item.classTestId, props.item.status)" >
+                            <v-btn id="grade" title="Dashboard" :disabled="props.item.status === 1" @click="getClassTest(props.item.classTestId, props.item.status, props.item.testId)" >
                               <v-icon :class="[{'primary white--text': props.item.status !== 1 }]">grid_on</v-icon>
                             </v-btn>
 
@@ -233,7 +233,8 @@ export default {
       }
       this.$router.push('/minhaprova')
     },
-    getClassTest (id, status) {
+    getClassTest (id, status, testId) {
+      testService.saveTestId(testId)
       if (status === 4) {
         baseService.get(`/classtests/${id}/correction`).then((r) => {
           this.saveClassTest(r, status)

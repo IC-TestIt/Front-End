@@ -1,7 +1,7 @@
 <template>
   <div id="my-test">
     <MyCorrectedTest v-if="status === 4" :test="classTest"></MyCorrectedTest>
-    <MyUncorrectedTest v-if="status === 3" :test="classTest"></MyUncorrectedTest>
+    <MyUncorrectedTest v-if="status === 3" :test="classTest" :testId="testId"></MyUncorrectedTest>
     <MyAppliedTest v-if="status === 2" :test="classTest"></MyAppliedTest>
   </div>
 </template>
@@ -10,6 +10,7 @@ import MyCorrectedTest from './MyCorrectedTest'
 import MyUncorrectedTest from './MyUncorrectedTest'
 import MyAppliedTest from './MyAppliedTest'
 import ClassTestService from '../services/classTestService'
+import testService from '../services/testService'
 
 export default {
   name: 'my-test',
@@ -20,7 +21,8 @@ export default {
   },
   data: () => ({
     classTest: {},
-    status: 0
+    status: 0,
+    testId: 0
   }),
   mounted () {
     this.getClassTest()
@@ -29,6 +31,7 @@ export default {
     getClassTest () {
       this.classTest = ClassTestService.getClassTest()
       this.status = ClassTestService.getClassTestStatus()
+      this.testId = testService.getTestId()
     }
   }
 }
