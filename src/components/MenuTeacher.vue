@@ -4,12 +4,6 @@
           <v-toolbar-side-icon></v-toolbar-side-icon>
           <v-toolbar-title v-model="name">{{ name }}</v-toolbar-title>
           <v-spacer></v-spacer>
-          <!--<v-btn 
-          icon
-          fab
-          v-on:click="GoHome ()">
-              inicio            
-          </v-btn>-->
          </v-toolbar>
          <v-list class="white my-4">
           
@@ -23,7 +17,7 @@
                  <v-list-tile-title class="world" v-if="item.link === undefined">{{ item.title }}</v-list-tile-title>
                  <a v-if="item.link !== undefined" :href="item.link">
                    <v-list-tile-title class="world">{{ item.title }}</v-list-tile-title>
-                  </a>
+                 </a>
                </v-list-tile-content>
                <v-list-tile-action v-if="item.link === undefined">
                  <v-icon>keyboard_arrow_down</v-icon>
