@@ -6,7 +6,7 @@
           <v-subheader v-if="item.header" v-text="item.header" class="primary--text bold"></v-subheader>
           <v-list-tile v-else>
             <v-list-tile-content class="test-item">
-              <v-list-tile-title v-html="`Prova: ${item.name} - Turma: ${item.className} -  Data Final: ${formatDate(item.endDate)}`" class="mt-4"></v-list-tile-title>
+              <p class="mr-5 pr-5">Prova: {{item.name}} <br/> Turma: {{item.className}} <br/>  Data Final: {{formatDate(item.endDate)}}</p>
               <v-btn class="success mt-3" v-if="isTodayOrBefore(momentDate(item.beginDate))" :loading="loading" @click="realizeExam(item.classTestId)">Realizar</v-btn>
             </v-list-tile-content>
           </v-list-tile>
