@@ -4,7 +4,8 @@
     <v-dialog v-model="dialog" scrollable lazy width="1200">
      <v-card class="ml-0 elevation-0">
       <v-card-title class="headline primary--text text-xs-center">Provas da Turma</v-card-title>
-      <test-list :tests="currentClass.tests"></test-list>
+      <test-list v-if="currentClass.tests > 0" :tests="currentClass.tests"></test-list>
+      <v-card-text v-else>Não existem provas associadas a essa turma</v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn class="success--text" center flat @click.native="dialog = false">Fechar</v-btn>
