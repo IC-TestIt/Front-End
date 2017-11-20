@@ -8,7 +8,7 @@
       </v-layout>
       <v-layout row>
         <v-flex xs12>
-          <students-table :students="currentClass.students" height="55vh"></students-table>
+          <students-table height="55vh" :students="students"></students-table>
         </v-flex>
       </v-layout>
       <v-layout row justify-end>
@@ -18,6 +18,9 @@
         <v-flex xs1>
           <tests-dialog :currentClass="currentClass"></tests-dialog>
         </v-flex>
+        <v-flex xs2>
+          <student-form-dialog :classId="classId" :students="students"></student-form-dialog>
+        </v-flex>
       </v-layout>
     </v-container>
   </div>
@@ -26,6 +29,7 @@
 <script>
 import StudentsTable from './StudentsTable'
 import ClassHeader from './Header'
+import StudentFormDialog from './StudentFormDialog'
 import classService from '../../services/classService'
 import baseService from '../../services/baseService'
 import TestsDialog from './TestsDialog'
@@ -34,12 +38,14 @@ export default {
   components: {
     StudentsTable,
     ClassHeader,
-    TestsDialog
+    TestsDialog,
+    StudentFormDialog
   },
   data () {
     return {
       classId: 1,
-      currentClass: {}
+      currentClass: {},
+      students: []
     }
   },
   mounted () {
@@ -47,9 +53,10 @@ export default {
   },
   methods: {
     get () {
-      let id = classService.getClass()
-      baseService.get(`/class/${id}`).then((r) => {
+      this.classId = classService.getClass()
+      baseService.get(`/class/${this.classId}`).then((r) => {
         this.currentClass = r.data
+        this.students = r.data.students
       })
     },
     back () {
