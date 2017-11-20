@@ -3,23 +3,18 @@
     <v-container fluid>
       <div>
         <v-layout row-wrap>
-          <v-flex xs6 >
+          <v-flex xs12 >
             <h2 class='realizeExam-exam-title'>{{ exam.title + ' - ' + exam.description}}</h2>
           </v-flex>
-          <v-flex xs3 v-if="!timeOut && exam.status !== 2">
-            <v-btn class="primary" dark v-on:click="saveExam()">Salvar Prova</v-btn>
-          </v-flex>
-          <v-flex xs1 v-if="!timeOut && exam.status !== 2">
-            <v-btn class="success" dark v-on:click="endExam()">Finalizar Prova</v-btn>
-          </v-flex>
+          
         </v-layout>
         <v-layout row-wrap>
           <v-flex xs12>
             <AnswerQuestion :status='exam.status' :question='currentQuestion' :realizedQuestion='currentRealizedQuestion' :index='index'></AnswerQuestion>
           </v-flex>
         </v-layout>
-        <v-layout row>
-          <v-flex v-if="timeOut || exam.status === 2">
+        <v-layout row class="mt-3">
+          <v-flex xs12 v-if="timeOut || exam.status === 2">
             <v-alert error value="true" md12 v-if="exam.status !== 2">
               Tempo para realização expirado
             </v-alert>
@@ -27,11 +22,17 @@
               A Prova já foi entregue
             </v-alert>
           </v-flex>
-          <v-flex md8 v-if="!timeOut && exam.status !== 2">
+          <v-flex xs5 v-if="!timeOut && exam.status !== 2">
             <Timer :endTime="exam.endDate" @time-out="getTimeOut"></Timer>
           </v-flex>
-          <v-flex xs6>
+          <v-flex xs3>
             <DynamicList v-show="exam.status !== 2" @get-current='getCurrentQuestion' @get-index='getIndex' :list='exam.questions' :current='currentQuestion'></DynamicList>
+          </v-flex>
+          <v-flex xs2 v-if="!timeOut && exam.status !== 2">
+            <v-btn class="primary" dark v-on:click="saveExam()" :loading="saveLoading">Salvar Prova</v-btn>
+          </v-flex>
+          <v-flex xs2 v-if="!timeOut && exam.status !== 2">
+            <v-btn class="success" dark v-on:click="endExam()" :loading="finalizeLoading">Entregar Prova</v-btn>
           </v-flex>
         </v-layout>
       </div>
@@ -59,7 +60,9 @@ export default {
       currentRealizedQuestion: '',
       exam: '',
       index: 1,
-      timeOut: false
+      timeOut: false,
+      saveLoading: false,
+      finalizeLoading: false
     }
   },
   beforeMount () {
@@ -115,30 +118,39 @@ export default {
       }
     },
     saveExam () {
+      this.saveLoading = true
       let id = this.$route.params.id
       let exam = {answeredQuestions: this.realizedQuestions}
       baseService.put(`/exam/${id}/saved`, exam).then(r => {
-        console.log(r.data)
         if (r.status === 200) {
           this.$toastr('success', {position: 'toast-top-right', msg: 'Prova salva com sucesso'})
         }
+        this.saveLoading = false
       }).catch(e => {
         this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro ao salvar a prova'})
+        this.saveLoading = false
       })
     },
     endExam () {
+      this.finalizeLoading = true
       let id = this.$route.params.id
       let exam = {answeredQuestions: this.realizedQuestions}
       baseService.put(`/exam/${id}`, exam).then(r => {
         if (r.status === 200 && r.data !== 0) {
           this.$toastr('success', {position: 'toast-top-right', msg: 'Prova entregue com sucesso'})
-          baseService.post(`exam/${id}/correct`).then(r => console.log(r.status))
+          baseService.post(`exam/${id}/correct`).then(r => {
+            console.log(r.status)
+            this.timeOut = true
+            this.finalizeLoading = false
+          })
           .catch(e => {
             this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro ao entregar a prova'})
+            this.finalizeLoading = false
           })
         }
       }).catch(e => {
         this.$toastr('error', {position: 'toast-top-right', msg: 'Houve um erro ao entregar a prova'})
+        this.finalizeLoading = false
       })
     },
     getIndex (index) {
