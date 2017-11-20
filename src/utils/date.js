@@ -7,11 +7,12 @@ const TOMORROW = REFERENCE.clone().add(1, 'days').startOf('day')
 const NEXT_WEEK = REFERENCE.clone().add(7, 'days').startOf('day')
 
 export function formatDate (date) {
-  let formatedDate = new Date(date).toLocaleDateString('pt-br')
   if (momentDate(date) <= moment('01/01/2000')) {
     return 'Indefinida'
+  } else {
+    let formatedDate = moment.utc(date).format('DD/MM/YY')
+    return formatedDate
   }
-  return formatedDate
 }
 
 export function isToday (momentDate) {
