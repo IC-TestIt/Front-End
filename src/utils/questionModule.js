@@ -1,5 +1,8 @@
+import questionService from '../services/questionService'
+
 export default {
-  addQuestion: function (questions) {
+  addQuestion: function (questions, currentQuestion) {
+    let length = questions.length
     questions.push({
       description: '',
       value: '',
@@ -10,12 +13,16 @@ export default {
       isAlternative: false,
       alternatives: [{description: '', isCorrect: false}]
     })
+    questionService.saveQuestions(questions)
+    currentQuestion = questions[length]
+    questions = questionService.getQuestions()
   },
   removeQuestion: function (questions, currentQuestion, index) {
     index -= 1
     let length = questions.length
     if (length >= 1) {
       questions.splice(index, 1)
+      questionService.saveQuestions(questions)
     }
     length = questions.length
     if (length === 0) {
@@ -30,11 +37,10 @@ export default {
         alternatives: [{description: '', isCorrect: false}]
       })
       currentQuestion = questions[0]
-      console.log(currentQuestion)
     } else {
       currentQuestion = questions[index + 1]
-      console.log(currentQuestion)
     }
+    questions = questionService.getQuestions()
   },
   lastQuestion: function (questions, index) {
     let length = questions.length
