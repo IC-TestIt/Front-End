@@ -13,6 +13,9 @@ export default {
       } catch (e) {
         return value
       }
+    },
+    remove (item) {
+      sessionStorage.removeItem(item)
     }
   },
   local: {
@@ -21,6 +24,9 @@ export default {
     },
     get (item) {
       localStorage.getItem(item)
+    },
+    remove (item) {
+      localStorage.removeItem(item)
     },
     clear () {
       localStorage.clear()
