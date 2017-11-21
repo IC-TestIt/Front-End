@@ -1,29 +1,22 @@
 <template>
 <div class="createTest">
   <v-container fluid>
-    <v-stepper non-linear class="white" v-model="step">
+    <v-stepper non-linear class="grey lighten-4" v-model="step">
       <v-stepper-header>
-        <v-stepper-step step="1" editable :complete="step1Complete()">Informações Gerais</v-stepper-step>
+        <v-stepper-step step="1" editable>Informações Gerais</v-stepper-step>
         <v-divider></v-divider>
-        <v-stepper-step step="2" :editable="step1Complete()">Adicionar Questões</v-stepper-step>
+        <v-stepper-step step="2" editable>Adicionar Questões</v-stepper-step>
         <v-divider></v-divider>
-        <v-stepper-step step="3" :editable="step1Complete()">Aplicar Prova</v-stepper-step>
+        <v-stepper-step step="3" editable>Aplicar Prova</v-stepper-step>
       </v-stepper-header>
       <v-stepper-content step="1">
-        <v-flex xs12 class="text-xs-right">
-          <v-btn primary @click.native="step = 2">Proximo</v-btn>
-        </v-flex>
         <testInformations @get-test-id="getTestId"></testInformations>
       </v-stepper-content>
       <v-stepper-content step="2">
-        <addQuestions :testId="testId" @next-step="nextStep" @previous-step="previousStep"></addQuestions>
+        <addQuestions @next-step="nextStep" @previous-step="previousStep"></addQuestions>
       </v-stepper-content>
       <v-stepper-content step="3">
-        <v-flex xs12 class="text-xs-right">
-          <v-btn primary @click.native="finish()">Finalizar</v-btn>
-          <v-btn flat @click.native="step = 2">Voltar</v-btn>
-        </v-flex>
-        <reviewTest :testId="testId"></reviewTest>
+        <reviewTest :testId="testId" @previous-step="previousStep"></reviewTest>
       </v-stepper-content>
     </v-stepper>
   </v-container>
@@ -33,6 +26,7 @@
 import testInformations from './TestInformations'
 import addQuestions from './AddQuestions'
 import reviewTest from './ReviewTest'
+import testService from '../../services/testService'
 
 export default {
   name: 'CreateTest',
@@ -48,17 +42,19 @@ export default {
     }
   },
   methods: {
-    getTestId: function (id) {
-      this.testId = id
+    getTestId () {
+      this.testId = testService.getTestId()
+      this.nextStep()
     },
     nextStep () {
-      this.step = 3
+      if (this.step < 3) {
+        this.step++
+      }
     },
     previousStep () {
-      this.step = 1
-    },
-    step1Complete: function () {
-      return this.testId !== 0
+      if (this.step > 1) {
+        this.step--
+      }
     },
     finish () {
       this.$router.push('/provas')
@@ -69,7 +65,7 @@ export default {
 
 <style>
 .createTest {
-  overflow: scroll;
+  overflow: auto;
 }
 
 .createTest .container {
