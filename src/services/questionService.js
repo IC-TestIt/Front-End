@@ -9,5 +9,14 @@ export default {
   },
   removeQuestions () {
     storage.session.remove('questions')
+  },
+  saveRealizedQuestions (questions) {
+    storage.session.set('realized-questions', questions)
+  },
+  getRealizedQuestions () {
+    return storage.session.get('realized-questions')
+  },
+  removeRealizedQuestions () {
+    storage.session.remove('realized-questions')
   }
 }
