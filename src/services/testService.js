@@ -6,5 +6,17 @@ export default {
   },
   getTest () {
     return storage.session.get('test')
+  },
+  removeTest () {
+    storage.session.remove('test')
+  },
+  saveTestId (testId) {
+    storage.session.set('testId', testId)
+  },
+  getTestId () {
+    return storage.session.get('testId')
+  },
+  removeTestId () {
+    storage.session.remove('testId')
   }
 }
