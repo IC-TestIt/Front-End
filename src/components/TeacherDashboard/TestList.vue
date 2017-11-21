@@ -1,7 +1,7 @@
 <template>
   <v-card height="74vh">
     <v-flex xs8 class="primary--text display-1 pa-3">
-      Últimas provas
+      Provas não corrigidas
     </v-flex>
     <test-group v-if="todayTests.length" :list="todayTests"></test-group>
     <test-group v-if="yesterdayTests" :list="yesterdayTests"></test-group>

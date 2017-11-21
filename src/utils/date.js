@@ -28,11 +28,11 @@ export function isYesterday (momentDate) {
 }
 
 export function isWithinAWeek (momentDate) {
-  return momentDate.isAfter(A_WEEK_OLD)
+  return momentDate.isAfter(A_WEEK_OLD) && !momentDate.isSame(YESTERDAY, 'd')
 }
 
 export function isTwoWeeksOrMore (momentDate) {
-  return !isWithinAWeek(momentDate)
+  return momentDate.isSameOrBefore(A_WEEK_OLD)
 }
 
 export function isInThisWeek (momentDate) {

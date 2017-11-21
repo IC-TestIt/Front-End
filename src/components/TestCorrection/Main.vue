@@ -95,9 +95,6 @@ export default {
 .title
   color #000
 
-.card
-  overflow-y auto
-  overflow-x hidden
 
 .card2
   overflow hidden
