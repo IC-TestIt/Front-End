@@ -5,6 +5,7 @@
 </template>
 <script>
 import BarGraphic from './BarGraphic'
+import {compareString} from '../utils/filter'
 
 export default {
   name: 'students-grade-graphic',
@@ -25,7 +26,7 @@ export default {
   },
   methods: {
     getStudentsGrade () {
-      this.studentsGrade.labels = this.students.map(r => r.studentName)
+      this.studentsGrade.labels = this.students.sort((a, b) => compareString(a.studentName, b.studentName)).map(r => r.studentName)
       this.studentsGrade.datasets.push({
         label: 'Nota',
         backgroundColor: '#000066',

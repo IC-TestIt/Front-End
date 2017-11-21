@@ -19,11 +19,11 @@
         </v-layout>
         <v-layout row>
           <v-flex xs12>
-            <v-text-field label="Confirmar Senha" type="password" v-model="rpassword"></v-text-field>
+            <v-text-field label="Confirmar Senha" type="password" v-model="user.rpassword"></v-text-field>
           </v-flex>
         </v-layout>
         <v-layout row>
-          <span v-if="!compare(user.password, rpassword)" class="error-msg">*Senhas não coincidem</span>
+          <span v-if="!compare(user.password, user.rpassword)" class="error-msg">*Senhas não coincidem</span>
         </v-layout>
         <v-layout row>
           <v-flex xs12>
@@ -46,11 +46,6 @@
 <script>
 export default {
   name: 'vform',
-  data () {
-    return {
-      rpassword: ''
-    }
-  },
   mounted () {
   },
   props: ['user', 'handleSubmit', 'loading'],
