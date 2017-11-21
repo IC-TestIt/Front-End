@@ -6,7 +6,7 @@
           <v-flex xs12 >
             <h2 class='realizeExam-exam-title'>{{ exam.title + ' - ' + exam.description}}</h2>
           </v-flex>
-          
+
         </v-layout>
         <v-layout row-wrap>
           <v-flex xs12>
@@ -42,6 +42,7 @@
 
 <script>
 import baseService from '../services/baseService'
+import questionService from '../services/questionService'
 import DynamicList from './DynamicList'
 import AnswerQuestion from './AnswerQuestion'
 import Timer from './Timer'
@@ -72,12 +73,16 @@ export default {
     getExam: function () {
       let id = this.$route.params.id
       baseService.get(`/exam/${id}`).then(response => {
-        console.log(response.data)
         if (response.status === 200) {
           this.exam = response.data
           if (this.exam.status !== 2) {
+            let realized = questionService.getRealizedQuestions()
             this.currentQuestion = this.exam.questions[0]
-            this.realizedQuestions = this.exam.answeredQuestions
+            if (this.exam.answeredQuestions.length < realized.length) {
+              this.realizedQuestions = realized
+            } else {
+              this.realizedQuestions = this.exam.answeredQuestions
+            }
             this.findAnswer(this.currentQuestion)
           } else {
             this.currentQuestion = 0
@@ -90,11 +95,13 @@ export default {
       this.saveAnswer(this.currentRealizedQuestion)
       this.findAnswer(question)
       this.currentQuestion = question
+      questionService.saveRealizedQuestions(this.realizedQuestions)
     },
     findAnswer (question) {
       let index = this.findQuestion(question)
       if (index !== -1) {
         this.currentRealizedQuestion = this.realizedQuestions[index]
+        questionService.saveRealizedQuestions(this.realizedQuestions)
       } else {
         this.currentRealizedQuestion = {
           questionId: question.id,
@@ -103,6 +110,7 @@ export default {
           examId: this.exam.id
         }
         this.realizedQuestions.push(this.currentRealizedQuestion)
+        questionService.saveRealizedQuestions(this.realizedQuestions)
       }
     },
     findQuestion (question) {
@@ -115,6 +123,7 @@ export default {
       let index = this.findQuestion(question)
       if (index !== -1) {
         this.realizedQuestions[index] = question
+        questionService.saveRealizedQuestions(this.realizedQuestions)
       }
     },
     saveExam () {
@@ -139,7 +148,6 @@ export default {
         if (r.status === 200 && r.data !== 0) {
           this.$toastr('success', {position: 'toast-top-right', msg: 'Prova entregue com sucesso'})
           baseService.post(`exam/${id}/correct`).then(r => {
-            console.log(r.status)
             this.timeOut = true
             this.finalizeLoading = false
           })
